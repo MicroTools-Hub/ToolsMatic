@@ -1,4 +1,22 @@
 (() => {
+  const ensureAds = () => {
+    if (typeof document === 'undefined') return;
+    if (!document.querySelector('meta[name="google-adsense-account"]')) {
+      const meta = document.createElement('meta');
+      meta.name = 'google-adsense-account';
+      meta.content = 'ca-pub-6119998481340838';
+      document.head.appendChild(meta);
+    }
+    if (!document.querySelector('script[data-adsbygoogle]')) {
+      const script = document.createElement('script');
+      script.async = true;
+      script.crossOrigin = 'anonymous';
+      script.dataset.adsbygoogle = 'true';
+      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6119998481340838';
+      document.head.appendChild(script);
+    }
+  };
+
   const createUpdateBanner = (onApply) => {
     const existing = document.querySelector('.update-banner');
     if (existing) existing.remove();
@@ -115,6 +133,7 @@
   };
 
   window.microTools = { showToast, handoffAndGo, consumeHandoff };
+  ensureAds();
   registerSW();
   bindKeyboard();
 })();
