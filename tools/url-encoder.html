@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Encoder | MicroTools</title>
+  <meta name="description" content="Encode and decode URLs safely in your browser. Protect special characters and clean query strings instantly." />
+  <link rel="stylesheet" href="../assets/styles.css">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script src="/assets/site.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/tools/word-counter.html">Word Counter</a>
+        <a href="/tools/password-generator.html">Password Generator</a>
+        <a href="/tools/quote-generator.html">Quote Generator</a>
+        <a href="/tools/case-converter.html">Case Converter</a>
+        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="tool-shell">
+      <h1>URL Encoder</h1>
+      <label class="label" for="url-input">Text or URL</label>
+      <textarea id="url-input" rows="4" placeholder="Paste a URL or query string..."></textarea>
+      <div class="inline-controls" style="margin-top:12px;flex-wrap:wrap;gap:8px;">
+        <button id="url-encode" data-primary="true">Encode</button>
+        <button id="url-decode">Decode</button>
+        <button id="url-clear">Clear</button>
+        <button id="url-copy-in" class="ghost">Copy input</button>
+        <button id="url-copy-out" class="ghost">Copy result</button>
+      </div>
+      <label class="label" for="url-output" style="margin-top:12px;">Result</label>
+      <textarea id="url-output" rows="4" readonly aria-live="polite"></textarea>
+      <div class="result-box" id="url-status"></div>
+    </section>
+
+    <section class="section" aria-labelledby="ue-what">
+      <h2 id="ue-what">What is this tool?</h2>
+      <p>The MicroTools URL Encoder cleans and protects URLs by encoding reserved characters. It also decodes encoded strings back to human-readable form, making it easy to debug query params or webhook payloads. It is a reliable helper when you need to ensure links survive copy-paste between systems.</p>
+      <p>Encoded URLs prevent spaces, quotes, and special symbols from breaking requests. Having a quick encoder nearby reduces mistakes in production links or API calls.</p>
+      <h2>How to use this tool</h2>
+      <p>Paste text into the input field. Click Encode to escape spaces and special characters, or Decode to make an encoded string readable again. The status bar confirms success or shows decode errors if the string is malformed.</p>
+      <p>When building campaign links, encode the query portion before sharing. If a webhook body returns encoded content, paste and decode to inspect it. Clear between uses to avoid mixing data across tests.</p>
+      <h2>Who should use it?</h2>
+      <p>Developers preparing API requests, marketers building UTM links, support teams inspecting redirect URLs, and students learning about HTTP encoding can all work faster with a quick encoder on hand.</p>
+      <p>Security analysts can double-check that redirect parameters are properly encoded, while operations teams can decode log entries to troubleshoot misrouted traffic.</p>
+      <h2>Why use MicroTools for this?</h2>
+      <p>MicroTools keeps the interface frictionless and ad-free in the workspace. It loads quickly and stays responsive even on mobile connections, letting you fix a URL seconds before you ship.</p>
+      <p>The unified design across MicroTools means you can pair this with the Base64 Encoder, JSON Formatter, or Regex Tester without changing workflows, keeping debugging chains short.</p>
+      <h2>Privacy & performance</h2>
+      <p>Encoding and decoding rely on built-in JavaScript functions that run locally. Nothing is transmitted or stored. The page is lightweight and free of external dependencies, preserving strong performance scores.</p>
+      <p>Because there are no external requests, you can encode sensitive links in a private window or on slow connections without risking leakage or latency. Everything happens instantly on your device.</p>
+    </section>
+  </main>
+  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+
+  <script>
+    const inEl = document.getElementById('url-input');
+    const outEl = document.getElementById('url-output');
+    const status = document.getElementById('url-status');
+    const copy = async (text, label) => {
+      if (!text) { status.textContent = 'Nothing to copy.'; return; }
+      try { await navigator.clipboard.writeText(text); status.textContent = `${label} copied.`; window.microToast?.(`${label} copied`); } catch (err) { status.textContent = `Copy failed: ${err.message}`; }
+    };
+    const validate = (value) => {
+      if (value.length > 4000) throw new Error('Input too long. Keep under 4,000 characters.');
+      return value;
+    };
+    document.getElementById('url-encode').addEventListener('click', () => {
+      try { const clean = validate(inEl.value); outEl.value = encodeURIComponent(clean); status.textContent = 'Encoded successfully.'; } catch (err) { status.textContent = `Encode failed: ${err.message}`; }
+    });
+    document.getElementById('url-decode').addEventListener('click', () => {
+      try {
+        const clean = validate(inEl.value);
+        if (/%(?![0-9a-fA-F]{2})/.test(clean)) throw new Error('Found stray % characters. Ensure percent-encodings are complete.');
+        outEl.value = decodeURIComponent(clean);
+        status.textContent = 'Decoded successfully.';
+      } catch (err) { status.textContent = `Decode failed: ${err.message}`; }
+    });
+    document.getElementById('url-clear').addEventListener('click', () => { inEl.value=''; outEl.value=''; status.textContent=''; inEl.focus(); });
+    document.getElementById('url-copy-in').addEventListener('click', () => copy(inEl.value, 'Input'));
+    document.getElementById('url-copy-out').addEventListener('click', () => copy(outEl.value, 'Result'));
+    inEl.addEventListener('input', () => { status.textContent = ''; });
+  </script>
+</body>
+</html>

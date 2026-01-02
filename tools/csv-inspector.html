@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSV Inspector | MicroTools</title>
+  <meta name="description" content="Validate, preview, and convert CSV locally. Detect row mismatches, header issues, and export JSON without uploads.">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="/assets/site.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/tools/csv-to-json.html">CSV to JSON</a>
+        <a href="/tools/json-formatter.html">JSON Formatter</a>
+        <a href="/tools/regex-tester.html">Regex Tester</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="tool-shell">
+      <h1>CSV Inspector</h1>
+      <label class="label" for="csv-input">Paste CSV</label>
+      <textarea id="csv-input" rows="10" placeholder="name,age\nAda,32\nGrace,29"></textarea>
+      <div class="inline-controls" style="margin-top:10px;flex-wrap:wrap;align-items:flex-end;">
+        <label style="min-width:140px;">Delimiter
+          <select id="delimiter" style="margin-top:4px;width:100%;">
+            <option value=",">Comma</option>
+            <option value=";">Semicolon</option>
+            <option value="\t">Tab</option>
+            <option value="|">Pipe</option>
+          </select>
+        </label>
+        <label style="min-width:120px;">Quote
+          <select id="quote" style="margin-top:4px;width:100%;">
+            <option value="\"">Double quote</option>
+            <option value="'">Single quote</option>
+          </select>
+        </label>
+        <label style="min-width:120px;">Header row
+          <select id="has-header" style="margin-top:4px;width:100%;">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </label>
+        <button id="csv-analyze" data-primary>Inspect</button>
+        <button id="csv-export">Export JSON</button>
+        <button id="csv-clear" data-clear>Clear</button>
+      </div>
+      <div class="result-box" id="csv-status">Waiting for input...</div>
+      <div class="muted-bg" style="margin-top:12px;">
+        <div class="pill" style="margin-bottom:6px;">Summary</div>
+        <div id="csv-summary" class="muted-text">Rows, columns, and anomalies will appear here.</div>
+      </div>
+      <div class="muted-bg" style="margin-top:12px;">
+        <div class="pill" style="margin-bottom:6px;">Preview (first 20 rows)</div>
+        <div style="overflow-x:auto;">
+          <table class="table" id="csv-table"></table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="csv-what">
+      <h2 id="csv-what">Why this tool?</h2>
+      <p>Catch delimiter mistakes, uneven rows, and quoting issues before importing CSVs into databases or spreadsheets. Inspect locally, then export JSON safely.</p>
+      <p>Built for analysts, engineers, and ops teams who want a fast sanity check without uploading files.</p>
+      <h2>How to use it</h2>
+      <p>Paste a CSV sample, pick delimiter and quote style, and click Inspect. The summary flags inconsistent row lengths, duplicate headers, and the detected column count. A preview table shows the first 20 rows so you can confirm alignment before bulk processing.</p>
+      <p>If the file uses tabs or semicolons, switch delimiters to match. Toggle Header row to treat the first row as field names and catch duplicates. When the shape looks correct, click Export JSON to download structured data for quick scripting or API mocks.</p>
+      <h2>Who benefits</h2>
+      <p>Data analysts cleaning vendor exports, engineers building ingestion pipelines, QA testers validating fixtures, and customer success teams triaging bad uploads all save time here. Support agents can paste a user’s CSV to spot the exact row that breaks an import, while product teams can prototype transformations without opening a spreadsheet app.</p>
+      <p>Security-conscious teams appreciate that no data leaves the browser, making it safe to inspect PII or internal metrics on locked-down machines.</p>
+      <h2>Implementation notes</h2>
+      <p>The parser handles escaped quotes and configurable delimiters without external libraries, keeping performance snappy. It ignores carriage returns, trims empty trailing lines, and reports length mismatches so you can fix malformed rows before reaching your database.</p>
+      <p>JSON export respects headers when present, falling back to col_1, col_2 naming when none are provided. All logic runs client-side, with no uploads or logging. Clear resets state instantly, letting you iterate across multiple samples during debugging or user support.</p>
+    </section>
+  </main>
+
+  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+
+  <script>
+    const input = document.getElementById('csv-input');
+    const delimiter = document.getElementById('delimiter');
+    const quote = document.getElementById('quote');
+    const hasHeader = document.getElementById('has-header');
+    const statusBox = document.getElementById('csv-status');
+    const summaryBox = document.getElementById('csv-summary');
+    const table = document.getElementById('csv-table');
+    const analyzeBtn = document.getElementById('csv-analyze');
+    const exportBtn = document.getElementById('csv-export');
+    const clearBtn = document.getElementById('csv-clear');
+
+    const parseCSV = (text, delim, quoteChar) => {
+      const rows = [];
+      let current = [];
+      let field = '';
+      let inQuotes = false;
+      for (let i = 0; i < text.length; i += 1) {
+        const ch = text[i];
+        const next = text[i + 1];
+        if (inQuotes) {
+          if (ch === quoteChar && next === quoteChar) {
+            field += quoteChar; i += 1; continue;
+          }
+          if (ch === quoteChar) { inQuotes = false; continue; }
+          field += ch;
+        } else {
+          if (ch === quoteChar) { inQuotes = true; continue; }
+          if (ch === delim) { current.push(field); field = ''; continue; }
+          if (ch === '\n') { current.push(field); rows.push(current); current = []; field = ''; continue; }
+          if (ch === '\r') { continue; }
+          field += ch;
+        }
+      }
+      current.push(field);
+      rows.push(current);
+      return rows.filter((r) => !(r.length === 1 && r[0] === ''));
+    };
+
+    const renderTable = (rows) => {
+      table.innerHTML = '';
+      if (!rows.length) return;
+      const header = table.createTHead().insertRow();
+      rows[0].forEach((col, idx) => {
+        const th = document.createElement('th');
+        th.textContent = `Col ${idx + 1}`;
+        header.appendChild(th);
+      });
+      const body = table.createTBody();
+      rows.slice(0, 20).forEach((row) => {
+        const tr = body.insertRow();
+        rows[0].forEach((_, idx) => {
+          const td = tr.insertCell();
+          td.textContent = row[idx] ?? '';
+        });
+      });
+    };
+
+    const inspect = () => {
+      const text = input.value.trim();
+      if (!text) { statusBox.textContent = 'Paste CSV to inspect.'; table.innerHTML = ''; summaryBox.textContent = 'Rows, columns, and anomalies will appear here.'; return; }
+      const rows = parseCSV(text, delimiter.value, quote.value);
+      if (!rows.length) { statusBox.textContent = 'No rows found.'; return; }
+      renderTable(rows);
+      const columnCounts = rows.map((r) => r.length);
+      const first = columnCounts[0];
+      const inconsistent = columnCounts.filter((c) => c !== first).length;
+      const summary = [];
+      summary.push(`Rows: ${rows.length}`);
+      summary.push(`Columns (first row): ${first}`);
+      summary.push(`Delimiter: ${delimiter.value === '\t' ? 'Tab' : delimiter.value}`);
+      if (inconsistent) summary.push(`Inconsistent rows: ${inconsistent}`);
+      const headers = hasHeader.value === 'true' ? rows[0] : null;
+      if (headers) {
+        const uniqueHeaders = new Set(headers.filter(Boolean).map((h) => h.toLowerCase()))
+        if (uniqueHeaders.size !== headers.filter(Boolean).length) summary.push('Duplicate header names detected');
+      }
+      statusBox.textContent = inconsistent ? 'Warnings detected' : 'Looks consistent';
+      summaryBox.textContent = summary.join(' · ');
+      return { rows, headers, inconsistent };
+    };
+
+    const exportJSON = () => {
+      const text = input.value.trim();
+      if (!text) return;
+      const { rows } = inspect() || {};
+      if (!rows || !rows.length) return;
+      const useHeader = hasHeader.value === 'true' && rows[0].length === rows[1]?.length;
+      let data;
+      if (useHeader) {
+        const headers = rows[0];
+        data = rows.slice(1).map((r) => {
+          const obj = {};
+          headers.forEach((h, i) => { obj[h || `col_${i+1}`] = r[i] ?? ''; });
+          return obj;
+        });
+      } else {
+        data = rows.map((r) => r.reduce((obj, val, idx) => { obj[`col_${idx+1}`] = val; return obj; }, {}));
+      }
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'csv-export.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      if (window.microTools) window.microTools.showToast('Exported JSON', 'success');
+    };
+
+    analyzeBtn.addEventListener('click', inspect);
+    exportBtn.addEventListener('click', exportJSON);
+    clearBtn.addEventListener('click', () => { input.value=''; table.innerHTML=''; statusBox.textContent='Waiting for input...'; summaryBox.textContent='Rows, columns, and anomalies will appear here.'; });
+  </script>
+</body>
+</html>

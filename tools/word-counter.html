@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Counter | MicroTools</title>
+  <meta name="description" content="Count words, characters, and reading time instantly with the MicroTools Word Counter. Runs locally for writers, students, and editors who need fast feedback.">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="/assets/site.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/">
+        <span>Micro</span>Tools
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/tools/word-counter.html">Word Counter</a>
+        <a href="/tools/password-generator.html">Password Generator</a>
+        <a href="/tools/quote-generator.html">Quote Generator</a>
+        <a href="/tools/case-converter.html">Case Converter</a>
+        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="tool-shell">
+      <h1>Word Counter</h1>
+      <label class="label" for="text">Paste or type your text</label>
+      <textarea id="text" rows="10" placeholder="Start typing to see counts update in real time..."></textarea>
+      <div class="inline-controls">
+        <button id="clear" data-clear>Clear</button>
+        <div class="result-box" id="stats">Words: 0 · Characters: 0 · Sentences: 0 · Reading time: 0 min</div>
+      </div>
+      <div class="result-box" id="readability">Flesch score: 0 · Approx grade: N/A</div>
+      <div class="inline-controls" style="margin-top:10px; flex-wrap:wrap;">
+        <button class="ghost" id="pipe-case">Send to Case Converter</button>
+        <button class="ghost" id="pipe-markdown">Send to Markdown Previewer</button>
+        <button class="ghost" id="pipe-diff-a">Send to Text Diff (original)</button>
+        <button class="ghost" id="pipe-diff-b">Send to Text Diff (modified)</button>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="wc-what">
+      <h2 id="wc-what">What is this tool?</h2>
+      <p>The MicroTools Word Counter gives you instant feedback on word count, character count, sentence count, and estimated reading time. It is a quick way to check length limits for essays, product descriptions, newsletters, social captions, and blog posts without opening a heavy document editor. It exists to remove the guesswork around “how long is this?” so you can focus on writing instead of manually counting.</p>
+      <p>Because it sits in the browser, the counter is always close by when you are drafting in Docs, Slides, CMS editors, or email tools. You get the essentials—counts and time—to make decisions such as trimming an intro, splitting a paragraph, or tightening headlines to fit platform limits. The goal is clarity, not complexity.</p>
+      <h2>How to use this tool</h2>
+      <p>Paste text into the field or start typing and the totals update immediately. The word count ignores extra spaces, the character count includes spaces so you can measure strict limits, and the sentence count looks for common punctuation to approximate flow. The reading time uses an average of 200 words per minute so you can see how long it takes to skim.</p>
+      <p>Use the Clear button to reset and refocus on a new draft. If you are iterating headlines, paste several options in sequence and watch the counts shift so you can pick the version that balances punch and brevity. When collaborating, keep the tab open and refer to the live numbers while you and a teammate edit in real time.</p>
+      <h2>Who should use it?</h2>
+      <p>Students can keep essays within submission guidelines. Marketers and copywriters can trim ad copy to fit character caps. Editors can watch sentence count to balance pacing. Creators on social platforms can test captions against platform limits. Anyone who writes in a browser benefits from a counter that is always a tab away.</p>
+      <h2>Why use MicroTools for this?</h2>
+      <p>MicroTools loads instantly, does not require an account, and does not distract you with modal dialogs. The interface stays focused on your text while still showing the numbers that matter. Because all calculations run locally, you can paste draft content with confidence and see accurate totals even when offline or on a slow connection.</p>
+      <p>The counter also plays nicely with other MicroTools utilities. Pair it with the case converter to polish headings, or with the text diff checker to see how changes affect length and reading time. The shared layout keeps cognitive load low, so you can move between tools without relearning controls.</p>
+      <h2>Privacy & performance</h2>
+      <p>Your text never leaves the page. The counting logic runs entirely in your browser, so sensitive drafts, proprietary scripts, and personal notes remain private. The tool is lightweight, uses no external libraries, and ships only essential JavaScript, which keeps page weight low and performance scores high.</p>
+      <p>Because everything is computed on the client, performance remains steady on low-bandwidth or offline-friendly scenarios. Nothing is tracked or stored, and there are no background requests. That privacy-first approach makes it safe to paste confidential material while still getting the quick feedback you need.</p>
+    </section>
+  </main>
+
+  <footer>
+    MicroTools · Fast, privacy-first utilities for the web.
+  </footer>
+
+  <script>
+    const input = document.getElementById('text');
+    const stats = document.getElementById('stats');
+    const readabilityBox = document.getElementById('readability');
+    const clearBtn = document.getElementById('clear');
+    const pipeCase = document.getElementById('pipe-case');
+    const pipeMarkdown = document.getElementById('pipe-markdown');
+    const pipeDiffA = document.getElementById('pipe-diff-a');
+    const pipeDiffB = document.getElementById('pipe-diff-b');
+
+    const countSyllables = (word) => {
+      const cleaned = word.toLowerCase().replace(/[^a-z]/g, '');
+      if (!cleaned) return 0;
+      if (cleaned.length <= 3) return 1;
+      let count = (cleaned.match(/[aeiouy]{1,2}/g) || []).length;
+      if (cleaned.endsWith('e')) count -= 1;
+      if (count <= 0) count = 1;
+      return count;
+    };
+
+    const updateStats = () => {
+      const text = input.value.trim();
+      const words = text.length ? text.split(/\s+/).filter(Boolean).length : 0;
+      const chars = text.length;
+      const sentences = text ? (text.match(/[.!?]+/g) || []).length : 0;
+      const minutes = words ? Math.max(1, Math.round(words / 200)) : 0;
+      const syllables = text
+        ? text
+            .split(/\s+/)
+            .filter(Boolean)
+            .reduce((sum, w) => sum + countSyllables(w), 0)
+        : 0;
+      const safeSentences = sentences || 1;
+      const safeWords = words || 1;
+      const flesch = 206.835 - 1.015 * (safeWords / safeSentences) - 84.6 * (syllables / safeWords);
+      const grade = 0.39 * (safeWords / safeSentences) + 11.8 * (syllables / safeWords) - 15.59;
+      stats.textContent = `Words: ${words} · Characters: ${chars} · Sentences: ${sentences} · Reading time: ${minutes} min`;
+      readabilityBox.textContent = `Flesch score: ${Math.max(0, Math.round(flesch))} · Approx grade: ${Math.max(0, Math.round(grade))}`;
+    };
+
+    input.addEventListener('input', updateStats);
+    clearBtn.addEventListener('click', () => {
+      input.value = '';
+      updateStats();
+      input.focus();
+    });
+
+    const handoff = window.microTools;
+    const getValue = () => input.value.trim();
+    const pipe = (target, slot) => {
+      if (!handoff || !getValue()) return;
+      handoff.handoffAndGo({ target, kind: 'text', value: getValue(), slot });
+    };
+
+    pipeCase.addEventListener('click', () => pipe('/tools/case-converter.html'));
+    pipeMarkdown.addEventListener('click', () => pipe('/tools/markdown-previewer.html'));
+    pipeDiffA.addEventListener('click', () => pipe('/tools/text-diff-checker.html', 'diff-a'));
+    pipeDiffB.addEventListener('click', () => pipe('/tools/text-diff-checker.html', 'diff-b'));
+
+    const incoming = handoff ? handoff.consumeHandoff('text') : null;
+    if (incoming && incoming.value) {
+      input.value = incoming.value;
+    }
+
+    updateStats();
+  </script>
+</body>
+</html>

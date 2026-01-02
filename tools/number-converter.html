@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Converter | MicroTools</title>
+  <meta name="description" content="Convert numbers between decimal, hexadecimal, and binary instantly. Works offline in your browser." />
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="/assets/site.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/tools/word-counter.html">Word Counter</a>
+        <a href="/tools/password-generator.html">Password Generator</a>
+        <a href="/tools/quote-generator.html">Quote Generator</a>
+        <a href="/tools/case-converter.html">Case Converter</a>
+        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="tool-shell">
+      <h1>Number Converter</h1>
+      <label class="label" for="num-input">Value</label>
+      <input id="num-input" value="42">
+      <label class="label" for="num-base">Input base</label>
+      <select id="num-base">
+        <option value="10">Decimal</option>
+        <option value="16">Hex</option>
+        <option value="2">Binary</option>
+      </select>
+      <button id="num-convert" style="margin-top:12px;">Convert</button>
+      <div class="result-box" id="num-dec">Decimal: 42</div>
+      <div class="result-box" id="num-hex">Hex: 2a</div>
+      <div class="result-box" id="num-bin">Binary: 101010</div>
+    </section>
+
+    <section class="section" aria-labelledby="nc-what">
+      <h2 id="nc-what">What is this tool?</h2>
+      <p>The MicroTools Number Converter flips values between decimal, hexadecimal, and binary. It is helpful for developers, students, and hardware tinkerers who need quick base conversions without a calculator. It keeps your focus on the math you care about instead of fiddling with syntax or separators.</p>
+      <p>By presenting all three bases together, it makes it easier to spot patterns, check bitmasks, and translate color codes or register values quickly.</p>
+      <h2>How to use this tool</h2>
+      <p>Enter a value, choose the base of that input, and click Convert. The tool outputs the other bases immediately, handling lowercase hex and stripping whitespace automatically.</p>
+      <p>Use it to confirm CSS hex colors against decimal RGB values, or to translate binary flags into readable hex during debugging. If a value fails, double-check the selected base and rerun; errors are cleared on the next conversion.</p>
+      <p>When working with microcontrollers or network packets, paste register values, convert them, and compare against documentation without leaving the browser.</p>
+      <h2>Who should use it?</h2>
+      <p>Developers working with color codes or bitmasks, embedded engineers translating registers, and learners studying number systems all benefit from a fast converter.</p>
+      <p>Security analysts reviewing hashes, firmware engineers testing addresses, and students in computer architecture courses can keep this open as a lightweight helper.</p>
+      <h2>Why use MicroTools for this?</h2>
+      <p>MicroTools keeps the interface distraction-free and loads instantly, so you can check a value mid-debug without leaving the browser.</p>
+      <p>The familiar MicroTools layout lets you pair this with the UUID Maker or Regex Tester while examining payloads, avoiding context switching between tools.</p>
+      <h2>Privacy & performance</h2>
+      <p>Conversion runs locally with built-in JavaScript parsing. No data leaves the page, and the script is tiny for strong performance.</p>
+      <p>With no external requests, the converter works offline-friendly and remains fast on low-powered machines. Your inputs are never transmitted, keeping sensitive values private.</p>
+    </section>
+  </main>
+  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+
+  <script>
+    const inputEl = document.getElementById('num-input');
+    const baseEl = document.getElementById('num-base');
+    const decBox = document.getElementById('num-dec');
+    const hexBox = document.getElementById('num-hex');
+    const binBox = document.getElementById('num-bin');
+    const convert = () => {
+      try {
+        const base = parseInt(baseEl.value, 10);
+        const value = parseInt(inputEl.value.trim(), base);
+        if (Number.isNaN(value)) throw new Error('Invalid number');
+        decBox.textContent = `Decimal: ${value}`;
+        hexBox.textContent = `Hex: ${value.toString(16)}`;
+        binBox.textContent = `Binary: ${value.toString(2)}`;
+      } catch (err) {
+        decBox.textContent = err.message;
+        hexBox.textContent = '';
+        binBox.textContent = '';
+      }
+    };
+    document.getElementById('num-convert').addEventListener('click', convert);
+    convert();
+  </script>
+</body>
+</html>

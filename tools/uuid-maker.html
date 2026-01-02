@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UUID Maker | MicroTools</title>
+  <meta name="description" content="Generate secure UUIDs locally with one click. Uses crypto-grade randomness when available." />
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="/assets/site.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/tools/word-counter.html">Word Counter</a>
+        <a href="/tools/password-generator.html">Password Generator</a>
+        <a href="/tools/quote-generator.html">Quote Generator</a>
+        <a href="/tools/case-converter.html">Case Converter</a>
+        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="tool-shell">
+      <h1>UUID Maker</h1>
+      <button id="uuid-generate">Generate UUID</button>
+      <button id="uuid-copy">Copy</button>
+      <div class="result-box" id="uuid-output">Click generate to create a UUID v4.</div>
+    </section>
+
+    <section class="section" aria-labelledby="uuid-what">
+      <h2 id="uuid-what">What is this tool?</h2>
+      <p>The MicroTools UUID Maker creates random version 4 UUIDs using browser cryptography when available. It is perfect for unique identifiers in tests, prototypes, database seeds, or demo environments. The output follows the standard UUID format, making it safe for drop-in use across services and databases.</p>
+      <p>By keeping the experience to two buttons—generate and copy—it removes friction while still using secure randomness. You get dependable IDs without touching a CLI.</p>
+      <h2>How to use this tool</h2>
+      <p>Click Generate UUID to get a new identifier. Use Copy to place it on your clipboard for quick pasting into configs or code. You can generate as many as you need; each call uses fresh randomness.</p>
+      <p>Use it during seeding scripts, while mocking feature flags, or when creating temporary users in staging. If you need multiple IDs, click Generate repeatedly and paste them into your fixtures. The output remains on screen so you can double-check before pasting.</p>
+      <h2>Who should use it?</h2>
+      <p>Developers seeding databases, QA teams creating test accounts, product managers mocking data, and students learning about identifiers can all rely on a quick generator without opening a terminal.</p>
+      <p>Support teams can create correlation IDs for ticket tracking, and analytics engineers can attach UUIDs to events during local testing. Anyone who wants collision-resistant identifiers on demand can keep this tab handy.</p>
+      <h2>Why use MicroTools for this?</h2>
+      <p>MicroTools avoids bloated dependencies and accounts. The generator loads in a blink, keeps focus on the output, and avoids ads inside the tool area so you can stay on task.</p>
+      <p>The shared design across MicroTools makes this a natural companion to JSON Formatter and Password Generator during setup flows. Minimal UI and zero pop-ups keep you moving quickly.</p>
+      <h2>Privacy & performance</h2>
+      <p>UUIDs are generated locally with crypto.randomUUID when supported, or a secure fallback using crypto.getRandomValues. Nothing leaves the page. The script is minimal, preserving performance across devices.</p>
+      <p>Because generation is client-side and dependency-free, it remains fast on low-powered machines and safe for offline-friendly environments. No telemetry or logging is involved, protecting identifiers you create for sensitive contexts.</p>
+    </section>
+  </main>
+  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+
+  <script>
+    const output = document.getElementById('uuid-output');
+    const generate = () => {
+      const uuid = (crypto.randomUUID) ? crypto.randomUUID() : ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
+      output.textContent = uuid;
+    };
+    const copy = async () => {
+      if (!output.textContent) return;
+      try {
+        await navigator.clipboard.writeText(output.textContent);
+        output.textContent = `${output.textContent} (copied!)`;
+        setTimeout(generate, 800);
+      } catch {
+        output.textContent = `${output.textContent} (copy failed)`;
+      }
+    };
+    document.getElementById('uuid-generate').addEventListener('click', generate);
+    document.getElementById('uuid-copy').addEventListener('click', copy);
+    generate();
+  </script>
+</body>
+</html>

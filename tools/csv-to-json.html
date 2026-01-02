@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSV to JSON | MicroTools</title>
+  <meta name="description" content="Convert CSV rows to JSON locally. Paste data, pick a delimiter, and export structured JSON instantly." />
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="/assets/site.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/tools/word-counter.html">Word Counter</a>
+        <a href="/tools/password-generator.html">Password Generator</a>
+        <a href="/tools/quote-generator.html">Quote Generator</a>
+        <a href="/tools/case-converter.html">Case Converter</a>
+        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="tool-shell">
+      <h1>CSV to JSON</h1>
+      <label class="label" for="csv-input">CSV data</label>
+      <textarea id="csv-input" rows="8" placeholder="name,age\nAda,32\nLin,29"></textarea>
+      <label class="label" for="csv-delim">Delimiter</label>
+      <input id="csv-delim" value="," class="small-input">
+      <label class="label"><input type="checkbox" id="csv-headers" checked> First row has headers</label>
+      <div class="inline-controls" style="margin-top:12px;">
+        <button id="csv-convert" data-primary>Convert</button>
+        <button id="csv-clear" data-clear>Clear</button>
+      </div>
+      <label class="label" for="csv-output" style="margin-top:12px;">JSON</label>
+      <textarea id="csv-output" rows="8" readonly></textarea>
+      <div class="result-box" id="csv-status"></div>
+      <div class="result-box" id="csv-preview">Preview: waiting for input.</div>
+    </section>
+
+    <section class="section" aria-labelledby="cj-what">
+      <h2 id="cj-what">What is this tool?</h2>
+      <p>The MicroTools CSV to JSON converter turns spreadsheet rows into JSON objects locally. It is handy for bootstrapping mock APIs, seeding databases, or cleaning data for dashboards. By keeping the transformation in your browser, it lets you inspect structured output without scripting.</p>
+      <p>The converter expects a header row, which becomes object keys. This keeps output consistent and predictable when you pass data to other tools or share it with teammates.</p>
+      <h2>How to use this tool</h2>
+      <p>Paste CSV with headers into the input box, set the delimiter if needed, and click Convert. The first row becomes keys; subsequent rows become objects. Errors surface if rows have uneven columns so you can fix them fast.</p>
+      <p>Adjust the delimiter for semicolon- or tab-separated files, then rerun the conversion. If you need fewer columns, trim them in the CSV first to keep the resulting JSON tidy. Copy the formatted JSON into fixtures, docs, or quick API mocks.</p>
+      <h2>Who should use it?</h2>
+      <p>Developers preparing fixtures, analysts shaping exports, product teams prototyping dashboards, and students learning data formats can all move faster with an in-browser converter.</p>
+      <p>Customer success teams can reshape report exports before sharing, and QA can craft realistic payloads for automated tests. Anyone handling tabular data benefits from a no-install transformer.</p>
+      <h2>Why use MicroTools for this?</h2>
+      <p>MicroTools avoids heavy uploads or ads in the workspace. You get a clean conversion with minimal clicks and no sign-up requirements.</p>
+      <p>The familiar MicroTools interface makes it easy to hop to the JSON Formatter to prettify results or to the Regex Tester to validate specific fields, keeping your data cleanup loop short.</p>
+      <h2>Privacy & performance</h2>
+      <p>Parsing runs in your browser only—no data leaves your device. The script is light and uses native JavaScript, keeping performance high even for longer rows.</p>
+      <p>With zero network calls, you can transform sensitive exports in a private window or offline-friendly environment. The lightweight code keeps the page responsive even with sizable but reasonable datasets.</p>
+    </section>
+  </main>
+  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+
+  <script>
+    const csvInput = document.getElementById('csv-input');
+    const csvOutput = document.getElementById('csv-output');
+    const csvStatus = document.getElementById('csv-status');
+    const csvPreview = document.getElementById('csv-preview');
+    const delimInput = document.getElementById('csv-delim');
+    const headersToggle = document.getElementById('csv-headers');
+
+    const convert = () => {
+      const delim = delimInput.value || ',';
+      const lines = csvInput.value.trim().split(/\r?\n/).filter((l) => l.length);
+      if (!lines.length) { csvStatus.textContent = 'Add CSV with data to convert.'; csvPreview.textContent = 'Preview: waiting for input.'; return; }
+      const rows = headersToggle.checked ? lines.slice(1) : lines;
+      let headers = headersToggle.checked ? lines[0].split(delim) : [];
+      if (!headersToggle.checked) {
+        const columnCount = rows[0].split(delim).length;
+        headers = Array.from({ length: columnCount }, (_, i) => `col${i + 1}`);
+      }
+      try {
+        const json = rows.map((row) => {
+          const cols = row.split(delim);
+          if (cols.length !== headers.length) throw new Error('Column count mismatch');
+          const obj = {};
+          headers.forEach((h, i) => { obj[h.trim() || `col${i + 1}`] = (cols[i] || '').trim(); });
+          return obj;
+        });
+        csvOutput.value = JSON.stringify(json, null, 2);
+        csvStatus.textContent = `Converted ${rows.length} row(s) with ${headers.length} column(s).`;
+        const previewSample = json.slice(0, 3);
+        csvPreview.textContent = previewSample.length ? `Preview: ${JSON.stringify(previewSample, null, 2)}` : 'Preview: no data rows.';
+      } catch (err) {
+        csvStatus.textContent = `Error: ${err.message}`;
+        csvOutput.value = '';
+        csvPreview.textContent = 'Preview: unable to render due to error.';
+        if (window.microTools) window.microTools.showToast('CSV error', 'error');
+      }
+    };
+
+    document.getElementById('csv-convert').addEventListener('click', convert);
+    document.getElementById('csv-clear').addEventListener('click', () => { csvInput.value=''; csvOutput.value=''; csvStatus.textContent=''; csvPreview.textContent='Preview: waiting for input.'; });
+  </script>
+</body>
+</html>

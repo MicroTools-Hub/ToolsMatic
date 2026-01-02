@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Maker | MicroTools</title>
+  <meta name="description" content="Generate QR codes locally for links and text. No uploads or external requests—rendered instantly in your browser." />
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="/assets/site.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/tools/word-counter.html">Word Counter</a>
+        <a href="/tools/password-generator.html">Password Generator</a>
+        <a href="/tools/quote-generator.html">Quote Generator</a>
+        <a href="/tools/case-converter.html">Case Converter</a>
+        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="tool-shell">
+      <h1>QR Code Maker</h1>
+      <label class="label" for="qr-text">Text or URL</label>
+      <textarea id="qr-text" rows="4" placeholder="Paste a link or short text..."></textarea>
+      <div class="inline-controls" style="margin-top:12px;flex-wrap:wrap;gap:10px;">
+        <label>Size <input type="number" id="qr-size" class="small-input" value="200" min="120" max="420"></label>
+        <label>Foreground <input type="color" id="qr-fore" value="#ffffff"></label>
+        <label>Background <input type="color" id="qr-back" value="#0b1222"></label>
+        <button id="qr-generate" data-primary="true">Generate</button>
+        <button id="qr-copy" class="ghost">Copy PNG</button>
+        <button id="qr-download">Download PNG</button>
+        <button id="qr-clear">Clear</button>
+      </div>
+      <div class="gradient-preview" id="qr-preview" style="background:#0c1425;display:flex;align-items:center;justify-content:center;color:var(--muted);">QR preview</div>
+      <div class="result-box" id="qr-status">Keep inputs under ~70 bytes for quick generation. Foreground and background must stay high-contrast.</div>
+    </section>
+
+    <section class="section" aria-labelledby="qr-what">
+      <h2 id="qr-what">What is this tool?</h2>
+      <p>The MicroTools QR Code Maker turns any short text or URL into a crisp QR code. It is useful for sharing Wi-Fi info, event links, product pages, or quick notes without sending data to a remote service. You get a reliable code that is printable, scannable, and unbranded—ideal for professional use.</p>
+      <p>The generator focuses on the essentials: text in, PNG out. That simplicity keeps it dependable for last-minute needs like booth signage, classroom handouts, or shipping labels.</p>
+      <h2>How to use this tool</h2>
+      <p>Enter your text, choose a size, and click Generate. The code renders instantly below. Use Download PNG to save it and drop it into slides, flyers, or emails. Because rendering is local, you can regenerate repeatedly until it looks right.</p>
+      <p>Keep inputs concise for best scanning reliability. If you are encoding a long URL, shorten it first, then generate the QR so it remains dense but scannable. Test on your phone before printing large batches to confirm readability at your chosen size.</p>
+      <h2>Who should use it?</h2>
+      <p>Event organizers printing check-in posters, marketers pointing to campaigns, teachers sharing classroom resources, and makers labeling hardware all gain a quick way to package a link into a scannable square.</p>
+      <p>Field teams can attach QR stickers to equipment for manuals, and support reps can send quick codes for self-serve guides. Anyone who needs a one-step way to connect people from physical space to digital content can rely on this page.</p>
+      <h2>Why use MicroTools for this?</h2>
+      <p>MicroTools stays fast, focused, and offline-friendly. There are no watermarks or remote requests, and you can produce a code moments before you need it. The interface keeps the controls simple so you can get back to your task.</p>
+      <p>The consistent layout across MicroTools makes it easy to pair this with the URL encoder or Base64 encoder when prepping links. You avoid learning new controls and can create codes even on devices with tight restrictions.</p>
+      <h2>Privacy & performance</h2>
+      <p>QR generation happens fully in the page using JavaScript and canvas. Your text never leaves the browser. The implementation is lightweight and avoids external libraries, which keeps load times and performance scores high.</p>
+      <p>Because no network calls occur, you can generate codes in low-connectivity environments or private windows. Sensitive URLs stay local, and the output appears instantly without waiting on external APIs.</p>
+    </section>
+  </main>
+  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+
+  <script>
+    // Minimal QR generation adapted from a small matrix algorithm
+    // Reference: public domain QR implementation (simplified for version auto)
+    (() => {
+      const GALOIS = [
+        1, 2, 4, 8, 16, 32, 64, 128, 29, 58, 116, 232, 205, 135, 19, 38,
+        76, 152, 45, 90, 180, 117, 234, 201, 143, 3, 6, 12, 24, 48, 96, 192,
+        157, 39, 78, 156, 37, 74, 148, 53, 106, 212, 181, 119, 238, 193, 159, 35,
+        70, 140, 5, 10, 20, 40, 80, 160, 93, 186, 105, 210, 185, 111, 222, 161,
+        95, 190, 97, 194, 153, 47, 94, 188, 101, 202, 137, 15, 30, 60, 120, 240,
+        253, 231, 211, 187, 107, 214, 177, 127, 254, 225, 223, 163, 91, 182, 113, 226,
+        217, 175, 67, 134, 17, 34, 68, 136, 13, 26, 52, 104, 208, 189, 103, 206,
+        129, 31, 62, 124, 248, 237, 199, 147, 59, 118, 236, 197, 151, 51, 102, 204,
+        133, 23, 46, 92, 184, 109, 218, 169, 79, 158, 33, 66, 132, 21, 42, 84,
+        168, 77, 154, 41, 82, 164, 85, 170, 73, 146, 57, 114, 228, 213, 183, 115,
+        230, 209, 191, 99, 198, 145, 63, 126, 252, 229, 215, 179, 123, 246, 241, 255,
+        227, 219, 171, 75, 150, 49, 98, 196, 149, 55, 110, 220, 165, 87, 174, 65,
+        130, 25, 50, 100, 200, 141, 7, 14, 28, 56, 112, 224, 221, 167, 83, 166,
+        81, 162, 89, 178, 121, 242, 249, 239, 195, 155, 43, 86, 172, 69, 138, 9,
+        18, 36, 72, 144, 61, 122, 244, 245, 247, 243, 251, 235, 203, 139, 11, 22,
+        44, 88, 176, 125, 250, 233, 207, 131, 27, 54, 108, 216, 173, 71, 142, 1
+      ];
+      const LOG = new Array(256).fill(0).map((_, i) => GALOIS.indexOf(i));
+      const gexp = (n) => GALOIS[(n % 255 + 255) % 255];
+      const glog = (n) => LOG[n];
+      const mul = (a, b) => (a && b) ? gexp(glog(a) + glog(b)) : 0;
+
+      const generate = (text) => {
+        const data = [0, 0, 0, 0, 0, 0];
+        const bytes = new TextEncoder().encode(text);
+        if (bytes.length > 70) throw new Error('Keep input under 70 bytes for this quick generator.');
+        data.push(0b0100); // mode
+        data.push(bytes.length);
+        for (const b of bytes) data.push(b);
+        while (data.length < 72) data.push(0);
+        const rs = buildRS(data.slice(2), 10);
+        const payload = data.slice(2).concat(rs);
+        return draw(21, payload);
+      };
+
+      const buildRS = (data, ecLength) => {
+        const gen = [1];
+        for (let i = 0; i < ecLength; i += 1) {
+          gen.unshift(0);
+          for (let j = 0; j < gen.length - 1; j += 1) {
+            gen[j] = gen[j] ^ mul(gen[j + 1], gexp(i));
+          }
+        }
+        const ec = new Array(ecLength).fill(0);
+        data.forEach((d) => {
+          const factor = d ^ ec[0];
+          ec.shift();
+          ec.push(0);
+          gen.forEach((g, i) => {
+            ec[i] ^= mul(g, factor);
+          });
+        });
+        return ec;
+      };
+
+      const draw = (size, data) => {
+        const m = Array.from({ length: size }, () => new Array(size).fill(null));
+        const placeFinder = (r, c) => {
+          for (let i = -1; i <= 7; i += 1) {
+            for (let j = -1; j <= 7; j += 1) {
+              const rr = r + i;
+              const cc = c + j;
+              if (rr < 0 || cc < 0 || rr >= size || cc >= size) continue;
+              if ((i >= 0 && i <= 6 && (j === 0 || j === 6)) || (j >= 0 && j <= 6 && (i === 0 || i === 6)) || (i >= 2 && i <= 4 && j >= 2 && j <= 4)) m[rr][cc] = true;
+              else m[rr][cc] = m[rr][cc] === null ? false : m[rr][cc];
+            }
+          }
+        };
+        placeFinder(0, 0);
+        placeFinder(0, size - 7);
+        placeFinder(size - 7, 0);
+        for (let i = 8; i < size - 8; i += 2) {
+          m[6][i] = true; m[6][i + 1] = false;
+          m[i][6] = true; m[i + 1][6] = false;
+        }
+        let dirUp = true; let col = size - 1; let bit = 7; let byte = 0;
+        while (col > 0) {
+          if (col === 6) col -= 1;
+          for (let r = 0; r < size; r += 1) {
+            const row = dirUp ? size - 1 - r : r;
+            for (let c = 0; c < 2; c += 1) {
+              if (m[row][col - c] !== null) continue;
+              const dark = ((data[byte] >> bit) & 1) === 1;
+              m[row][col - c] = dark;
+              bit -= 1;
+              if (bit < 0) { byte += 1; bit = 7; }
+            }
+          }
+          dirUp = !dirUp;
+          col -= 2;
+        }
+        return m;
+      };
+
+      const paint = (matrix, size, fg = '#ffffff', bg = '#0b1222') => {
+        const scale = Math.max(4, Math.floor(size / matrix.length));
+        const canvas = document.createElement('canvas');
+        canvas.width = canvas.height = matrix.length * scale;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = fg;
+        matrix.forEach((row, y) => {
+          row.forEach((cell, x) => {
+            if (cell) ctx.fillRect(x * scale, y * scale, scale, scale);
+          });
+        });
+        return canvas.toDataURL('image/png');
+      };
+
+      window.__microQr = (text, size, fg, bg) => paint(generate(text || 'MicroTools'), size, fg, bg);
+    })();
+
+    const preview = document.getElementById('qr-preview');
+    const textInput = document.getElementById('qr-text');
+    const sizeInput = document.getElementById('qr-size');
+    const download = document.getElementById('qr-download');
+    const status = document.getElementById('qr-status');
+    const fore = document.getElementById('qr-fore');
+    const back = document.getElementById('qr-back');
+    const render = () => {
+      try {
+        const size = Math.max(120, Math.min(420, parseInt(sizeInput.value, 10) || 200));
+        sizeInput.value = size;
+        const input = textInput.value.trim();
+        if (input.length === 0) status.textContent = 'Using placeholder URL while the input is empty.';
+        if (input.length > 160) throw new Error('Input too long. Keep under 160 characters for reliable scans.');
+        const url = window.__microQr(input || 'https://microtools.local', size, fore.value, back.value);
+        preview.style.backgroundImage = `url(${url})`;
+        preview.textContent = '';
+        download.href = url;
+        status.textContent = `QR ready at ${size}px. Contrast ratio depends on your colors—verify with a quick scan.`;
+      } catch (err) {
+        preview.textContent = 'Input too long for quick QR (keep under ~70 bytes).';
+        preview.style.backgroundImage = 'none';
+        status.textContent = err.message;
+      }
+    };
+    document.getElementById('qr-generate').addEventListener('click', render);
+    document.getElementById('qr-clear').addEventListener('click', () => { textInput.value=''; preview.textContent='QR preview'; preview.style.backgroundImage='none'; status.textContent='Cleared. Add text to generate.'; });
+    document.getElementById('qr-copy').addEventListener('click', async () => {
+      if (!download.href) return;
+      try { const data = await (await fetch(download.href)).blob(); await navigator.clipboard.write([new ClipboardItem({ 'image/png': data })]); status.textContent = 'PNG copied to clipboard.'; window.microToast?.('QR copied'); } catch (err) { status.textContent = `Copy failed: ${err.message}`; }
+    });
+    document.getElementById('qr-download').addEventListener('click', (e) => {
+      if (!download.href) e.preventDefault();
+    });
+    [fore, back].forEach(el => el.addEventListener('input', () => status.textContent = 'Adjusted colors—regenerate to apply.'));
+    render();
+  </script>
+</body>
+</html>

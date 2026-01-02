@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quote Generator | MicroTools</title>
+  <meta name="description" content="Grab a fresh, uplifting quote with the MicroTools Quote Generator. Built for writers, presenters, and creators who want quick inspiration without distractions.">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="/assets/site.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/">
+        <span>Micro</span>Tools
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/tools/word-counter.html">Word Counter</a>
+        <a href="/tools/password-generator.html">Password Generator</a>
+        <a href="/tools/quote-generator.html">Quote Generator</a>
+        <a href="/tools/case-converter.html">Case Converter</a>
+        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="tool-shell">
+      <h1>Quote Generator</h1>
+      <label class="label" for="quote-category">Category</label>
+      <select id="quote-category">
+        <option value="creativity">Creativity</option>
+        <option value="focus">Focus</option>
+        <option value="perseverance">Perseverance</option>
+        <option value="leadership">Leadership</option>
+        <option value="learning">Learning</option>
+        <option value="productivity">Productivity</option>
+        <option value="teamwork">Teamwork</option>
+        <option value="innovation">Innovation</option>
+        <option value="mindset">Mindset</option>
+        <option value="growth">Growth</option>
+        <option value="design">Design</option>
+        <option value="writing">Writing</option>
+        <option value="engineering">Engineering</option>
+        <option value="startup">Startup</option>
+        <option value="wellness">Wellness</option>
+      </select>
+      <p class="result-box" id="quote">Click the button to see a new quote.</p>
+      <button id="next" data-primary>Show another quote</button>
+    </section>
+
+    <section class="section" aria-labelledby="qg-what">
+      <h2 id="qg-what">What is this tool?</h2>
+      <p>The MicroTools Quote Generator pulls from a curated list of thoughtful, concise quotes so you can spark ideas, open a presentation, or add a finishing line to a newsletter without opening another tab. Every quote is short enough to fit in a slide or caption while still carrying a clear point. The collection blends creativity, focus, craftsmanship, and perseverance so you always have a relevant line nearby.</p>
+      <p>The goal is to keep inspiration close and dependable. Rather than scraping random sources, the quotes are handpicked to avoid filler and to stay suitable for professional contexts. That makes it safer to grab a line for client work, classrooms, or public talks.</p>
+      <h2>How to use this tool</h2>
+      <p>Press the Show another quote button to cycle through the set. When you land on a line that works, copy it into your draft or note-taking app. Because the quotes are preloaded, the tool works instantly and keeps the focus on picking the right statement, not on waiting for an API call.</p>
+      <p>If you are drafting a deck, keep the tab open and refresh until you find a line that matches the slide’s tone. For social posts, grab a quote, pair it with a visual, and move on without worrying about usage rights from unvetted sources. The quick loop is designed to fit into busy workflows.</p>
+      <h2>Who should use it?</h2>
+      <p>Writers looking for a hook, presenters opening with a memorable line, teachers creating classroom prompts, and social media managers who need a quick caption can all benefit. The quotes are balanced between creativity, craft, and perseverance, making them useful across a wide range of contexts.</p>
+      <p>Mentors, coaches, and support reps can also use it to add a human touch to check-ins or onboarding emails. Students preparing speeches or club announcements get a bank of concise lines that fit within short time limits.</p>
+      <h2>Why use MicroTools for this?</h2>
+      <p>MicroTools keeps inspiration close without clutter. There are no pop-ups, autoplaying widgets, or hidden paywalls—just a clean interface with a single action. Because the list is stored locally, the tool is fast enough to use moments before you go on stage or hit publish.</p>
+      <p>The consistent UI across MicroTools means you can switch from this generator to other writing helpers—like the case converter or word counter—without relearning controls. That reduces friction when you are assembling a full piece of content under deadline.</p>
+      <h2>Privacy & performance</h2>
+      <p>The quotes live directly in the page. No data leaves your browser, and you do not have to accept extra cookies or tracking to use it. With no external requests, the page stays lightweight and responsive even on mobile connections, which keeps performance scores high.</p>
+      <p>Since everything is bundled in the initial load, the tool works in low-connectivity environments and adds virtually no overhead to the site. You can use it in a private window knowing nothing is stored or sent anywhere.</p>
+    </section>
+  </main>
+
+  <footer>
+    MicroTools · Fast, privacy-first utilities for the web.
+  </footer>
+
+  <script>
+    const categories = {
+      creativity: [
+        'Creativity is intelligence having fun. - Albert Einstein',
+        'Constraints spark creativity, not comfort. - Unknown',
+        'Make bad drafts to find great ideas. - Unknown',
+        'Curiosity is the spark for creation. - Unknown',
+        'Sketch first, polish later. - Unknown',
+        'Ideas grow when shared. - Unknown',
+        'Combine unlikely things to invent. - Unknown',
+        'Boredom is fuel for imagination. - Unknown',
+        'Diverge first, converge later. - Unknown',
+        'Originality is recombination. - Unknown',
+        'Question defaults to find surprises. - Unknown',
+        'Creativity favors the prepared mind. - Louis Pasteur',
+        'Mood follows action, so start making. - Unknown',
+        'Make room for play in the process. - Unknown',
+        'Simple beats clever when stakes are high. - Unknown',
+        'Ship the weird prototype and learn. - Unknown',
+        'Creativity loves a deadline. - Unknown',
+        'Make rules, then break them on purpose. - Unknown',
+        'Collect sparks every day. - Unknown',
+        'Draw to think more clearly. - Unknown',
+        'Write it down to see it. - Unknown',
+        'Curate ideas ruthlessly. - Unknown',
+        'Inspiration is everywhere if you notice. - Unknown',
+        'Reframe the problem to unlock it. - Unknown',
+        'Small experiments beat big debates. - Unknown',
+        'Creativity is choice plus chance. - Unknown',
+        'Start ugly, end excellent. - Unknown',
+        'Cross-train in other arts. - Unknown',
+        'Protect maker time like money. - Unknown',
+        'Iterate until it sings. - Unknown'
+      ],
+      focus: [
+        'Focus beats talent when talent is distracted. - Unknown',
+        'Single-task the critical path. - Unknown',
+        'Turn off notifications to turn on results. - Unknown',
+        'Depth wins over speed. - Unknown',
+        'Guard your mornings. - Unknown',
+        'Start with the hardest piece. - Unknown',
+        'Context switching is a tax. - Unknown',
+        'Short sprints, long calm. - Unknown',
+        'Say no to protect yes. - Unknown',
+        'Finish small to finish big. - Unknown',
+        'Breathe, then resume. - Unknown',
+        'Clarity before activity. - Unknown',
+        'Make the next step obvious. - Unknown',
+        'Remove friction from starts. - Unknown',
+        'Work in blocks, rest between. - Unknown',
+        'Decide once, execute daily. - Unknown',
+        'Deep work compounds over time. - Unknown',
+        'Idle tabs steal focus. - Unknown',
+        'Schedule distraction, not attention. - Unknown',
+        'Do less, then obsess. - Unknown',
+        'Track time, trust reality. - Unknown',
+        'Progress needs boundaries. - Unknown',
+        'Protect your attention span. - Unknown',
+        'Set a timer, start now. - Unknown',
+        'Focus is a muscle you train. - Unknown',
+        'Reduce inputs to increase outputs. - Unknown',
+        'Batch the shallow tasks. - Unknown',
+        'Focus on what you control. - Unknown',
+        'Momentum beats motivation. - Unknown',
+        'End with a clean desk. - Unknown'
+      ],
+      perseverance: [
+        'Progress is rarely linear. - Unknown',
+        'Persistence beats resistance. - Unknown',
+        'Fall seven times, stand eight. - Japanese Proverb',
+        'Small steps count when steady. - Unknown',
+        'Grit is long obedience in one direction. - Unknown',
+        'Keep moving, even if slow. - Unknown',
+        'Hard now, easy later. - Unknown',
+        'Every draft teaches. - Unknown',
+        'Finish lines reward finishers. - Unknown',
+        'Storms pass when you keep walking. - Unknown',
+        'Endurance is built, not born. - Unknown',
+        'Stay the course, adjust the sail. - Unknown',
+        'Consistency outpaces intensity. - Unknown',
+        'Doubt is normal, quitting is optional. - Unknown',
+        'Keep promises to yourself. - Unknown',
+        'Tiny wins stack into momentum. - Unknown',
+        'Delay is not defeat. - Unknown',
+        'Rest is part of the race. - Unknown',
+        'Discipline holds when motivation fades. - Unknown',
+        'Repeat the reps. - Unknown',
+        'Tough roads teach strong skills. - Unknown',
+        'Patience is a performance tool. - Unknown',
+        'Stay in the game one more day. - Unknown',
+        'Effort compounds quietly. - Unknown',
+        'Hard choices, easy life. - Jerzy Gregorek',
+        'Keep pushing the flywheel. - Unknown',
+        'The middle is the test. - Unknown',
+        'You can do hard things. - Unknown',
+        'Progress loves persistence. - Unknown',
+        'Finish what you started. - Unknown'
+      ],
+      leadership: [
+        'Lead by example before directive. - Unknown',
+        'Clarity is kindness. - Unknown',
+        'Listeners earn trust fastest. - Unknown',
+        'Praise in public, coach in private. - Unknown',
+        'Set the vision, clear the path. - Unknown',
+        'Leaders remove friction. - Unknown',
+        'Your calendar shows your values. - Unknown',
+        'Slow to blame, quick to own. - Unknown',
+        'Decide, then communicate twice. - Unknown',
+        'Hire for trajectory. - Unknown',
+        'Feedback is a gift, not a grenade. - Unknown',
+        'Ask brave questions. - Unknown',
+        'Teach the why, not just the what. - Unknown',
+        'Protect focus for the team. - Unknown',
+        'Celebrate small wins loudly. - Unknown',
+        'Guard the culture in the details. - Unknown',
+        'Be consistent, not perfect. - Unknown',
+        'Model the behavior you want repeated. - Unknown',
+        'Clear goals reduce conflict. - Unknown',
+        'Lead meetings, do not let them wander. - Unknown',
+        'Transparency scales trust. - Unknown',
+        'Assume positive intent, verify facts. - Unknown',
+        'Give credit freely. - Unknown',
+        'Coach for outcomes, not activity. - Unknown',
+        'Standards are set by what you tolerate. - Unknown',
+        'Admit mistakes quickly. - Unknown',
+        'Make it safe to dissent. - Unknown',
+        'Calm is contagious. - Unknown',
+        'Serve the mission, not ego. - Unknown',
+        'Lead people, manage systems. - Unknown'
+      ],
+      learning: [
+        'Stay curious longer. - Unknown',
+        'Learning is a loop, not a line. - Unknown',
+        'Teach to truly learn. - Unknown',
+        'Write notes, remember twice. - Unknown',
+        'Questions are the engine of insight. - Unknown',
+        'Read widely, apply narrowly. - Unknown',
+        'Failure is tuition. - Unknown',
+        'Review after doing, not just after reading. - Unknown',
+        'Chunk skills into drills. - Unknown',
+        'Practice deliberately, not endlessly. - Unknown',
+        'Learn in public to speed feedback. - Unknown',
+        'Memory loves meaning, not just repetition. - Unknown',
+        'Seek models, then adapt. - Unknown',
+        'Learners own their schedule. - Unknown',
+        'Reflect before you move on. - Unknown',
+        'Comparison is data, not judgment. - Unknown',
+        'Document what surprised you. - Unknown',
+        'Revisit fundamentals often. - Unknown',
+        'Curate sources ruthlessly. - Unknown',
+        'Ask why five times. - Unknown',
+        'Speed comes after understanding. - Unknown',
+        'Learning feels like confusion first. - Unknown',
+        'Make flashcards from your mistakes. - Unknown',
+        'Your questions show your growth. - Unknown',
+        'Connect ideas across fields. - Unknown',
+        'Learning never subtracts, it compounds. - Unknown',
+        'Make learning visible. - Unknown',
+        'The basics are advanced when mastered. - Unknown',
+        'Unlearn to make room to learn. - Unknown',
+        'Stay a student, even when you teach. - Unknown'
+      ],
+      productivity: [
+        'Systems beat willpower. - Unknown',
+        'Plan your day before it starts. - Unknown',
+        'Automate the repeatable. - Unknown',
+        'Templates save future you. - Unknown',
+        'Time block what matters. - Unknown',
+        'Break work into 25 minute slices. - Unknown',
+        'Start tiny to start now. - Unknown',
+        'Defaults decide outcomes. - Unknown',
+        'Protect deep work on the calendar. - Unknown',
+        'Set deadlines, even artificial ones. - Unknown',
+        'Ship on cadence, improve on cadence. - Unknown',
+        'Priorities are plural only in fantasy. - Unknown',
+        'Checklist the routine. - Unknown',
+        'Measure what moves the mission. - Unknown',
+        'Meetings need agendas or exits. - Unknown',
+        'Inbox zero is a habit, not a trophy. - Unknown',
+        'Say no fast, yes slow. - Unknown',
+        'Batch errands to reclaim hours. - Unknown',
+        'Turn decisions into policies. - Unknown',
+        'Guard energy, not just time. - Unknown',
+        'Do it now if under two minutes. - Unknown',
+        'Reuse successful patterns. - Unknown',
+        'Constraints create efficiency. - Unknown',
+        'Schedule your recovery. - Unknown',
+        'Quit the wrong thing sooner. - Unknown',
+        'Delegate outcomes, not tasks. - Unknown',
+        'Track wins daily. - Unknown',
+        'Productivity is doing the right things. - Unknown',
+        'Avoid perfect, aim for progress. - Unknown',
+        'Tomorrow starts tonight. - Unknown'
+      ],
+      teamwork: [
+        'Trust is built in small moments. - Unknown',
+        'Assume positive intent, clarify quickly. - Unknown',
+        'Great teams argue ideas, not people. - Unknown',
+        'Feedback early beats feedback late. - Unknown',
+        'Teams move at the speed of clarity. - Unknown',
+        'Share context, not just tasks. - Unknown',
+        'Celebrate assists, not only goals. - Unknown',
+        'Listen to learn, not to reload. - Unknown',
+        'Disagree and commit. - Intel Motto',
+        'Document decisions so they travel. - Unknown',
+        'Alignment is a continuous practice. - Unknown',
+        'Psychological safety unlocks speed. - Unknown',
+        'Overcommunicate when stakes are high. - Unknown',
+        'Give credit loudly, take blame quietly. - Unknown',
+        'Clarity of roles reduces friction. - Unknown',
+        'Tight feedback loops build trust. - Unknown',
+        'Win together, learn together. - Unknown',
+        'Assumptions are the enemy of teamwork. - Unknown',
+        'Teams that reflect improve fastest. - Unknown',
+        'Respect time zones and boundaries. - Unknown',
+        'Kind candor beats silent resentment. - Unknown',
+        'Ask for help early. - Unknown',
+        'Pair on the hard parts. - Unknown',
+        'Shared rituals build culture. - Unknown',
+        'Small teams ship big things. - Unknown',
+        'Answer questions before they are asked. - Unknown',
+        'Good handoffs are invisible. - Unknown',
+        'Meet less, align more. - Unknown',
+        'Surface risks together. - Unknown',
+        'We over me wins longer. - Unknown'
+      ],
+      innovation: [
+        'Innovation starts with a customer itch. - Unknown',
+        'Prototype to learn, not to impress. - Unknown',
+        'Data plus curiosity beats opinion. - Unknown',
+        'Ship, measure, adjust. - Unknown',
+        'Bet small, iterate fast. - Unknown',
+        'Novelty fades, usefulness endures. - Unknown',
+        'Invent for the job to be done. - Clayton Christensen',
+        'Kill your darlings if data disagrees. - Unknown',
+        'Innovation loves constraints. - Unknown',
+        'Ask what is missing, not just what is wrong. - Unknown',
+        'Solve a problem worth solving. - Unknown',
+        'Experiment beats debate. - Unknown',
+        'Explore edges, then simplify. - Unknown',
+        'Fall in love with the problem. - Unknown',
+        'Keep a backlog of questions. - Unknown',
+        'Minimum lovable, not just minimum viable. - Unknown',
+        'Retire features to make room. - Unknown',
+        'Innovation is a habit, not a hack. - Unknown',
+        'Observe users, not just metrics. - Unknown',
+        'Risk is managed, not avoided. - Unknown',
+        'Invent in the small to change the large. - Unknown',
+        'If it is not tested, it is not learned. - Unknown',
+        'Simplify until it is elegant. - Unknown',
+        'Document experiments so learning scales. - Unknown',
+        'Seek the next 10x, not the next 10 percent. - Unknown',
+        'Innovators ship, critics comment. - Unknown',
+        'Replace fear with curiosity. - Unknown',
+        'Innovation is recombining existing parts. - Unknown',
+        'Stay close to the problem owner. - Unknown',
+        'Future value hides in present friction. - Unknown'
+      ],
+      mindset: [
+        'Growth is a choice repeated daily. - Unknown',
+        'You are not your last result. - Unknown',
+        'Replace perfection with practice. - Unknown',
+        'Self-talk sets your ceiling. - Unknown',
+        'Facts over fears. - Unknown',
+        'Rehearse success, not failure. - Unknown',
+        'Confidence comes from kept promises. - Unknown',
+        'A calm mind makes better moves. - Unknown',
+        'You can start again every morning. - Unknown',
+        'Curiosity is stronger than judgment. - Unknown',
+        'Detach from outcomes, attach to effort. - Unknown',
+        'Failure is feedback, not identity. - Unknown',
+        'Reframe problems as puzzles. - Unknown',
+        'Gratitude widens perspective. - Unknown',
+        'Discomfort is a signal of growth. - Unknown',
+        'You control inputs, not timing. - Unknown',
+        'Optimism is a force multiplier. - Unknown',
+        'Habits are votes for identity. - James Clear',
+        'Talk to yourself like you would a friend. - Unknown',
+        'Pause before reacting. - Unknown',
+        'Assume you can learn it. - Unknown',
+        'Choose progress over pride. - Unknown',
+        'Let go of perfect plans. - Unknown',
+        'Find the lesson, keep the lesson. - Unknown',
+        'What you repeat, you become. - Unknown',
+        'Start where you are, not where you wish. - Unknown',
+        'Your best today is enough. - Unknown',
+        'Mindset is the first tool. - Unknown',
+        'Curate the inputs that shape you. - Unknown',
+        'Believe, then build. - Unknown'
+      ],
+      growth: [
+        'Compounding works on skills too. - Unknown',
+        'Tiny improvements beat rare breakthroughs. - Unknown',
+        'Measure backward to see growth. - Unknown',
+        'Set pace you can sustain. - Unknown',
+        'Track one habit at a time. - Unknown',
+        'Review weekly, adjust weekly. - Unknown',
+        'Remove friction before adding force. - Unknown',
+        'Raise the floor, then the ceiling. - Unknown',
+        'Consistency is the growth engine. - Unknown',
+        'Ship, learn, improve, repeat. - Unknown',
+        'Seek feedback faster. - Unknown',
+        'Learn from adjacent fields. - Unknown',
+        'Replace intensity with frequency. - Unknown',
+        'Simplify to scale. - Unknown',
+        'Make progress visible. - Unknown',
+        'Plant seeds every day. - Unknown',
+        'Remove one drag per week. - Unknown',
+        'Growth needs recovery. - Unknown',
+        'Celebrate deltas, not just deltas from others. - Unknown',
+        'The curve turns up after it feels flat. - Unknown',
+        'Set ceilings by experimenting, not guessing. - Unknown',
+        'Start small, think long. - Unknown',
+        'Growth is earned, not gifted. - Unknown',
+        'A plan is a bet; revise often. - Unknown',
+        'Bias toward action, learn by doing. - Unknown',
+        'Remove waste before adding work. - Unknown',
+        'Get 1 percent better daily. - Unknown',
+        'Growth sneaks up on the consistent. - Unknown',
+        'Momentum is fragile; protect it. - Unknown',
+        'Greatness is grown, not granted. - Unknown'
+      ],
+      design: [
+        'Design is how it works. - Steve Jobs',
+        'Form follows function and feeling. - Unknown',
+        'Constraints make design sing. - Unknown',
+        'Whitespace is a feature. - Unknown',
+        'Start with the user, end with delight. - Unknown',
+        'Hierarchy guides attention. - Unknown',
+        'Design for clarity, then for charm. - Unknown',
+        'Test with real people early. - Unknown',
+        'Great design is invisible. - Unknown',
+        'Remove one thing, then another. - Unknown',
+        'Typography is interface voice. - Unknown',
+        'Accessibility is table stakes. - Unknown',
+        'Consistency reduces cognitive load. - Unknown',
+        'Good defaults beat good docs. - Unknown',
+        'Prototypes beat meetings. - Unknown',
+        'Motion should serve meaning. - Unknown',
+        'Design is a conversation with constraints. - Unknown',
+        'Edges matter as much as centers. - Unknown',
+        'Design for the 80, allow for the 20. - Unknown',
+        'Every pixel is a decision. - Unknown',
+        'Color carries emotion. - Unknown',
+        'Balance novelty with familiarity. - Unknown',
+        'Your grid is your friend. - Unknown',
+        'Design systems scale teams. - Unknown',
+        'Copy is part of design. - Unknown',
+        'Design the empty states. - Unknown',
+        'Latency is a design problem. - Unknown',
+        'Design is never done, only due. - Unknown',
+        'Learn the rules, then bend them. - Unknown',
+        'Ship, watch, refine. - Unknown'
+      ],
+      writing: [
+        'Clear thinking becomes clear writing. - Unknown',
+        'Write to discover what you think. - Unknown',
+        'Short sentences win. - Unknown',
+        'Cut half, then cut again. - Unknown',
+        'Specifics beat abstractions. - Unknown',
+        'Write for one reader. - Unknown',
+        'Draft fast, edit slow. - Unknown',
+        'Lead with the payoff. - Unknown',
+        'Active voice is stronger. - Unknown',
+        'Show, do not tell. - Unknown',
+        'Replace adverbs with proof. - Unknown',
+        'Outline to avoid wandering. - Unknown',
+        'Facts first, flair later. - Unknown',
+        'Kill filler words. - Unknown',
+        'Read aloud to find friction. - Unknown',
+        'One idea per sentence. - Unknown',
+        'Titles sell the read. - Unknown',
+        'Write daily to think daily. - Unknown',
+        'Readers skim; help them. - Unknown',
+        'Use verbs that move. - Unknown',
+        'If it bores you, delete it. - Unknown',
+        'Clarity is kindness in text. - Unknown',
+        'Paragraphs are rhythm. - Unknown',
+        'End strong, not long. - Unknown',
+        'Rewrite until the point is sharp. - Unknown',
+        'Editing is writing. - Unknown',
+        'Use examples to anchor ideas. - Unknown',
+        'Writing is thinking in public. - Unknown',
+        'Be brief, be vivid. - Unknown',
+        'Finish the draft, then judge. - Unknown'
+      ],
+      engineering: [
+        'Read the error before you react. - Unknown',
+        'Make it work, then make it right. - Unknown',
+        'Tests are the fastest form of fear reduction. - Unknown',
+        'Naming is design. - Unknown',
+        'Logs are love letters to your future self. - Unknown',
+        'Measure before you optimize. - Unknown',
+        'Simplicity scales better than cleverness. - Unknown',
+        'Delete code bravely. - Unknown',
+        'Automate what you repeat. - Unknown',
+        'Latency has many parents. - Unknown',
+        'Readability outlives hacks. - Unknown',
+        'Code is liability until value is proven. - Unknown',
+        'APIs are contracts, treat them like ones. - Unknown',
+        'Review with empathy and rigor. - Unknown',
+        'Bugs hide at boundaries. - Unknown',
+        'Feature flags save launches. - Unknown',
+        'Choose boring tech for critical paths. - Unknown',
+        'Backups are hope, restores are proof. - Unknown',
+        'Security is a habit, not a sprint. - Unknown',
+        'Document the why, not just the how. - Unknown',
+        'Little monitoring beats big surprises. - Unknown',
+        'Version control everything. - Unknown',
+        'Ship small, ship often. - Unknown',
+        'Latency budgets enforce discipline. - Unknown',
+        'Incidents are tuition, write the receipt. - Unknown',
+        'Premature optimization steals time. - Donald Knuth',
+        'Cache carefully, validate relentlessly. - Unknown',
+        'Uptime is earned daily. - Unknown',
+        'Tech debt is a loan with interest. - Unknown',
+        'Reliability is a team sport. - Unknown'
+      ],
+      startup: [
+        'Talk to users every week. - Unknown',
+        'Build painkillers, not vitamins. - Unknown',
+        'Do things that do not scale first. - Paul Graham',
+        'Distribution is as hard as product. - Unknown',
+        'Start narrow, win a wedge. - Unknown',
+        'Revenue is the best signal. - Unknown',
+        'Ship value before polish. - Unknown',
+        'Churn is louder than growth. - Unknown',
+        'Unit economics tell the truth. - Unknown',
+        'Hire for learning speed. - Unknown',
+        'Founders set the cultural weather. - Unknown',
+        'Default alive beats default famous. - Unknown',
+        'Cash is oxygen. - Unknown',
+        'Listen hard, defend little. - Unknown',
+        'Pivot on insight, not boredom. - Unknown',
+        'Speed with direction beats speed alone. - Unknown',
+        'Retention is product-market fit breathing. - Unknown',
+        'Beware vanity metrics. - Unknown',
+        'Solve one job deeply. - Unknown',
+        'Fundraising is a tool, not a trophy. - Unknown',
+        'Founders must sell first. - Unknown',
+        'Onboard like your future depends on it. - Unknown',
+        'Document the playbook as you learn. - Unknown',
+        'Customer support is product research. - Unknown',
+        'Focus on a tiny fan club first. - Unknown',
+        'Pricing is positioning. - Unknown',
+        'Moats grow from habits you build. - Unknown',
+        'Trust compounds with consistency. - Unknown',
+        'Launches are starts, not endings. - Unknown',
+        'Survive to iterate. - Unknown'
+      ],
+      wellness: [
+        'Rest is a productivity tool. - Unknown',
+        'Sleep is the original performance enhancer. - Unknown',
+        'Move daily, mood follows. - Unknown',
+        'Hydrate, you are mostly water. - Unknown',
+        'Sunlight sets your clock. - Unknown',
+        'Breathe slow to think clear. - Unknown',
+        'Healthy boundaries protect energy. - Unknown',
+        'Walks solve stuck thoughts. - Unknown',
+        'Stretch the stress away. - Unknown',
+        'Strong body, steady mind. - Unknown',
+        'Say no to stay well. - Unknown',
+        'Nutrition is long-term code. - Unknown',
+        'Quiet time is not wasted time. - Unknown',
+        'Micro-breaks prevent macro-burnout. - Unknown',
+        'Sleep debt charges interest. - Unknown',
+        'Pause screens before bed. - Unknown',
+        'Laughter resets the system. - Unknown',
+        'Friendship is medicine. - Unknown',
+        'Nature reduces noise. - Unknown',
+        'Your pace is personal. - Unknown',
+        'Check in with yourself daily. - Unknown',
+        'Move your body like you brush your teeth. - Unknown',
+        'Stress signals need responses. - Unknown',
+        'Recovery is training. - Unknown',
+        'Good posture is good mood. - Unknown',
+        'Protect your sleep like a meeting. - Unknown',
+        'Gratitude lowers stress. - Unknown',
+        'Health is built in small choices. - Unknown',
+        'Water, light, rest, repeat. - Unknown',
+        'You cannot pour from an empty cup. - Unknown'
+      ]
+    };
+
+    const quoteBox = document.getElementById('quote');
+    const nextBtn = document.getElementById('next');
+    const categorySelect = document.getElementById('quote-category');
+
+    const pickQuote = () => {
+      const category = categorySelect.value;
+      const list = categories[category];
+      if (!list) return;
+      const index = Math.floor(Math.random() * list.length);
+      quoteBox.textContent = list[index];
+    };
+
+    nextBtn.addEventListener('click', pickQuote);
+    categorySelect.addEventListener('change', pickQuote);
+    pickQuote();
+  </script>
+</body>
+</html>

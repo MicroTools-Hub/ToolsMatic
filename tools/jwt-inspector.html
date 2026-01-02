@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JWT Inspector | MicroTools</title>
+  <meta name="description" content="Decode and inspect JWTs locally. View header, payload, and claim health without sending tokens to a server.">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="/assets/site.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/tools/word-counter.html">Word Counter</a>
+        <a href="/tools/password-generator.html">Password Generator</a>
+        <a href="/tools/case-converter.html">Case Converter</a>
+        <a href="/tools/regex-tester.html">Regex Tester</a>
+        <a href="/tools/json-formatter.html">JSON Formatter</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="tool-shell">
+      <h1>JWT Inspector</h1>
+      <label class="label" for="jwt-input">Paste a JWT</label>
+      <textarea id="jwt-input" rows="6" placeholder="eyJhbGciOi..." spellcheck="false"></textarea>
+      <div class="inline-controls" style="margin-top:12px;flex-wrap:wrap;">
+        <button id="jwt-decode" data-primary>Decode</button>
+        <button id="jwt-copy-payload">Copy payload JSON</button>
+        <button id="jwt-copy-header">Copy header JSON</button>
+        <button id="jwt-clear" data-clear>Clear</button>
+      </div>
+      <div class="result-box" id="jwt-status">Waiting for a token...</div>
+      <div class="two-col" style="margin-top:12px;gap:10px;">
+        <div class="muted-bg">
+          <div class="pill" style="margin-bottom:6px;">Header</div>
+          <pre id="jwt-header" style="white-space:pre-wrap;margin:0;">{}</pre>
+        </div>
+        <div class="muted-bg">
+          <div class="pill" style="margin-bottom:6px;">Payload</div>
+          <pre id="jwt-payload" style="white-space:pre-wrap;margin:0;">{}</pre>
+        </div>
+      </div>
+      <div class="muted-bg" style="margin-top:12px;">
+        <div class="pill" style="margin-bottom:6px;">Claims</div>
+        <div id="jwt-claims" class="muted-text">exp, nbf, iss, sub, aud will appear here after decoding.</div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="jwt-what">
+      <h2 id="jwt-what">Why this tool?</h2>
+      <p>Quickly decode JWTs offline, inspect standard claims, and spot expiry or not-before issues without sending secrets to external services. Great for debugging auth flows, testing stage tokens, or confirming claim shapes.</p>
+      <p>It never validates signatures and never transmits the token; it simply decodes and interprets timestamps locally.</p>
+      <h2>How to use it well</h2>
+      <p>Paste any bearer token from your logs or network calls into the box and click Decode. The header shows algorithm and key hints, while the payload displays raw claims in formatted JSON. The claims panel highlights exp, nbf, iat, iss, sub, and aud so you can see whether the token is still valid, not yet active, or missing critical metadata. Use Copy buttons to hand payloads to teammates in chat without risking screenshots.</p>
+      <p>When debugging login or refresh flows, check that exp and nbf are aligned with the session length you expect. If a mobile client reports “token expired,” this page will confirm the exact skew in seconds. For federated setups, verify iss and aud match what your gateway expects before escalating to identity providers.</p>
+      <h2>Who benefits most</h2>
+      <p>Backend engineers validating new auth middleware, front-end engineers debugging 401 responses, SREs investigating failing health checks with expired machine tokens, and support teams triaging sign-in issues all get instant clarity. Security analysts can sanity-check staging tokens without uploading them to third-party decoders. Educators teaching JWT structure can use this page live in a classroom because nothing leaves the browser.</p>
+      <p>Product managers working on session policies can see how refresh cadence impacts exp and nbf, making it easier to balance security with usability. QA teams can paste tokens from automated test logs to confirm claims match the test user profile.</p>
+      <h2>Implementation notes</h2>
+      <p>The inspector uses base64url decoding and JSON parsing only; it does not attempt signature verification. That keeps the page lightweight and safe for offline or air-gapped environments. If a segment cannot be parsed, the status message tells you whether the problem is padding, invalid characters, or malformed JSON so you can fix the source quickly.</p>
+      <p>All parsing is client-side. No analytics, network calls, or storage beyond the page lifecycle are used. You can close the tab to clear everything. If you need signature verification, pair this tool with your server-side libraries, but rely on this view for fast structural checks and time-based validation clues.</p>
+    </section>
+  </main>
+
+  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+
+  <script>
+    const input = document.getElementById('jwt-input');
+    const statusBox = document.getElementById('jwt-status');
+    const headerBox = document.getElementById('jwt-header');
+    const payloadBox = document.getElementById('jwt-payload');
+    const claimsBox = document.getElementById('jwt-claims');
+    const decodeBtn = document.getElementById('jwt-decode');
+    const clearBtn = document.getElementById('jwt-clear');
+    const copyPayloadBtn = document.getElementById('jwt-copy-payload');
+    const copyHeaderBtn = document.getElementById('jwt-copy-header');
+
+    const b64urlDecode = (part) => {
+      try {
+        const norm = part.replace(/-/g, '+').replace(/_/g, '/');
+        const pad = '='.repeat((4 - (norm.length % 4)) % 4);
+        const str = atob(norm + pad);
+        const bytes = new Uint8Array(str.length);
+        for (let i = 0; i < str.length; i += 1) bytes[i] = str.charCodeAt(i);
+        const decoder = new TextDecoder('utf-8');
+        return decoder.decode(bytes);
+      } catch (err) {
+        return null;
+      }
+    };
+
+    const pretty = (obj) => JSON.stringify(obj, null, 2);
+
+    const formatTime = (sec) => {
+      if (!sec || Number.isNaN(sec)) return 'n/a';
+      const date = new Date(sec * 1000);
+      return `${date.toLocaleString()} (${Math.round((sec * 1000 - Date.now()) / 1000)}s offset)`;
+    };
+
+    const decode = () => {
+      const token = (input.value || '').trim();
+      if (!token || token.split('.').length < 2) {
+        statusBox.textContent = 'Enter a JWT with three parts separated by dots.';
+        headerBox.textContent = '{}';
+        payloadBox.textContent = '{}';
+        claimsBox.textContent = 'exp, nbf, iss, sub, aud will appear here after decoding.';
+        return;
+      }
+      const parts = token.split('.');
+      const rawHeader = b64urlDecode(parts[0]);
+      const rawPayload = b64urlDecode(parts[1]);
+      if (!rawHeader || !rawPayload) {
+        statusBox.textContent = 'Could not decode base64url segments. Check padding or characters.';
+        return;
+      }
+      let header; let payload;
+      try { header = JSON.parse(rawHeader); } catch (err) { statusBox.textContent = 'Header is not valid JSON.'; return; }
+      try { payload = JSON.parse(rawPayload); } catch (err) { statusBox.textContent = 'Payload is not valid JSON.'; return; }
+
+      headerBox.textContent = pretty(header);
+      payloadBox.textContent = pretty(payload);
+
+      const nowSec = Math.floor(Date.now() / 1000);
+      const exp = payload.exp;
+      const nbf = payload.nbf;
+      const iat = payload.iat;
+      const sub = payload.sub;
+      const iss = payload.iss;
+      const aud = payload.aud;
+      const warn = [];
+
+      if (exp) {
+        if (exp < nowSec) warn.push(`Expired ${Math.round(nowSec - exp)}s ago`);
+      } else {
+        warn.push('exp missing');
+      }
+      if (nbf && nbf > nowSec) warn.push(`Not valid yet (starts in ${Math.round(nbf - nowSec)}s)`);
+      if (!iat) warn.push('iat missing');
+      const statusLine = warn.length ? `Warnings: ${warn.join(' · ')}` : 'Looks current based on exp/nbf.';
+      statusBox.textContent = statusLine;
+
+      const lines = [];
+      if (iss) lines.push(`iss: ${iss}`);
+      if (sub) lines.push(`sub: ${sub}`);
+      if (aud) lines.push(`aud: ${Array.isArray(aud) ? aud.join(', ') : aud}`);
+      if (iat) lines.push(`iat: ${formatTime(iat)}`);
+      if (nbf) lines.push(`nbf: ${formatTime(nbf)}`);
+      if (exp) lines.push(`exp: ${formatTime(exp)}`);
+      if (!lines.length) lines.push('No standard claims present.');
+      claimsBox.textContent = lines.join('\n');
+    };
+
+    const copyBox = async (node) => {
+      const text = node.textContent.trim();
+      if (!text) return;
+      try {
+        await navigator.clipboard.writeText(text);
+        if (window.microTools) window.microTools.showToast('Copied', 'success');
+      } catch (err) {
+        if (window.microTools) window.microTools.showToast('Copy failed', 'error');
+      }
+    };
+
+    decodeBtn.addEventListener('click', decode);
+    clearBtn.addEventListener('click', () => { input.value = ''; statusBox.textContent = 'Waiting for a token...'; headerBox.textContent = '{}'; payloadBox.textContent = '{}'; claimsBox.textContent = 'exp, nbf, iss, sub, aud will appear here after decoding.'; });
+    copyPayloadBtn.addEventListener('click', () => copyBox(payloadBox));
+    copyHeaderBtn.addEventListener('click', () => copyBox(headerBox));
+    input.addEventListener('input', () => { if (input.value.trim().length === 0) statusBox.textContent = 'Waiting for a token...'; });
+  </script>
+</body>
+</html>

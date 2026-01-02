@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contrast Checker | MicroTools</title>
+  <meta name="description" content="Check WCAG contrast, preview accessible pairs, and copy CSS tokens. Runs fully in your browser.">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="/assets/site.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/tools/color-picker.html">Color Picker</a>
+        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+        <a href="/tools/markdown-previewer.html">Markdown Previewer</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="tool-shell">
+      <h1>Contrast Checker</h1>
+      <div class="two-col" style="gap:12px;">
+        <label class="label">Foreground
+          <input id="fg" value="#e2e8f0" placeholder="#e2e8f0">
+        </label>
+        <label class="label">Background
+          <input id="bg" value="#0f172a" placeholder="#0f172a">
+        </label>
+      </div>
+      <div class="inline-controls" style="margin-top:10px;flex-wrap:wrap;">
+        <button id="swap">Swap</button>
+        <button id="randomize">Random accessible pair</button>
+        <button id="copy-css">Copy CSS vars</button>
+      </div>
+      <div class="result-box" id="ratio-box">Ratio: -- · AA: -- · AAA: --</div>
+      <div class="gradient-preview" id="preview" style="display:flex;align-items:center;justify-content:center;font-weight:800;">Sample Text</div>
+      <div class="muted-bg" style="margin-top:12px;">
+        <div class="pill" style="margin-bottom:6px;">Suggestions</div>
+        <div id="suggestions" class="history-list"></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="cc-what">
+      <h2 id="cc-what">What this does</h2>
+      <p>Compute WCAG contrast ratios, surface AA/AAA pass status for normal and large text, and generate nearby accessible pairs. Helpful for UI polish, brand reviews, and handoff specs.</p>
+      <p>All math is local; no color data leaves the page. Copy-ready CSS variables let you drop chosen pairs into design systems quickly.</p>
+      <h2>How to use it</h2>
+      <p>Enter foreground and background hex values or paste from a design token file. The ratio readout shows whether your pair passes AA or AAA for both normal and large text. The preview block updates instantly so you can judge legibility in-context. Click “Random accessible pair” to generate a compliant starting point when you are exploring palettes.</p>
+      <p>Scroll to Suggestions to try small lightening or darkening adjustments. Each suggestion lists its ratio and an Apply button to adopt the pair. When you land on a keeper, copy the CSS variables to drop directly into a stylesheet or design system file.</p>
+      <h2>Who benefits</h2>
+      <p>Designers and UX writers validating brand palettes, engineers adding design-token checks to PRs, QA teams running accessibility sweeps, and product managers writing acceptance criteria can all use this page to reduce churn. Support teams can check that quick fixes in a status page remain legible for all users, while marketing teams can validate campaign colors before launch.</p>
+      <p>Educators teaching accessibility can demo contrast rules live without relying on external services. Because nothing leaves the browser, it is safe to use with unreleased brand colors during internal reviews.</p>
+      <h2>Implementation details</h2>
+      <p>The checker uses WCAG 2.1 relative luminance and contrast formulas. Normal text thresholds are 4.5:1 for AA and 7:1 for AAA; large text thresholds are 3:1 for AA and 4.5:1 for AAA. Calculations run locally with no network calls or third-party libraries, keeping the page fast and private.</p>
+      <p>Suggestions nudge colors by small deltas to help you reach passing ratios without redesigning your palette. Because the tool is deterministic, you can repeat adjustments to converge on the exact ratio you need for token reviews or PR comments.</p>
+    </section>
+  </main>
+
+  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+
+  <script>
+    const fg = document.getElementById('fg');
+    const bg = document.getElementById('bg');
+    const ratioBox = document.getElementById('ratio-box');
+    const preview = document.getElementById('preview');
+    const swapBtn = document.getElementById('swap');
+    const randomBtn = document.getElementById('randomize');
+    const copyCssBtn = document.getElementById('copy-css');
+    const suggestionsBox = document.getElementById('suggestions');
+
+    const clamp01 = (n) => Math.min(1, Math.max(0, n));
+    const hexToRgb = (hex) => {
+      const clean = hex.replace('#', '');
+      if (![3,6].includes(clean.length)) return null;
+      const full = clean.length === 3 ? clean.split('').map((c) => c + c).join('') : clean;
+      const int = parseInt(full, 16);
+      return { r: (int >> 16) & 255, g: (int >> 8) & 255, b: int & 255 };
+    };
+
+    const luminance = ({ r, g, b }) => {
+      const channel = (v) => {
+        const s = v / 255;
+        return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+      };
+      const [R, G, B] = [channel(r), channel(g), channel(b)];
+      return 0.2126 * R + 0.7152 * G + 0.0722 * B;
+    };
+
+    const contrast = (c1, c2) => {
+      const l1 = luminance(c1);
+      const l2 = luminance(c2);
+      const lighter = Math.max(l1, l2);
+      const darker = Math.min(l1, l2);
+      return (lighter + 0.05) / (darker + 0.05);
+    };
+
+    const randomHex = () => `#${Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0')}`;
+
+    const adjust = (rgb, delta) => ({
+      r: Math.round(clamp01(rgb.r / 255 + delta) * 255),
+      g: Math.round(clamp01(rgb.g / 255 + delta) * 255),
+      b: Math.round(clamp01(rgb.b / 255 + delta) * 255)
+    });
+
+    const rgbToHex = ({ r, g, b }) => `#${[r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('')}`;
+
+    const statusLabel = (ratio) => {
+      const normalAA = ratio >= 4.5;
+      const normalAAA = ratio >= 7;
+      const largeAA = ratio >= 3;
+      const largeAAA = ratio >= 4.5;
+      return { normalAA, normalAAA, largeAA, largeAAA };
+    };
+
+    const render = () => {
+      const fgRgb = hexToRgb(fg.value || '');
+      const bgRgb = hexToRgb(bg.value || '');
+      if (!fgRgb || !bgRgb) {
+        ratioBox.textContent = 'Enter valid hex colors.';
+        return;
+      }
+      const ratio = Number(contrast(fgRgb, bgRgb).toFixed(2));
+      const status = statusLabel(ratio);
+      ratioBox.textContent = `Ratio: ${ratio}:1 · Normal text AA ${status.normalAA ? 'passes' : 'fails'}, AAA ${status.normalAAA ? 'passes' : 'fails'} · Large text AA ${status.largeAA ? 'passes' : 'fails'}, AAA ${status.largeAAA ? 'passes' : 'fails'}`;
+      preview.style.color = fg.value;
+      preview.style.background = bg.value;
+
+      // suggestions: lighten FG, darken BG, and vice versa to hit AA
+      const suggs = [];
+      const deltas = [0.08, 0.12, 0.18];
+      deltas.forEach((d) => {
+        const brighterFg = rgbToHex(adjust(fgRgb, d));
+        const darkerBg = rgbToHex(adjust(bgRgb, -d));
+        const r1 = Number(contrast(hexToRgb(brighterFg), bgRgb).toFixed(2));
+        const r2 = Number(contrast(fgRgb, hexToRgb(darkerBg)).toFixed(2));
+        suggs.push({ label: `Lighter fg +${Math.round(d*100)}%`, fg: brighterFg, bg: bg.value, ratio: r1 });
+        suggs.push({ label: `Darker bg -${Math.round(d*100)}%`, fg: fg.value, bg: darkerBg, ratio: r2 });
+      });
+      suggestionsBox.innerHTML = '';
+      suggs.slice(0, 6).forEach((s) => {
+        const card = document.createElement('div');
+        card.className = 'history-item';
+        const swatch = document.createElement('div');
+        swatch.style.width = '42px';
+        swatch.style.height = '32px';
+        swatch.style.borderRadius = '8px';
+        swatch.style.border = '1px solid var(--border)';
+        swatch.style.background = `linear-gradient(135deg, ${s.fg}, ${s.bg})`;
+        const text = document.createElement('div');
+        text.className = 'history-value';
+        text.textContent = `${s.label} · ${s.ratio}:1`;
+        const btn = document.createElement('button');
+        btn.className = 'ghost';
+        btn.textContent = 'Apply';
+        btn.addEventListener('click', () => { fg.value = s.fg; bg.value = s.bg; render(); });
+        card.appendChild(swatch);
+        card.appendChild(text);
+        card.appendChild(btn);
+        suggestionsBox.appendChild(card);
+      });
+    };
+
+    const randomAccessible = () => {
+      let attempt = 0;
+      while (attempt < 50) {
+        const fgHex = randomHex();
+        const bgHex = randomHex();
+        const r = contrast(hexToRgb(fgHex), hexToRgb(bgHex));
+        if (r >= 4.5) { fg.value = fgHex; bg.value = bgHex; break; }
+        attempt += 1;
+      }
+      render();
+    };
+
+    swapBtn.addEventListener('click', () => { const tmp = fg.value; fg.value = bg.value; bg.value = tmp; render(); });
+    randomBtn.addEventListener('click', randomAccessible);
+    copyCssBtn.addEventListener('click', async () => {
+      const css = `:root {\n  --mt-fg: ${fg.value};\n  --mt-bg: ${bg.value};\n}`;
+      try {
+        await navigator.clipboard.writeText(css);
+        if (window.microTools) window.microTools.showToast('CSS vars copied', 'success');
+      } catch (err) {
+        if (window.microTools) window.microTools.showToast('Copy failed', 'error');
+      }
+    });
+    fg.addEventListener('input', render);
+    bg.addEventListener('input', render);
+
+    render();
+  </script>
+</body>
+</html>

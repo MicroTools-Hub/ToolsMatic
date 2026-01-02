@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gradient Generator | MicroTools</title>
+  <meta name="description" content="Blend colors, set angles, and copy CSS backgrounds with the MicroTools Gradient Generator. Fast, local, and perfect for designers and developers." />
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="/assets/site.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/">
+        <span>Micro</span>Tools
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/tools/word-counter.html">Word Counter</a>
+        <a href="/tools/password-generator.html">Password Generator</a>
+        <a href="/tools/quote-generator.html">Quote Generator</a>
+        <a href="/tools/case-converter.html">Case Converter</a>
+        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="tool-shell">
+      <h1>Gradient Generator</h1>
+      <div class="inline-controls" style="flex-wrap:wrap;gap:8px;">
+        <label class="label" for="angle">Angle (deg)</label>
+        <input id="angle" type="number" class="small-input" value="135" min="0" max="360">
+        <button id="add-color" class="ghost">Add color stop</button>
+      </div>
+      <div id="color-list" class="stack" style="display:flex;flex-direction:column;gap:8px;margin-top:8px;"></div>
+      <div id="color-chips" class="inline-controls" style="margin:8px 0;flex-wrap:wrap;gap:8px;"></div>
+      <div class="inline-controls" style="margin-top:8px;flex-wrap:wrap;gap:8px;">
+        <button id="copy" data-primary>Copy CSS</button>
+        <button id="copy-tailwind">Copy Tailwind</button>
+        <button id="swap">Shuffle colors</button>
+      </div>
+      <div class="gradient-preview" id="preview"></div>
+      <div class="result-box" id="css-output"></div>
+      <div class="result-box" id="tw-output"></div>
+    </section>
+
+    <section class="section" aria-labelledby="gg-what">
+      <h2 id="gg-what">What is this tool?</h2>
+      <p>The MicroTools Gradient Generator helps you design smooth linear gradients for backgrounds, buttons, and overlays. You can pick two colors, set an angle, and immediately see the result along with copy-ready CSS. It exists to bridge the gap between quick experimentation and production-safe output so you do not have to open a heavy design suite for a simple background.</p>
+      <p>Because gradients are native CSS, the preview you see here matches what ships to production. That fidelity means you can trust the result for marketing sites, product UIs, or decks without extra tweaking.</p>
+      <h2>How to use this tool</h2>
+      <p>Choose two colors with the pickers or paste hex values. Adjust the angle to control the direction of the blend. The preview updates instantly and the CSS output box shows the exact declaration to drop into your stylesheet. Click Copy CSS to send the declaration to your clipboard.</p>
+      <p>Experiment by rotating the angle in small increments to see how light and shadow shift across components. If you are preparing design tokens, pick brand colors, set a consistent angle (like 135 degrees), and reuse the CSS line in multiple components for visual cohesion. Regenerate as often as you need; everything updates live.</p>
+      <h2>Who should use it?</h2>
+      <p>Designers looking to match a brand palette, developers styling a landing page, and marketers building quick mockups can all rely on this tool. It is also handy for students learning CSS who want to see how angle values map to visual directions.</p>
+      <p>Engineers working in Tailwind or inline styles can copy the declaration as-is. Slide creators and content teams can grab the CSS and convert it to design tool fills to keep decks aligned with product visuals.</p>
+      <h2>Why use MicroTools for this?</h2>
+      <p>MicroTools keeps the interaction tight: no logins, no canvas lag, and no external libraries. The gradient preview uses native CSS, so what you see is exactly what ships in production. Because the output is a single line, it is easy to paste into Tailwind configs, inline styles, or plain CSS files.</p>
+      <p>The consistent UI across MicroTools means you can jump from gradients to the color picker to refine your palette, or to the image compressor to optimize assets, without changing mental models. That speed matters when you are polishing details close to launch.</p>
+      <h2>Privacy & performance</h2>
+      <p>All calculations and previews are rendered locally. Color choices stay in your browser; there is no call to remote APIs. The page ships minimal JavaScript and leans on native inputs, which keeps performance high even on low-powered devices.</p>
+      <p>With no tracking scripts or remote dependencies, performance remains strong on mobile data and older laptops. You can finalize gradients offline-friendly, knowing nothing is stored or transmitted.</p>
+    </section>
+  </main>
+
+  <footer>
+    MicroTools · Fast, privacy-first utilities for the web.
+  </footer>
+
+  <script>
+    const angleInput = document.getElementById('angle');
+    const preview = document.getElementById('preview');
+    const cssOutput = document.getElementById('css-output');
+    const twOutput = document.getElementById('tw-output');
+    const copyBtn = document.getElementById('copy');
+    const copyTailwindBtn = document.getElementById('copy-tailwind');
+    const swapBtn = document.getElementById('swap');
+    const addBtn = document.getElementById('add-color');
+    const colorList = document.getElementById('color-list');
+    const colorChips = document.getElementById('color-chips');
+
+    let colors = ['#22d3ee', '#a855f7'];
+
+    const clampAngle = (val) => Math.max(0, Math.min(360, val));
+
+    const renderChips = () => {
+      colorChips.innerHTML = colors.map((c) => `<span style="display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,0.03);">` +
+        `<span style="width:16px;height:16px;border-radius:50%;background:${c};border:1px solid rgba(255,255,255,0.3);"></span>` +
+        `<span style="font-size:12px;color:${c.toLowerCase()==='#ffffff' ? '#0b1222' : 'var(--muted)'};">${c}</span>` +
+      `</span>`).join('');
+    };
+
+    const update = () => {
+      const angle = clampAngle(parseInt(angleInput.value, 10) || 0);
+      angleInput.value = angle;
+      const stops = colors.join(', ');
+      const css = `background: linear-gradient(${angle}deg, ${stops});`;
+      const tw = `bg-[linear-gradient(${angle}deg,_${colors.join(',_')})]`;
+      preview.style.background = `linear-gradient(${angle}deg, ${stops})`;
+      cssOutput.textContent = css;
+      twOutput.textContent = tw;
+      renderChips();
+    };
+
+    const renderList = () => {
+      colorList.innerHTML = '';
+      colors.forEach((color, idx) => {
+        const row = document.createElement('div');
+        row.className = 'inline-controls';
+        row.style.gap = '8px';
+        row.innerHTML = `<label class="label">Color ${idx + 1}</label>` +
+          `<input type="color" data-idx="${idx}" value="${color}" class="small-input">` +
+          `<button class="ghost" data-remove="${idx}" ${colors.length <= 2 ? 'disabled' : ''}>Remove</button>`;
+        colorList.appendChild(row);
+      });
+      colorList.querySelectorAll('input[type=color]').forEach((input) => {
+        input.addEventListener('input', (e) => {
+          const i = Number(e.target.getAttribute('data-idx'));
+          colors[i] = e.target.value;
+          update();
+        });
+      });
+      colorList.querySelectorAll('button[data-remove]').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          const i = Number(e.target.getAttribute('data-remove'));
+          if (colors.length <= 2) return;
+          colors.splice(i, 1);
+          renderList();
+          update();
+        });
+      });
+    };
+
+    const addColor = () => {
+      const last = colors[colors.length - 1];
+      colors.push(last);
+      renderList();
+      update();
+    };
+
+    const shuffle = () => {
+      if (colors.length < 2) return;
+      colors = colors.sort(() => Math.random() - 0.5);
+      renderList();
+      update();
+    };
+
+    const copyCss = async () => {
+      if (!cssOutput.textContent) return;
+      try {
+        await navigator.clipboard.writeText(cssOutput.textContent);
+        if (window.microTools) window.microTools.showToast('CSS copied', 'success');
+      } catch (err) {
+        cssOutput.textContent = `${cssOutput.textContent} (copy failed)`;
+        if (window.microTools) window.microTools.showToast('Copy failed', 'error');
+      }
+    };
+
+    const copyTailwind = async () => {
+      if (!twOutput.textContent) return;
+      try {
+        await navigator.clipboard.writeText(twOutput.textContent);
+        if (window.microTools) window.microTools.showToast('Tailwind class copied', 'success');
+      } catch (err) {
+        if (window.microTools) window.microTools.showToast('Copy failed', 'error');
+      }
+    };
+
+    angleInput.addEventListener('input', update);
+    addBtn.addEventListener('click', addColor);
+    copyBtn.addEventListener('click', copyCss);
+    copyTailwindBtn.addEventListener('click', copyTailwind);
+    swapBtn.addEventListener('click', shuffle);
+
+    renderList();
+    update();
+  </script>
+</body>
+</html>

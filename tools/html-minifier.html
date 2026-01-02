@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Minifier | MicroTools</title>
+  <meta name="description" content="Minify HTML by stripping whitespace and comments locally. Paste markup and get a lean output instantly." />
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="/assets/site.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/tools/word-counter.html">Word Counter</a>
+        <a href="/tools/password-generator.html">Password Generator</a>
+        <a href="/tools/quote-generator.html">Quote Generator</a>
+        <a href="/tools/case-converter.html">Case Converter</a>
+        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="tool-shell">
+      <h1>HTML Minifier</h1>
+      <label class="label" for="html-input">HTML</label>
+      <textarea id="html-input" rows="8" placeholder="<div>   Spaced content   </div>"></textarea>
+      <div class="inline-controls" style="margin-top:12px;">
+        <button id="html-minify">Minify</button>
+        <button id="html-clear">Clear</button>
+      </div>
+      <label class="label" for="html-output" style="margin-top:12px;">Minified</label>
+      <textarea id="html-output" rows="8" readonly></textarea>
+      <div class="inline-controls" style="margin-top:10px;">
+        <button id="html-copy" class="ghost">Copy minified</button>
+      </div>
+      <div class="result-box" id="html-status"></div>
+    </section>
+
+    <section class="section" aria-labelledby="hm-what">
+      <h2 id="hm-what">What is this tool?</h2>
+      <p>The MicroTools HTML Minifier removes comments and unnecessary whitespace from markup. It is useful for quick optimizations before sharing snippets or embedding widgets. By collapsing markup in the browser, it gives you a ready-to-ship version without running a build step.</p>
+      <p>The minifier keeps tag order intact, making it safe for small embeds, landing pages, and email-friendly snippets that must stay lightweight. It is handy when you want to trim copy-and-paste fragments without opening a full IDE.</p>
+      <h2>How to use this tool</h2>
+      <p>Paste HTML, click Minify, and copy the output. The tool strips comments, collapses multiple spaces, and trims new lines while preserving tag order.</p>
+      <p>Use it after composing a snippet to reduce size before inserting into a CMS, or to tidy code samples before sharing with teammates. If you need to retry, adjust spacing in the source and minify again. You can also clear the fields to compare an untouched version with a minified one side by side.</p>
+      <p>For embedded widgets, minify once, test in a staging environment, and keep the original nearby for reference. The output is easy to version, making reviews quicker.</p>
+      <h2>Who should use it?</h2>
+      <p>Developers preparing embeds, marketers cleaning email templates, and students learning about payload size can all benefit from a lightweight minifier.</p>
+      <p>Support and implementation teams can also trim third-party widgets before handing them to customers, ensuring faster loads and fewer issues in constrained environments.</p>
+      <h2>Why use MicroTools for this?</h2>
+      <p>MicroTools keeps the process immediate and offline-friendly. There is no dependency to install and no ads inside the workspace.</p>
+      <p>The shared MicroTools interface means you can move from minifying HTML to compressing images or encoding URLs without context switching, keeping prep work for launches efficient. Controls stay familiar, so you spend time on content rather than relearning UI.</p>
+      <p>Because it is single-purpose and quick, it complements other MicroTools like CSV to JSON during handoffs where size and clarity matter.</p>
+      <h2>Tips and edge cases</h2>
+      <p>Minification is whitespace- and comment-focused. It does not rewrite attributes, remove optional tags, or inline assets. If your snippet relies on exact whitespace for formatting (such as pre/code examples), avoid minifying that portion. For email templates, always test in a staging inbox—some clients are sensitive to removed line breaks, so keep an original copy as a reference.</p>
+      <p>If you need aggressive HTML minification with attribute collapsing or inline CSS processing, pair this tool with a build step later. Use this page for quick wins before sharing or embedding snippets in docs, PR comments, or support replies. Because the output is deterministic, it’s easy to diff before and after to spot unexpected removals.</p>
+      <h2>Privacy & performance</h2>
+      <p>Minification happens locally in JavaScript; your markup stays in the browser. The script is minimal, keeping performance scores high.</p>
+      <p>Because nothing is uploaded, you can safely minify sensitive snippets. The light code path ensures the page remains quick even on slower machines or networks. That keeps your iterations fast when you are working under deadlines.</p>
+      <p>Offline-friendly behavior means you can clean up HTML on a plane, in a lab, or anywhere network access is limited without exposing code.</p>
+    </section>
+  </main>
+  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+
+  <script>
+    const htmlInput = document.getElementById('html-input');
+    const htmlOutput = document.getElementById('html-output');
+    const htmlStatus = document.getElementById('html-status');
+    const htmlCopy = document.getElementById('html-copy');
+    const minify = () => {
+      const raw = htmlInput.value;
+      if (!raw.trim()) { htmlStatus.textContent = 'Add HTML to minify.'; return; }
+      const noComments = raw.replace(/<!--([\s\S]*?)-->/g, '');
+      const collapsed = noComments
+        .replace(/>\s+</g, '><') // remove whitespace between tags
+        .replace(/\s{2,}/g, ' ') // collapse runs of spaces/tabs/newlines
+        .trim();
+      htmlOutput.value = collapsed;
+      htmlStatus.textContent = 'Minified successfully.';
+    };
+    document.getElementById('html-minify').addEventListener('click', minify);
+    document.getElementById('html-clear').addEventListener('click', () => {
+      htmlInput.value='';
+      htmlOutput.value='';
+      htmlStatus.textContent='';
+      htmlInput.focus();
+      if (window.microTools) window.microTools.showToast('Cleared', 'info');
+    });
+
+    htmlCopy.addEventListener('click', async () => {
+      const value = htmlOutput.value.trim();
+      if (!value) { htmlStatus.textContent = 'Nothing to copy.'; return; }
+      try {
+        await navigator.clipboard.writeText(value);
+        htmlStatus.textContent = 'Copied minified HTML.';
+        if (window.microTools) window.microTools.showToast('Copied', 'success');
+      } catch (err) {
+        htmlStatus.textContent = 'Copy failed.';
+        if (window.microTools) window.microTools.showToast('Copy failed', 'error');
+      }
+    });
+
+    htmlInput.addEventListener('input', () => { htmlStatus.textContent = ''; });
+  </script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Diff Checker | MicroTools</title>
+  <meta name="description" content="Compare two text blocks and spot differences instantly. Highlights additions and removals in your browser." />
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="/assets/site.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/tools/word-counter.html">Word Counter</a>
+        <a href="/tools/password-generator.html">Password Generator</a>
+        <a href="/tools/quote-generator.html">Quote Generator</a>
+        <a href="/tools/case-converter.html">Case Converter</a>
+        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="tool-shell">
+      <h1>Text Diff Checker</h1>
+      <label class="label" for="diff-a">Original text</label>
+      <textarea id="diff-a" rows="6"></textarea>
+      <label class="label" for="diff-b">Modified text</label>
+      <textarea id="diff-b" rows="6"></textarea>
+      <div class="inline-controls" style="margin-top:12px;">
+        <button id="diff-run" data-primary>Compare</button>
+        <button id="diff-clear" data-clear>Clear</button>
+      </div>
+      <div class="section" id="diff-output" style="margin-top:12px;"></div>
+    </section>
+
+    <section class="section" aria-labelledby="td-what">
+      <h2 id="td-what">What is this tool?</h2>
+      <p>The MicroTools Text Diff Checker compares two blocks of text and highlights what changed. It is ideal for quick copy edits, release note tweaks, and spotting differences before committing code. The goal is to expose additions and removals instantly so you do not ship unintended changes.</p>
+      <p>With a clear, color-coded view, it is easy to verify that key lines remain intact while new content stands out. This keeps review cycles shorter and lowers the risk of errors.</p>
+      <h2>How to use this tool</h2>
+      <p>Paste the original text on the left and the updated text on the right. Click Compare to see additions in green and deletions in red. Use it to ensure you did not accidentally drop key lines or add duplicates.</p>
+      <p>Iterate by making small edits in the modified box and re-running the diff until the output looks correct. Combine it with the Word Counter to watch how revisions affect length and reading time.</p>
+      <h2>Who should use it?</h2>
+      <p>Editors reviewing revisions, developers checking config tweaks, marketers comparing campaign copy, and students proofing papers all save time by scanning a quick diff.</p>
+      <p>Support teams can compare template updates, and legal reviewers can confirm redlines before finalizing agreements. Anyone who needs a fast sanity check between versions benefits here.</p>
+      <h2>Why use MicroTools for this?</h2>
+      <p>The interface is focused and fast—no logins, no ads in the workspace, and no extra steps. You can paste, compare, and move on without switching apps.</p>
+      <p>The familiar MicroTools layout means you can pair this with the Case Converter or Markdown Previewer when polishing documents, keeping your workflow consistent across tasks.</p>
+      <h2>Privacy & performance</h2>
+      <p>Comparisons run locally in the browser. Your text is not uploaded or stored. The diff algorithm is lightweight, keeping performance high on any device.</p>
+      <p>With zero network calls, you can safely compare sensitive drafts or contracts. Performance remains steady on low-power devices, so you can review changes anywhere.</p>
+    </section>
+  </main>
+  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+
+  <script>
+    const a = document.getElementById('diff-a');
+    const b = document.getElementById('diff-b');
+    const out = document.getElementById('diff-output');
+    const handoff = window.microTools;
+
+    const incoming = handoff ? handoff.consumeHandoff('text') : null;
+    if (incoming && incoming.value) {
+      if (incoming.slot === 'diff-b') {
+        b.value = incoming.value;
+      } else {
+        a.value = incoming.value;
+      }
+    }
+
+    const diff = () => {
+      const oldWords = a.value.split(/\s+/);
+      const newWords = b.value.split(/\s+/);
+      let i = 0, j = 0;
+      const parts = [];
+      while (i < oldWords.length || j < newWords.length) {
+        if (oldWords[i] === newWords[j]) {
+          parts.push(oldWords[i]);
+          i += 1; j += 1;
+          continue;
+        }
+        if (newWords.slice(j + 1).includes(oldWords[i])) {
+          parts.push(`<ins style="color:#22d3ee;">${newWords[j]}</ins>`);
+          j += 1;
+        } else {
+          parts.push(`<del style="color:#f87171;">${oldWords[i]}</del>`);
+          i += 1;
+        }
+      }
+      out.innerHTML = `<p>${parts.join(' ')}</p>`;
+    };
+    document.getElementById('diff-run').addEventListener('click', diff);
+    document.getElementById('diff-clear').addEventListener('click', () => {
+      a.value = '';
+      b.value = '';
+      out.innerHTML = '';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit Converter | MicroTools</title>
+  <meta name="description" content="Convert length, weight, and temperature quickly in your browser. No installs or logins needed." />
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script src="/assets/site.js" defer></script>
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/tools/word-counter.html">Word Counter</a>
+        <a href="/tools/password-generator.html">Password Generator</a>
+        <a href="/tools/quote-generator.html">Quote Generator</a>
+        <a href="/tools/case-converter.html">Case Converter</a>
+        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="tool-shell">
+      <h1>Unit Converter</h1>
+      <label class="label" for="unit-type">Type</label>
+      <select id="unit-type">
+        <option value="length">Length</option>
+        <option value="weight">Weight</option>
+        <option value="temp">Temperature</option>
+        <option value="volume">Volume</option>
+        <option value="speed">Speed</option>
+      </select>
+      <label class="label" for="unit-value">Value</label>
+      <input id="unit-value" type="number" value="1">
+      <label class="label" for="unit-from">From</label>
+      <select id="unit-from"></select>
+      <label class="label" for="unit-to">To</label>
+      <select id="unit-to"></select>
+      <div class="inline-controls" style="margin-top:12px;flex-wrap:wrap;gap:8px;">
+        <button id="unit-convert" data-primary="true">Convert</button>
+        <button id="unit-swap" class="ghost">Swap</button>
+        <button id="unit-copy" class="ghost">Copy result</button>
+        <button id="unit-clear">Clear</button>
+      </div>
+      <div class="result-box" id="unit-result">Result appears here.</div>
+    </section>
+
+    <section class="section" aria-labelledby="uc-what">
+      <h2 id="uc-what">What is this tool?</h2>
+      <p>The MicroTools Unit Converter handles everyday conversions for length, weight, and temperature. It is designed for quick checks while writing specs, recipes, or travel notes. The goal is to give you accurate numbers instantly so you do not need to open a spreadsheet or install an app.</p>
+      <p>With common units preloaded, it supports the most frequent scenarios: meters to feet, kilograms to pounds, and Celsius to Fahrenheit or Kelvin. That keeps the experience focused and fast.</p>
+      <h2>How to use this tool</h2>
+      <p>Select a type, choose the source and target units, enter a value, and click Convert. Results show instantly in the result box. Switch units as needed to compare values across systems.</p>
+      <p>If you are sanity-checking specs, flip between units to ensure tolerances make sense for different regions. For cooking, convert temperatures and weights to match the equipment you have. Clear and re-run as many times as needed; everything happens client-side.</p>
+      <h2>Who should use it?</h2>
+      <p>Travelers converting weather or distances, developers localizing apps, cooks adapting recipes, and students doing homework all benefit from a fast, reliable converter without ads or clutter.</p>
+      <p>Operations teams planning logistics can cross-check weights and distances, while educators can offer students a simple way to understand relationships between units during lessons.</p>
+      <h2>Why use MicroTools for this?</h2>
+      <p>MicroTools keeps everything local and light. No account, no extra pop-ups—just the numbers you need. The interface stays minimal so you can focus on the conversion.</p>
+      <p>The consistent MicroTools design means you can keep this open alongside the timezone converter or number converter when documenting specs for distributed teams. Familiar controls reduce friction.</p>
+      <h2>Privacy & performance</h2>
+      <p>Conversions run in plain JavaScript with no network calls. Inputs stay on your device, and the page uses a handful of lines of code to maintain strong performance.</p>
+      <p>Because nothing leaves the browser, you can use it offline-friendly or on limited networks. The light code path keeps the page responsive even on older laptops and mobile devices.</p>
+    </section>
+  </main>
+  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+
+  <script>
+    const units = {
+      length: { m: 1, km: 1000, ft: 0.3048, mi: 1609.34, cm: 0.01, in: 0.0254 },
+      weight: { g: 1, kg: 1000, lb: 453.592, oz: 28.3495 },
+      temp: { c: 'c', f: 'f', k: 'k' },
+      volume: { ml: 1, l: 1000, cup: 236.588, gal: 3785.41 },
+      speed: { 'm/s': 1, 'km/h': 0.277778, mph: 0.44704, knot: 0.514444 },
+    };
+    const typeSelect = document.getElementById('unit-type');
+    const fromSelect = document.getElementById('unit-from');
+    const toSelect = document.getElementById('unit-to');
+    const valueInput = document.getElementById('unit-value');
+    const resultBox = document.getElementById('unit-result');
+    const copyBtn = document.getElementById('unit-copy');
+
+    const populate = () => {
+      const type = typeSelect.value;
+      const keys = Object.keys(units[type]);
+      fromSelect.innerHTML = keys.map(k => `<option value="${k}">${k.toUpperCase()}</option>`).join('');
+      toSelect.innerHTML = keys.map(k => `<option value="${k}">${k.toUpperCase()}</option>`).join('');
+    };
+
+    const convertTemp = (val, from, to) => {
+      let c;
+      if (from === 'c') c = val;
+      if (from === 'f') c = (val - 32) * 5/9;
+      if (from === 'k') c = val - 273.15;
+      if (to === 'c') return c;
+      if (to === 'f') return (c * 9/5) + 32;
+      return c + 273.15;
+    };
+
+    const convert = () => {
+      const type = typeSelect.value;
+      const from = fromSelect.value;
+      const to = toSelect.value;
+      const valueRaw = valueInput.value;
+      const value = parseFloat(valueRaw);
+      if (Number.isNaN(value)) { resultBox.textContent = 'Enter a valid number to convert.'; return; }
+      if (type === 'temp') {
+        const res = convertTemp(value, from, to);
+        resultBox.textContent = `${value} ${from.toUpperCase()} = ${res.toFixed(2)} ${to.toUpperCase()}`;
+        return;
+      }
+      const base = value * units[type][from];
+      const result = base / units[type][to];
+      resultBox.textContent = `${value} ${from.toUpperCase()} = ${result.toFixed(4)} ${to.toUpperCase()}`;
+    };
+
+    typeSelect.addEventListener('change', () => { populate(); convert(); });
+    document.getElementById('unit-convert').addEventListener('click', convert);
+    document.getElementById('unit-swap').addEventListener('click', () => {
+      const tmp = fromSelect.value;
+      fromSelect.value = toSelect.value;
+      toSelect.value = tmp;
+      convert();
+    });
+    document.getElementById('unit-clear').addEventListener('click', () => {
+      valueInput.value = '';
+      resultBox.textContent = 'Cleared. Enter a value to convert.';
+      valueInput.focus();
+    });
+    copyBtn.addEventListener('click', async () => {
+      if (!resultBox.textContent) return;
+      try { await navigator.clipboard.writeText(resultBox.textContent); window.microToast?.('Result copied'); } catch (err) { resultBox.textContent = `Copy failed: ${err.message}`; }
+    });
+    valueInput.addEventListener('input', () => { resultBox.textContent = ''; });
+    populate();
+    convert();
+  </script>
+</body>
+</html>

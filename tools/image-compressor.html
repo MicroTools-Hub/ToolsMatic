@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Compressor | MicroTools</title>
+  <meta name="description" content="Compress images in-browser with adjustable quality. Drop a JPG or PNG, preview, and download a lighter file instantly." />
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="/assets/site.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/tools/word-counter.html">Word Counter</a>
+        <a href="/tools/password-generator.html">Password Generator</a>
+        <a href="/tools/quote-generator.html">Quote Generator</a>
+        <a href="/tools/case-converter.html">Case Converter</a>
+        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="tool-shell">
+      <h1>Image Compressor</h1>
+      <input type="file" id="img-input" accept="image/*">
+      <label class="label" for="quality">Quality (JPEG)</label>
+      <input type="range" id="quality" min="40" max="100" value="80">
+      <label class="label" for="max-width">Max width (px, optional)</label>
+      <input type="number" id="max-width" class="small-input" placeholder="Keep original" min="320" max="4000">
+      <div class="inline-controls" style="margin-top:12px;flex-wrap:wrap;gap:8px;">
+        <button id="compress" data-primary="true">Compress</button>
+        <button id="copy-img" class="ghost">Copy image</button>
+        <a id="download" class="card" style="display:inline-block;padding:10px 14px;border:1px solid var(--border);border-radius:10px;" download="compressed.jpg">Download</a>
+        <button id="reset">Reset</button>
+      </div>
+      <div class="result-box" id="img-status">Drop an image to begin. Files stay local. Recommended: keep under 10 MB for quick processing.</div>
+      <div class="gradient-preview" id="img-preview" style="background:#0c1425;display:flex;align-items:center;justify-content:center;color:var(--muted);">Preview</div>
+    </section>
+
+    <section class="section" aria-labelledby="ic-what">
+      <h2 id="ic-what">What is this tool?</h2>
+      <p>The MicroTools Image Compressor reduces file size for web use without needing a desktop editor. It is ideal for thumbnails, blog images, screenshots, and quick client approvals when you just need a lighter file fast. By exporting to JPEG, it helps you meet upload limits for CMSs, LMS portals, and chat apps without sacrificing clarity for common use cases.</p>
+      <p>The goal is to keep compression decisions simple: pick a quality value, see the preview, and download. You get predictable output that is ready for the web without watermarks or extra steps.</p>
+      <h2>How to use this tool</h2>
+      <p>Select a JPG or PNG, choose a quality level, and click Compress. A preview appears with a download link for the compressed image. Quality defaults to 80 for a balanced trade-off, but you can slide higher for detail or lower for speed.</p>
+      <p>Use the preview to sanity-check text legibility and gradients. If you need a smaller file for email, lower the quality and recompress. If you are preparing a hero image, raise the quality slightly to protect edges while still cutting weight. Download whenever the balance looks right.</p>
+      <h2>Who should use it?</h2>
+      <p>Designers preparing assets for the web, marketers shrinking campaign images, founders sending pitch decks, and students uploading projects to LMS portals all benefit. It is especially helpful on locked-down machines where installing an editor is not possible.</p>
+      <p>Support teams can compress screenshots before attaching them to tickets, and QA engineers can shrink repro videos into stills to keep bug reports light. Anyone who needs a quick, reliable compression pass can use it without sign-in.</p>
+      <h2>Why use MicroTools for this?</h2>
+      <p>Everything runs in the browser—no uploads, no queue, no watermark. You can try multiple quality levels quickly and grab the best balance without leaving the page. The interface stays distraction-free so you can focus on size and clarity.</p>
+      <p>The consistent MicroTools layout means you can jump to the color picker or gradient generator to finish styling assets, then return here to compress them. That unified flow cuts context switching during production sprints.</p>
+      <h2>Privacy & performance</h2>
+      <p>Images are processed locally with canvas APIs. Nothing is transmitted or stored on a server. Because the code is lightweight and avoids external libraries, the page keeps strong performance even on mid-range laptops and mobile devices.</p>
+      <p>With no network calls, you can compress images on slow or offline-friendly connections. Your files stay on your device, which is crucial when handling internal screenshots or client assets under NDA.</p>
+    </section>
+  </main>
+  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+
+  <script>
+    const fileInput = document.getElementById('img-input');
+    const qualityInput = document.getElementById('quality');
+    const preview = document.getElementById('img-preview');
+    const statusBox = document.getElementById('img-status');
+    const downloadLink = document.getElementById('download');
+    const maxWidthInput = document.getElementById('max-width');
+    const copyBtn = document.getElementById('copy-img');
+    const resetBtn = document.getElementById('reset');
+    let currentDataUrl = '';
+
+    const compress = () => {
+      const file = fileInput.files && fileInput.files[0];
+      if (!file) { statusBox.textContent = 'Choose an image to compress.'; return; }
+      if (!file.type.startsWith('image/')) { statusBox.textContent = 'Unsupported file type. Choose an image.'; return; }
+      if (file.size > 10 * 1024 * 1024) { statusBox.textContent = 'File too large. Keep under 10 MB for quick processing.'; return; }
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const maxW = parseInt(maxWidthInput.value, 10);
+          if (maxW && img.width > maxW) {
+            const ratio = maxW / img.width;
+            canvas.width = maxW;
+            canvas.height = Math.round(img.height * ratio);
+          } else {
+            canvas.width = img.width;
+            canvas.height = img.height;
+          }
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          const quality = Math.min(1, Math.max(0.4, (parseInt(qualityInput.value, 10) || 80) / 100));
+          currentDataUrl = canvas.toDataURL('image/jpeg', quality);
+          preview.style.backgroundImage = `url(${currentDataUrl})`;
+          preview.textContent = '';
+          downloadLink.href = currentDataUrl;
+          const originalKb = Math.round(file.size / 1024);
+          const compressedKb = Math.round(currentDataUrl.length * 0.75 / 1024);
+          const resized = maxW && img.width > maxW ? ` Resized to ${canvas.width}x${canvas.height}.` : '';
+          statusBox.textContent = `Compressed from ~${originalKb} KB to ~${compressedKb} KB at quality ${Math.round(quality * 100)}.${resized}`;
+          window.microToast?.('Image ready');
+        };
+        img.onerror = () => { statusBox.textContent = 'Could not read image. Try another file.'; };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    };
+
+    const copyImage = async () => {
+      if (!currentDataUrl) { statusBox.textContent = 'Nothing to copy yet.'; return; }
+      try {
+        const blob = await (await fetch(currentDataUrl)).blob();
+        await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
+        statusBox.textContent = 'Image copied to clipboard.';
+        window.microToast?.('Image copied');
+      } catch (err) {
+        statusBox.textContent = `Copy failed: ${err.message}`;
+      }
+    };
+
+    copyBtn.addEventListener('click', copyImage);
+    resetBtn.addEventListener('click', () => {
+      fileInput.value = '';
+      preview.style.backgroundImage = 'none';
+      preview.textContent = 'Preview';
+      downloadLink.removeAttribute('href');
+      currentDataUrl = '';
+      statusBox.textContent = 'Cleared. Drop a new image to compress.';
+    });
+    document.getElementById('compress').addEventListener('click', compress);
+  </script>
+</body>
+</html>

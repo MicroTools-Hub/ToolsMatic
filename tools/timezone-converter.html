@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timezone Converter | MicroTools</title>
+  <meta name="description" content="Convert times across major timezones instantly. Pick two zones and see the matching time without leaving your browser." />
+  <link rel="stylesheet" href="../assets/styles.css">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script src="/assets/site.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/tools/word-counter.html">Word Counter</a>
+        <a href="/tools/password-generator.html">Password Generator</a>
+        <a href="/tools/quote-generator.html">Quote Generator</a>
+        <a href="/tools/case-converter.html">Case Converter</a>
+        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="tool-shell">
+      <h1>Timezone Converter</h1>
+      <label class="label" for="tz-from">From timezone</label>
+      <select id="tz-from"></select>
+      <label class="label" for="tz-to">To timezone</label>
+      <select id="tz-to"></select>
+      <label class="label" for="tz-time">Time</label>
+      <input type="time" id="tz-time" value="12:00">
+      <div class="inline-controls" style="margin-top:12px;flex-wrap:wrap;gap:8px;">
+        <button id="tz-convert" data-primary="true">Convert</button>
+        <button id="tz-now" class="ghost">Use current time</button>
+        <button id="tz-swap" class="ghost">Swap zones</button>
+        <button id="tz-copy">Copy result</button>
+      </div>
+      <div class="result-box" id="tz-result">Result appears here.</div>
+    </section>
+
+    <section class="section" aria-labelledby="tz-what">
+      <h2 id="tz-what">What is this tool?</h2>
+      <p>The MicroTools Timezone Converter shows what a time in one city equals in another. It helps teams schedule across regions without opening a calendar app. By centering only the inputs you need, it delivers a fast way to avoid missed meetings or late-night calls.</p>
+      <p>It uses common zones that cover major hubs, giving you clarity for most collaboration scenarios. The output includes day information, which helps spot date rollovers.</p>
+      <h2>How to use this tool</h2>
+      <p>Select the source timezone, the destination timezone, set a time, and click Convert. The result shows the converted time along with today’s date in the destination zone.</p>
+      <p>Use it while drafting invites: enter the presenter’s local time, convert to your audience, and copy the result into the calendar description. For travel, check what a home-time check-in translates to abroad. Re-run as plans change—updates are instant.</p>
+      <h2>Who should use it?</h2>
+      <p>Remote teams planning meetings, event organizers coordinating speakers, support teams handling global SLAs, and travelers checking call windows all gain clarity quickly.</p>
+      <p>Product managers coordinating releases across regions and customer success reps scheduling onboarding with international clients can keep this open to avoid guesswork.</p>
+      <h2>Why use MicroTools for this?</h2>
+      <p>MicroTools is fast, local, and distraction-free. It focuses on the conversion instead of burying you in menus, making it ideal when you just need a time match.</p>
+      <p>The unified MicroTools feel means you can pair this with the unit converter or number converter while assembling regional documentation, staying in one consistent workflow.</p>
+      <h2>Privacy & performance</h2>
+      <p>Conversions rely on the browser’s Intl API; no data is sent to servers. The code is lightweight, keeping the page quick even on slower networks.</p>
+      <p>Because there are no external requests, you can use it on slow or offline-friendly connections. Inputs stay local, which is helpful when planning sensitive meetings.</p>
+    </section>
+  </main>
+  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+
+  <script>
+    const zones = [
+      'UTC','Europe/London','Europe/Berlin','Europe/Paris','Asia/Kolkata','Asia/Tokyo','Asia/Singapore','Australia/Sydney','America/New_York','America/Chicago','America/Denver','America/Los_Angeles'
+    ];
+    const fromSel = document.getElementById('tz-from');
+    const toSel = document.getElementById('tz-to');
+    const timeInput = document.getElementById('tz-time');
+    const result = document.getElementById('tz-result');
+
+    const populate = () => {
+      fromSel.innerHTML = zones.map(z => `<option value="${z}">${z}</option>`).join('');
+      toSel.innerHTML = zones.map(z => `<option value="${z}">${z}</option>`).join('');
+      fromSel.value = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+      toSel.value = 'UTC';
+    };
+
+    const convert = () => {
+      const [hours, minutes] = timeInput.value.split(':').map(Number);
+      if (Number.isNaN(hours) || Number.isNaN(minutes)) { result.textContent = 'Enter a valid time.'; return; }
+      const now = new Date();
+      now.setHours(hours, minutes, 0, 0);
+      const from = fromSel.value;
+      const to = toSel.value;
+      const formatter = new Intl.DateTimeFormat('en-US', { timeZone: to, hour: '2-digit', minute: '2-digit', hour12: false, weekday: 'short', month: 'short', day: 'numeric' });
+      const toStr = formatter.format(now);
+      result.textContent = `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')} in ${from} is ${toStr} in ${to}.`;
+    };
+
+    document.getElementById('tz-convert').addEventListener('click', convert);
+    document.getElementById('tz-now').addEventListener('click', () => {
+      const now = new Date();
+      timeInput.value = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+      convert();
+    });
+    document.getElementById('tz-swap').addEventListener('click', () => {
+      const tmp = fromSel.value;
+      fromSel.value = toSel.value;
+      toSel.value = tmp;
+      convert();
+    });
+    document.getElementById('tz-copy').addEventListener('click', async () => {
+      if (!result.textContent) return;
+      try { await navigator.clipboard.writeText(result.textContent); window.microToast?.('Result copied'); } catch (err) { result.textContent = `Copy failed: ${err.message}`; }
+    });
+    populate();
+    convert();
+  </script>
+</body>
+</html>

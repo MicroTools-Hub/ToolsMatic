@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base64 Encoder | MicroTools</title>
+  <meta name="description" content="Encode or decode Base64 text instantly with the MicroTools Base64 Encoder. All processing stays in your browser." />
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script src="/assets/site.js" defer></script>
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/tools/word-counter.html">Word Counter</a>
+        <a href="/tools/password-generator.html">Password Generator</a>
+        <a href="/tools/quote-generator.html">Quote Generator</a>
+        <a href="/tools/case-converter.html">Case Converter</a>
+        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="tool-shell">
+      <h1>Base64 Encoder</h1>
+      <label class="label" for="b64-input">Text</label>
+      <textarea id="b64-input" rows="6" placeholder="Paste text to encode or decode..."></textarea>
+      <div class="inline-controls" style="margin-top:12px;flex-wrap:wrap;gap:8px;">
+        <button id="encode" data-primary="true">Encode</button>
+        <button id="decode">Decode</button>
+        <button id="clear">Clear</button>
+        <button id="copy-in" class="ghost">Copy input</button>
+        <button id="copy-out" class="ghost">Copy result</button>
+      </div>
+      <label class="label" for="b64-output" style="margin-top:12px;">Result</label>
+      <textarea id="b64-output" rows="6" readonly aria-live="polite"></textarea>
+      <div class="result-box" id="b64-status"></div>
+    </section>
+
+    <section class="section" aria-labelledby="b64-what">
+      <h2 id="b64-what">What is this tool?</h2>
+      <p>The MicroTools Base64 Encoder converts plain text to Base64 and back. It is useful for quickly packaging data for URLs, basic auth headers, or debugging payloads without installing command-line utilities. The page gives you a reliable, zero-install way to check encodings when you are away from your usual toolkit.</p>
+      <p>Base64 is often used in HTTP bodies, email attachments, and small inline assets. Having a clean encoder and decoder ready in the browser saves time and prevents mistakes when handling tokens or embedded strings.</p>
+      <h2>How to use this tool</h2>
+      <p>Paste text in the input box. Click Encode to turn it into Base64 or Decode to bring a Base64 string back to readable text. The status bar confirms success or shows decode errors so you know when a string is malformed.</p>
+      <p>When testing APIs, encode a snippet and drop it directly into a request payload. If you encounter a Base64 blob in logs, paste and decode to reveal what was transmitted. Use Clear between runs to avoid mixing strings from different tests.</p>
+      <h2>Who should use it?</h2>
+      <p>Developers preparing test payloads, support engineers reading encoded screenshots or tokens, and learners exploring how Base64 works can all benefit. It is also handy when you need a quick encode on a locked-down machine where installing tools is not allowed.</p>
+      <p>Security and DevOps teams can confirm that secrets are not accidentally exposed in encoded form, while marketers embedding small assets can ensure their strings are well-formed before sending campaigns.</p>
+      <h2>Why use MicroTools for this?</h2>
+      <p>There are no pop-ups, no accounts, and no extra dependencies. The tool loads instantly and keeps focus on the conversion. Because it is web-based, it works anywhere you have a browser—desktop or mobile.</p>
+      <p>The consistent MicroTools layout means you can switch to the URL encoder, JSON formatter, or Regex tester without relearning controls. That makes it easy to chain small tasks together during debugging.</p>
+      <h2>Privacy & performance</h2>
+      <p>Encoding and decoding run fully in your browser using built-in JavaScript functions. Nothing is uploaded, logged, or stored. The page ships minimal code, maintaining strong performance and keeping battery impact low.</p>
+      <p>Because there are zero external calls, you can use the encoder offline-friendly or on restricted networks. Your inputs remain on your device, which is critical when handling tokens or snippets that must stay confidential.</p>
+    </section>
+  </main>
+  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+
+  <script>
+    const input = document.getElementById('b64-input');
+    const output = document.getElementById('b64-output');
+    const status = document.getElementById('b64-status');
+    const guard = (val) => {
+      if (val.length > 6000) throw new Error('Input too long. Keep under 6,000 characters.');
+      return val;
+    };
+    const encode = () => {
+      try {
+        const clean = guard(input.value);
+        output.value = btoa(unescape(encodeURIComponent(clean)));
+        status.textContent = 'Encoded successfully';
+      } catch (err) {
+        status.textContent = `Encode failed: ${err.message}`;
+      }
+    };
+    const decode = () => {
+      try {
+        const clean = guard(input.value.trim());
+        if (/[^A-Za-z0-9+/=\s]/.test(clean)) throw new Error('Invalid characters found. Base64 uses A–Z, a–z, 0–9, +, /, =');
+        output.value = decodeURIComponent(escape(atob(clean)));
+        status.textContent = 'Decoded successfully';
+      } catch (err) {
+        status.textContent = `Decode failed: ${err.message}`;
+      }
+    };
+    const copy = async (text, label) => {
+      if (!text) { status.textContent = 'Nothing to copy.'; return; }
+      try { await navigator.clipboard.writeText(text); status.textContent = `${label} copied.`; window.microToast?.(`${label} copied`); } catch (err) { status.textContent = `Copy failed: ${err.message}`; }
+    };
+    document.getElementById('encode').addEventListener('click', encode);
+    document.getElementById('decode').addEventListener('click', decode);
+    document.getElementById('clear').addEventListener('click', () => {
+      input.value = '';
+      output.value = '';
+      status.textContent = '';
+      input.focus();
+    });
+    document.getElementById('copy-in').addEventListener('click', () => copy(input.value, 'Input'));
+    document.getElementById('copy-out').addEventListener('click', () => copy(output.value, 'Result'));
+    input.addEventListener('input', () => { status.textContent = ''; });
+  </script>
+</body>
+</html>

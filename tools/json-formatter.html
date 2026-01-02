@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Formatter | MicroTools</title>
+  <meta name="description" content="Format, validate, and minify JSON in your browser with the MicroTools JSON Formatter. No uploads, instant results." />
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="/assets/site.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/tools/word-counter.html">Word Counter</a>
+        <a href="/tools/password-generator.html">Password Generator</a>
+        <a href="/tools/quote-generator.html">Quote Generator</a>
+        <a href="/tools/case-converter.html">Case Converter</a>
+        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="tool-shell">
+      <h1>JSON Formatter</h1>
+      <label class="label" for="json-input">Paste JSON</label>
+      <textarea id="json-input" rows="10" placeholder='{"hello":"world"}'></textarea>
+      <div class="inline-controls" style="margin-top:12px;">
+        <button id="format" data-primary>Format</button>
+        <button id="minify">Minify</button>
+        <button id="json-copy">Copy output</button>
+        <button id="json-sample">Load sample</button>
+        <button id="clear" data-clear>Clear</button>
+      </div>
+      <label class="label" for="json-output" style="margin-top:12px;">Output</label>
+      <textarea id="json-output" rows="10" readonly></textarea>
+      <div class="result-box" id="json-status"></div>
+    </section>
+
+    <section class="section" aria-labelledby="jf-what">
+      <h2 id="jf-what">What is this tool?</h2>
+      <p>The MicroTools JSON Formatter cleans, validates, and re-indents JSON so you can read API responses, config files, and logs without leaving your browser. It is built for developers who need quick clarity and for non-engineers who just want the structure to make sense. The formatter turns dense, single-line payloads into readable blocks that reveal keys, nesting, and anomalies at a glance.</p>
+      <p>Because it runs in the browser, it is always available while you are in tickets, dashboards, or docs. You can sanity-check webhook bodies, decode feature flag files, or prep payloads for documentation without switching tools.</p>
+      <h2>How to use this tool</h2>
+      <p>Paste any JSON into the input field. Click Format to pretty-print with consistent spacing, or Minify to remove whitespace for production. Errors surface in the status bar so you immediately know if a stray comma or missing brace is causing trouble. Use Clear to reset and start over.</p>
+      <p>For quick diffs, format a payload, copy it, adjust values, and format again; pairing this with the Text Diff Checker lets you spot changes in seconds. When you need to embed JSON in docs, minify to save space or format to keep it instructional—both options are one click away.</p>
+      <h2>Who should use it?</h2>
+      <p>Engineers debugging API payloads, product managers reviewing feature flags, analysts inspecting exported data, and QA teams confirming response shapes all benefit. If you ever copy JSON into tickets, docs, or dashboards, a one-click formatter keeps it legible.</p>
+      <p>Support teams can sanitize customer-provided payloads before sharing internally, and students learning APIs can use it to see how well-structured JSON should look. Anyone working with log exports or configuration files gains readability fast.</p>
+      <h2>Why use MicroTools for this?</h2>
+      <p>MicroTools loads fast, has no ads inside the workspace, and needs no accounts. You are not bounced to another tab or extension, and results stay on screen for quick comparison. It is tuned for speed on even modest laptops so you can keep shipping.</p>
+      <p>The shared interface across MicroTools means you can jump from formatting JSON to encoding Base64 or converting CSV without relearning controls. That consistency saves time during incident response or while pairing with teammates.</p>
+      <h2>Privacy & performance</h2>
+      <p>Parsing and formatting happen locally in JavaScript. Your payloads never leave the page, making it safe for confidential configs or API responses under NDA. The page ships minimal code and no network calls, preserving high performance scores.</p>
+      <p>Because there are zero external dependencies, performance stays strong on low-bandwidth networks and older hardware. You can safely format sensitive data in an offline-friendly session knowing nothing is transmitted or stored.</p>
+    </section>
+  </main>
+  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+
+  <script>
+    const input = document.getElementById('json-input');
+    const output = document.getElementById('json-output');
+    const status = document.getElementById('json-status');
+    const copyBtn = document.getElementById('json-copy');
+    const sampleBtn = document.getElementById('json-sample');
+
+    const handle = (mode) => {
+      const raw = input.value.trim();
+      if (!raw) {
+        status.textContent = 'Paste JSON to begin.';
+        output.value = '';
+        return;
+      }
+      try {
+        const parsed = JSON.parse(raw);
+        const pretty = mode === 'minify' ? JSON.stringify(parsed) : JSON.stringify(parsed, null, 2);
+        output.value = pretty;
+        const bytes = new Blob([pretty]).size;
+        status.textContent = `Valid JSON · ${bytes} bytes · Keys: ${Object.keys(parsed).length || 0}`;
+      } catch (err) {
+        status.textContent = `Invalid JSON: ${err.message}`;
+        output.value = '';
+        if (window.microTools) window.microTools.showToast('Invalid JSON', 'error');
+      }
+    };
+
+    document.getElementById('format').addEventListener('click', () => handle('format'));
+    document.getElementById('minify').addEventListener('click', () => handle('minify'));
+    document.getElementById('clear').addEventListener('click', () => {
+      input.value = '';
+      output.value = '';
+      status.textContent = '';
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      if (!output.value) return;
+      try {
+        await navigator.clipboard.writeText(output.value);
+        if (window.microTools) window.microTools.showToast('Output copied', 'success');
+      } catch (err) {
+        status.textContent = 'Copy failed';
+        if (window.microTools) window.microTools.showToast('Copy failed', 'error');
+      }
+    });
+
+    sampleBtn.addEventListener('click', () => {
+      input.value = JSON.stringify({ user: 'Ada', roles: ['admin', 'editor'], active: true, visits: 42 }, null, 2);
+      output.value = '';
+      status.textContent = 'Sample loaded. Click Format or Minify to view.';
+    });
+  </script>
+</body>
+</html>
