@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contrast Checker | MicroTools</title>
+  <title>Contrast Checker | ToolsMatic</title>
   <meta name="description" content="Check WCAG contrast, preview accessible pairs, and copy CSS tokens. Runs fully in your browser.">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="../assets/styles.css">
@@ -12,12 +12,10 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/color-picker.html">Color Picker</a>
-        <a href="/tools/gradient-generator.html">Gradient Generator</a>
-        <a href="/tools/markdown-previewer.html">Markdown Previewer</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
@@ -62,7 +60,7 @@
     </section>
   </main>
 
-  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const fg = document.getElementById('fg');
@@ -184,9 +182,9 @@
       const css = `:root {\n  --mt-fg: ${fg.value};\n  --mt-bg: ${bg.value};\n}`;
       try {
         await navigator.clipboard.writeText(css);
-        if (window.microTools) window.microTools.showToast('CSS vars copied', 'success');
+        if (window.ToolsMatic) window.ToolsMatic.showToast('CSS vars copied', 'success');
       } catch (err) {
-        if (window.microTools) window.microTools.showToast('Copy failed', 'error');
+        if (window.ToolsMatic) window.ToolsMatic.showToast('Copy failed', 'error');
       }
     });
     fg.addEventListener('input', render);
@@ -196,3 +194,5 @@
   </script>
 </body>
 </html>
+
+

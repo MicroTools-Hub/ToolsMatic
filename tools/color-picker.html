@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Color Picker | MicroTools</title>
+  <title>Color Picker | ToolsMatic</title>
   <meta name="description" content="Pick colors and copy HEX, RGB, and HSL values instantly. Perfect for designers and developers." />
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="../assets/styles.css">
@@ -12,14 +12,10 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/word-counter.html">Word Counter</a>
-        <a href="/tools/password-generator.html">Password Generator</a>
-        <a href="/tools/quote-generator.html">Quote Generator</a>
-        <a href="/tools/case-converter.html">Case Converter</a>
-        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
@@ -39,7 +35,7 @@
 
     <section class="section" aria-labelledby="cp-what">
       <h2 id="cp-what">What is this tool?</h2>
-      <p>The MicroTools Color Picker lets you grab HEX, RGB, and HSL values with a single input. It is handy for designers, frontend developers, and content creators matching brand palettes without opening a full design suite. The goal is to provide accurate color values instantly so you can move from exploration to implementation without friction.</p>
+      <p>The ToolsMatic Color Picker lets you grab HEX, RGB, and HSL values with a single input. It is handy for designers, frontend developers, and content creators matching brand palettes without opening a full design suite. The goal is to provide accurate color values instantly so you can move from exploration to implementation without friction.</p>
       <p>By exposing multiple formats at once, it bridges design and code workflows. You can share a hex value with marketing while using RGB or HSL for fine-tuned CSS adjustments.</p>
       <h2>How to use this tool</h2>
       <p>Use the color input to select a shade. The HEX, RGB, and HSL values update immediately. Click Copy HEX to place the hex code on your clipboard and paste it into CSS, design tools, or notes.</p>
@@ -47,15 +43,15 @@
       <h2>Who should use it?</h2>
       <p>Designers fine-tuning UI accents, marketers aligning campaign colors, students learning color models, and engineers checking palette values before commits can all work faster here.</p>
       <p>Brand managers can verify hex codes before publishing style guides, and QA teams can confirm implemented colors match specs. Anyone needing quick conversions between color models benefits from the multi-format display.</p>
-      <h2>Why use MicroTools for this?</h2>
-      <p>MicroTools keeps the control simple and fast. There are no ads in the workspace, no login walls, and no external scripts. You get the values you need without distractions.</p>
-      <p>The consistent layout across MicroTools means you can hop to the Gradient Generator or Image Compressor without relearning controls, keeping design-to-export workflows quick.</p>
+      <h2>Why use ToolsMatic for this?</h2>
+      <p>ToolsMatic keeps the control simple and fast. There are no ads in the workspace, no login walls, and no external scripts. You get the values you need without distractions.</p>
+      <p>The consistent layout across ToolsMatic means you can hop to the Gradient Generator or Image Compressor without relearning controls, keeping design-to-export workflows quick.</p>
       <h2>Privacy & performance</h2>
       <p>All calculations happen in the browser. No data leaves the page. The implementation relies on native inputs and a few small functions, so performance stays high on any device.</p>
       <p>With no network calls or external libraries, the picker responds instantly even on low-powered hardware. You can work offline-friendly and still trust that the values shown are accurate and private.</p>
     </section>
   </main>
-  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const input = document.getElementById('color-input');
@@ -95,9 +91,9 @@
     const copyValue = async (value) => {
       try {
         await navigator.clipboard.writeText(value);
-        if (window.microTools) window.microTools.showToast('Copied', 'success');
+        if (window.ToolsMatic) window.ToolsMatic.showToast('Copied', 'success');
       } catch (err) {
-        if (window.microTools) window.microTools.showToast('Copy failed', 'error');
+        if (window.ToolsMatic) window.ToolsMatic.showToast('Copy failed', 'error');
       }
     };
 
@@ -109,3 +105,5 @@
   </script>
 </body>
 </html>
+
+

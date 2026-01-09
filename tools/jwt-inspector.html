@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JWT Inspector | MicroTools</title>
+  <title>JWT Inspector | ToolsMatic</title>
   <meta name="description" content="Decode and inspect JWTs locally. View header, payload, and claim health without sending tokens to a server.">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="../assets/styles.css">
@@ -12,14 +12,10 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/word-counter.html">Word Counter</a>
-        <a href="/tools/password-generator.html">Password Generator</a>
-        <a href="/tools/case-converter.html">Case Converter</a>
-        <a href="/tools/regex-tester.html">Regex Tester</a>
-        <a href="/tools/json-formatter.html">JSON Formatter</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
@@ -68,7 +64,7 @@
     </section>
   </main>
 
-  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const input = document.getElementById('jwt-input');
@@ -161,9 +157,9 @@
       if (!text) return;
       try {
         await navigator.clipboard.writeText(text);
-        if (window.microTools) window.microTools.showToast('Copied', 'success');
+        if (window.ToolsMatic) window.ToolsMatic.showToast('Copied', 'success');
       } catch (err) {
-        if (window.microTools) window.microTools.showToast('Copy failed', 'error');
+        if (window.ToolsMatic) window.ToolsMatic.showToast('Copy failed', 'error');
       }
     };
 
@@ -175,3 +171,5 @@
   </script>
 </body>
 </html>
+
+

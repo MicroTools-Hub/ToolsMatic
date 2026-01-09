@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Compressor | MicroTools</title>
+  <title>Image Compressor | ToolsMatic</title>
   <meta name="description" content="Compress images in-browser with adjustable quality. Drop a JPG or PNG, preview, and download a lighter file instantly." />
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="../assets/styles.css">
@@ -12,14 +12,10 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/word-counter.html">Word Counter</a>
-        <a href="/tools/password-generator.html">Password Generator</a>
-        <a href="/tools/quote-generator.html">Quote Generator</a>
-        <a href="/tools/case-converter.html">Case Converter</a>
-        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
@@ -43,7 +39,7 @@
 
     <section class="section" aria-labelledby="ic-what">
       <h2 id="ic-what">What is this tool?</h2>
-      <p>The MicroTools Image Compressor reduces file size for web use without needing a desktop editor. It is ideal for thumbnails, blog images, screenshots, and quick client approvals when you just need a lighter file fast. By exporting to JPEG, it helps you meet upload limits for CMSs, LMS portals, and chat apps without sacrificing clarity for common use cases.</p>
+      <p>The ToolsMatic Image Compressor reduces file size for web use without needing a desktop editor. It is ideal for thumbnails, blog images, screenshots, and quick client approvals when you just need a lighter file fast. By exporting to JPEG, it helps you meet upload limits for CMSs, LMS portals, and chat apps without sacrificing clarity for common use cases.</p>
       <p>The goal is to keep compression decisions simple: pick a quality value, see the preview, and download. You get predictable output that is ready for the web without watermarks or extra steps.</p>
       <h2>How to use this tool</h2>
       <p>Select a JPG or PNG, choose a quality level, and click Compress. A preview appears with a download link for the compressed image. Quality defaults to 80 for a balanced trade-off, but you can slide higher for detail or lower for speed.</p>
@@ -51,15 +47,15 @@
       <h2>Who should use it?</h2>
       <p>Designers preparing assets for the web, marketers shrinking campaign images, founders sending pitch decks, and students uploading projects to LMS portals all benefit. It is especially helpful on locked-down machines where installing an editor is not possible.</p>
       <p>Support teams can compress screenshots before attaching them to tickets, and QA engineers can shrink repro videos into stills to keep bug reports light. Anyone who needs a quick, reliable compression pass can use it without sign-in.</p>
-      <h2>Why use MicroTools for this?</h2>
+      <h2>Why use ToolsMatic for this?</h2>
       <p>Everything runs in the browser—no uploads, no queue, no watermark. You can try multiple quality levels quickly and grab the best balance without leaving the page. The interface stays distraction-free so you can focus on size and clarity.</p>
-      <p>The consistent MicroTools layout means you can jump to the color picker or gradient generator to finish styling assets, then return here to compress them. That unified flow cuts context switching during production sprints.</p>
+      <p>The consistent ToolsMatic layout means you can jump to the color picker or gradient generator to finish styling assets, then return here to compress them. That unified flow cuts context switching during production sprints.</p>
       <h2>Privacy & performance</h2>
       <p>Images are processed locally with canvas APIs. Nothing is transmitted or stored on a server. Because the code is lightweight and avoids external libraries, the page keeps strong performance even on mid-range laptops and mobile devices.</p>
       <p>With no network calls, you can compress images on slow or offline-friendly connections. Your files stay on your device, which is crucial when handling internal screenshots or client assets under NDA.</p>
     </section>
   </main>
-  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const fileInput = document.getElementById('img-input');
@@ -135,3 +131,5 @@
   </script>
 </body>
 </html>
+
+

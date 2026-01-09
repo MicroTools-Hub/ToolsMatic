@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BMI Calculator | MicroTools</title>
+  <title>BMI Calculator | ToolsMatic</title>
   <meta name="description" content="Advanced BMI calculator with metric/imperial presets, healthy weight range, body fat approximation, and TDEE estimate—runs fully in your browser.">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="../assets/styles.css">
@@ -12,12 +12,10 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/word-counter.html">Word Counter</a>
-        <a href="/tools/unit-converter.html">Unit Converter</a>
-        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
@@ -87,7 +85,7 @@
     </section>
   </main>
 
-  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const unitsEl = document.getElementById('units');
@@ -222,3 +220,5 @@
   </script>
 </body>
 </html>
+
+

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASCII Art Generator | ToolsMatic</title>
+  <meta name="description" content="Turn text into stylized ASCII art with 9 fonts, live preview, copy, and download. Runs entirely in your browser with no uploads.">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="/assets/site.js" defer></script>
+  <style>
+    .tool-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .controls {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .control-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .input-area {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .input-area textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 1rem;
+      resize: vertical;
+    }
+
+    .output-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .output-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .output-actions button {
+      flex: 1;
+      min-width: 130px;
+      padding: 0.65rem 0.9rem;
+      border: 1px solid var(--accent-color);
+      background: var(--accent-color);
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+
+    .output-actions button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.08);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    }
+
+    .output-box {
+      flex: 1;
+      overflow: auto;
+      background: var(--bg-primary);
+      border: 1px dashed var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .output-box pre {
+      margin: 0;
+      white-space: pre;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      line-height: 1.1;
+      font-size: 0.95rem;
+    }
+
+    .stat-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      font-size: 0.85rem;
+    }
+
+    .panel {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .panel h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.75rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .feature-list li {
+      padding: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--bg-secondary);
+      line-height: 1.4;
+    }
+
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .tips-grid .panel {
+      height: 100%;
+    }
+
+    .faq h3 { margin-bottom: 0.25rem; }
+    .faq p { margin-top: 0; }
+
+    .toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      padding: 0.8rem 1rem;
+      background: var(--accent-color);
+      color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 30;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 960px) {
+      .tool-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/">ToolsMatic</a>
+      <div class="nav-links">
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="tool-shell">
+      <h1>ASCII Art Generator</h1>
+      <p>Create stylized ASCII banners directly in your browser. Choose from nine fonts, preview instantly, then copy or download as plain text.</p>
+
+      <div class="tool-grid">
+        <div class="controls">
+          <div class="input-area">
+            <label class="label" for="text-input">Text</label>
+            <textarea id="text-input" placeholder="Type or paste your text..." spellcheck="false">TOOLS MATIC</textarea>
+          </div>
+
+          <div class="control-row">
+            <div>
+              <label class="label" for="font-select">Font</label>
+              <select id="font-select">
+                <option value="standard">Standard</option>
+                <option value="block">Block</option>
+                <option value="bubble">Bubble</option>
+                <option value="bold">Bold</option>
+                <option value="threeD">3D</option>
+                <option value="graffiti">Graffiti</option>
+                <option value="slant">Slant</option>
+                <option value="mini">Mini</option>
+                <option value="dotmatrix">Dot Matrix</option>
+              </select>
+            </div>
+            <div>
+              <label class="label" for="spacing-range">Letter spacing</label>
+              <input type="range" id="spacing-range" min="0" max="3" value="1">
+            </div>
+            <div>
+              <label class="label" for="case-select">Case</label>
+              <select id="case-select">
+                <option value="upper">Uppercase</option>
+                <option value="preserve">Preserve input</option>
+              </select>
+            </div>
+            <div>
+              <label class="label" for="shadow-toggle">Extras</label>
+              <div class="control-row" style="grid-template-columns: 1fr;">
+                <label><input type="checkbox" id="shadow-toggle" checked> Keep spacing on empty lines</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="output-actions">
+            <button id="random-font">Random font</button>
+            <button id="copy-text">Copy ASCII</button>
+            <button id="copy-html">Copy as HTML</button>
+            <button id="download">Download .txt</button>
+          </div>
+        </div>
+
+        <div class="output-card">
+          <div class="stat-row">
+            <span class="badge" id="stat-length">Length: 0</span>
+            <span class="badge" id="stat-lines">Lines: 0</span>
+            <span class="badge" id="stat-font">Font: Standard</span>
+          </div>
+          <div class="output-box" aria-live="polite">
+            <pre id="ascii-output">Loading preview...</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="what">
+      <h2 id="what">What is the ASCII Art Generator?</h2>
+      <p>The ToolsMatic ASCII Art Generator converts plain text into stylized mono-spaced banners. It runs entirely in your browser, so nothing is uploaded or stored on a server. You get nine built-in font styles, instant preview, and simple export buttons for copying or downloading the artwork. It is built for developers, designers, and writers who need headings, console banners, or playful separators without hunting for an external service.</p>
+      <ul class="feature-list">
+        <li>9 ASCII fonts: Standard, Block, Bubble, Bold, 3D, Graffiti, Slant, Mini, and Dot Matrix.</li>
+        <li>Live preview: updates as you type or switch fonts.</li>
+        <li>Copy options: plain ASCII or HTML-wrapped preformatted text.</li>
+        <li>Download: export a .txt file for README banners or console headers.</li>
+        <li>Letter spacing slider: fine-tune compact vs airy layouts.</li>
+        <li>Case handling: force uppercase or preserve your original text.</li>
+        <li>Local and private: everything renders in-browser with no network calls.</li>
+      </ul>
+    </section>
+
+    <section class="section" aria-labelledby="how">
+      <h2 id="how">How to use it</h2>
+      <div class="tips-grid">
+        <div class="panel">
+          <h3>1) Enter text</h3>
+          <p>Type or paste any phrase into the text area. Keep it short for banners or longer for playful paragraphs. The preview updates instantly.</p>
+        </div>
+        <div class="panel">
+          <h3>2) Pick a font</h3>
+          <p>Select from the nine font styles. Use <strong>Random font</strong> if you want a quick mix while you explore options.</p>
+        </div>
+        <div class="panel">
+          <h3>3) Adjust spacing</h3>
+          <p>Use the letter spacing slider to tighten or loosen the output. Higher spacing improves readability for dense text.</p>
+        </div>
+        <div class="panel">
+          <h3>4) Export</h3>
+          <p>Copy as ASCII for terminals, copy as HTML for blogs and docs, or download a .txt file for README banners and CI logs.</p>
+        </div>
+      </div>
+      <p>Tip: Keep lines under 60 characters for best readability inside terminals and chat apps. If you paste into Markdown, wrap the output in triple backticks so it stays aligned.</p>
+    </section>
+
+    <section class="section" aria-labelledby="who">
+      <h2 id="who">Who benefits from ASCII art?</h2>
+      <div class="tips-grid">
+        <div class="panel">
+          <h3>Developers</h3>
+          <p>Add banner comments to source files, log headers in scripts, or stylish section breaks in Markdown documentation.</p>
+        </div>
+        <div class="panel">
+          <h3>Designers</h3>
+          <p>Create playful headings for portfolios, mood boards, or low-fi posters without opening a design suite.</p>
+        </div>
+        <div class="panel">
+          <h3>Writers and creators</h3>
+          <p>Drop ASCII headers into newsletters, blog posts, or social posts to add personality while staying text-only.</p>
+        </div>
+        <div class="panel">
+          <h3>Educators</h3>
+          <p>Make console-first examples more engaging by labeling sections with ASCII banners in lectures or tutorials.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="why">
+      <h2 id="why">Why this generator?</h2>
+      <p>Plenty of ASCII tools exist online, but many require uploads, inject ads, or send your text to remote servers. ToolsMatic keeps everything local and immediate. You get predictable output, no popups, and export buttons that respect your clipboard and file system.</p>
+      <div class="tips-grid">
+        <div class="panel">
+          <h3>Local rendering</h3>
+          <p>All nine fonts live in the page. Nothing is fetched after load, so you can disconnect and keep working.</p>
+        </div>
+        <div class="panel">
+          <h3>Privacy-first</h3>
+          <p>Your text stays in memory only. Favorites are not stored, and no analytics calls are made from this page.</p>
+        </div>
+        <div class="panel">
+          <h3>Practical exports</h3>
+          <p>Copy as plain ASCII, copy as HTML, or download as .txt. Everything is a single click.</p>
+        </div>
+        <div class="panel">
+          <h3>Predictable layout</h3>
+          <p>Mono-spaced fonts and consistent character grids ensure the preview matches what you paste elsewhere.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq" aria-labelledby="faq">
+      <h2 id="faq">FAQ</h2>
+      <h3>Does it work offline?</h3>
+      <p>Yes. After the first load, all fonts and logic are available offline. Copy and download continue to work without a network.</p>
+      <h3>Which characters are supported?</h3>
+      <p>Letters A-Z, numbers 0-9, basic punctuation, and space are covered. Unsupported characters render as ? so you can spot them quickly.</p>
+      <h3>Can I keep lowercase?</h3>
+      <p>Choose "Preserve input" in the case dropdown. Otherwise everything is uppercased for clean grids.</p>
+      <h3>How do I add it to Markdown?</h3>
+      <p>Copy the ASCII output and wrap it in triple backticks in your Markdown file to preserve spacing.</p>
+      <h3>Why nine fonts?</h3>
+      <p>Each style targets a different feel: Standard is balanced, Block is loud, Bubble is playful, Bold widens strokes, 3D adds a drop shadow, Graffiti leans angular, Slant tilts forward, Mini is compact, and Dot Matrix mimics retro printers.</p>
+      <h3>Is there a size limit?</h3>
+      <p>Input is designed for short titles and banners. Very long paragraphs will render, but output will be tall—use with discretion.</p>
+    </section>
+  </main>
+
+  <div class="toast" id="toast">Copied!</div>
+
+  <script>
+    const baseGlyphs = {
+      'A': ['01110','10001','11111','10001','10001'],
+      'B': ['11110','10001','11110','10001','11110'],
+      'C': ['01111','10000','10000','10000','01111'],
+      'D': ['11110','10001','10001','10001','11110'],
+      'E': ['11111','10000','11110','10000','11111'],
+      'F': ['11111','10000','11110','10000','10000'],
+      'G': ['01111','10000','10111','10001','01111'],
+      'H': ['10001','10001','11111','10001','10001'],
+      'I': ['11111','00100','00100','00100','11111'],
+      'J': ['00111','00001','00001','10001','01110'],
+      'K': ['10001','10010','11100','10010','10001'],
+      'L': ['10000','10000','10000','10000','11111'],
+      'M': ['10001','11011','10101','10001','10001'],
+      'N': ['10001','11001','10101','10011','10001'],
+      'O': ['01110','10001','10001','10001','01110'],
+      'P': ['11110','10001','11110','10000','10000'],
+      'Q': ['01110','10001','10001','10011','01111'],
+      'R': ['11110','10001','11110','10010','10001'],
+      'S': ['01111','10000','01110','00001','11110'],
+      'T': ['11111','00100','00100','00100','00100'],
+      'U': ['10001','10001','10001','10001','01110'],
+      'V': ['10001','10001','10001','01010','00100'],
+      'W': ['10001','10001','10101','11011','10001'],
+      'X': ['10001','01010','00100','01010','10001'],
+      'Y': ['10001','01010','00100','00100','00100'],
+      'Z': ['11111','00010','00100','01000','11111'],
+      '0': ['01110','10001','10001','10001','01110'],
+      '1': ['00100','01100','00100','00100','01110'],
+      '2': ['11110','00001','01110','10000','11111'],
+      '3': ['11110','00001','00110','00001','11110'],
+      '4': ['10010','10010','11111','00010','00010'],
+      '5': ['11111','10000','11110','00001','11110'],
+      '6': ['01111','10000','11110','10001','01110'],
+      '7': ['11111','00001','00010','00100','00100'],
+      '8': ['01110','10001','01110','10001','01110'],
+      '9': ['01110','10001','01111','00001','11110'],
+      ' ': ['00000','00000','00000','00000','00000'],
+      '-': ['00000','00000','01110','00000','00000'],
+      '.': ['00000','00000','00000','00100','00100'],
+      '!': ['00100','00100','00100','00000','00100'],
+      '?': ['01110','10001','00010','00000','00010'],
+      ':': ['00000','00100','00000','00100','00000'],
+      ',': ['00000','00000','00000','00100','01000'],
+      '/': ['00001','00010','00100','01000','10000'],
+      "'": ['00100','00100','00000','00000','00000']
+    };
+
+    const miniGlyphs = {
+      height: 1,
+      map: {}
+    };
+
+    // Build mini glyphs as single-line text (compact mode)
+    (() => {
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- .!?:;/\\'\"";
+      chars.split('').forEach(c => {
+        miniGlyphs.map[c] = [c];
+      });
+      miniGlyphs.map[' '] = [' '];
+    })();
+
+    const randomFonts = ['standard','block','bubble','bold','threeD','graffiti','slant','mini','dotmatrix'];
+
+    const textInput = document.getElementById('text-input');
+    const fontSelect = document.getElementById('font-select');
+    const spacingRange = document.getElementById('spacing-range');
+    const caseSelect = document.getElementById('case-select');
+    const output = document.getElementById('ascii-output');
+    const statLength = document.getElementById('stat-length');
+    const statLines = document.getElementById('stat-lines');
+    const statFont = document.getElementById('stat-font');
+    const copyTextBtn = document.getElementById('copy-text');
+    const copyHtmlBtn = document.getElementById('copy-html');
+    const downloadBtn = document.getElementById('download');
+    const randomBtn = document.getElementById('random-font');
+    const toast = document.getElementById('toast');
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+
+    function glyphLines(char) {
+      const lookup = baseGlyphs[char] || baseGlyphs['?'];
+      return lookup || ['11111','11111','11111','11111','11111'];
+    }
+
+    function buildAscii(text, font, spacing, keepEmptyLines) {
+      if (!text) return '';
+      const isMini = font === 'mini';
+      if (isMini) {
+        const lines = [text];
+        return lines.join('\n');
+      }
+
+      const lines = Array(5).fill('').map(() => []);
+      const fillChar = '#';
+
+      for (const rawChar of text) {
+        const char = rawChar;
+        const glyph = glyphLines(char.toUpperCase());
+        glyph.forEach((row, rowIdx) => {
+          const rowChars = row.split('').map(bit => bit === '1' ? fillChar : ' ');
+          lines[rowIdx].push(rowChars.join(''));
+        });
+        for (let s = 0; s < spacing; s++) {
+          lines.forEach(line => line.push(' '));
+        }
+      }
+
+      let rendered = lines.map(parts => parts.join(''));
+
+      switch (font) {
+        case 'block':
+          rendered = rendered.map(l => l.replace(/#/g, '█'));
+          break;
+        case 'bubble':
+          rendered = rendered.map(l => l.replace(/#/g, 'o'));
+          break;
+        case 'bold':
+          rendered = rendered.map(l => l.replace(/#/g, '##').replace(/ /g, '  '));
+          break;
+        case 'threeD': {
+          const shadow = rendered.map(l => l.replace(/#/g, '#'));
+          rendered = rendered.map((line, idx) => line);
+          for (let r = shadow.length - 1; r >= 0; r--) {
+            const base = rendered[r].split('');
+            const sh = shadow[r].split('');
+            for (let c = 0; c < sh.length; c++) {
+              if (sh[c] === '#') {
+                const rr = Math.min(rendered.length - 1, r + 1);
+                const cc = Math.min(rendered[rr].length, c + 1);
+                const target = rendered[rr].split('');
+                if (target[cc] === ' ' || target[cc] === undefined) {
+                  target[cc] = '.';
+                }
+                rendered[rr] = target.join('');
+              }
+            }
+          }
+          break;
+        }
+        case 'graffiti':
+          rendered = rendered.map(l => l.replace(/#/g, '/'));
+          break;
+        case 'slant':
+          rendered = rendered.map((l, idx) => ' '.repeat(idx) + l);
+          break;
+        case 'dotmatrix':
+          rendered = rendered.map(l => l.replace(/#/g, '.'));
+          break;
+        default:
+          rendered = rendered.map(l => l.replace(/#/g, '#'));
+      }
+
+      if (!keepEmptyLines) {
+        while (rendered.length && rendered[rendered.length - 1].trim() === '') {
+          rendered.pop();
+        }
+      }
+
+      return rendered.join('\n');
+    }
+
+    function render() {
+      const raw = textInput.value || '';
+      const font = fontSelect.value;
+      const spacing = Number(spacingRange.value || 0);
+      const keepSpacing = document.getElementById('shadow-toggle').checked;
+      const casing = caseSelect.value;
+      const processed = casing === 'upper' ? raw.toUpperCase() : raw;
+      const ascii = buildAscii(processed, font, spacing, keepSpacing);
+      output.textContent = ascii || 'Type something to see the art.';
+      statLength.textContent = `Length: ${processed.length}`;
+      statLines.textContent = `Lines: ${ascii ? ascii.split('\n').length : 0}`;
+      statFont.textContent = `Font: ${fontSelect.options[fontSelect.selectedIndex].text}`;
+    }
+
+    function copyAscii() {
+      navigator.clipboard.writeText(output.textContent).then(() => showToast('ASCII copied')).catch(() => showToast('Copy failed'));
+    }
+
+    function copyHtml() {
+      const html = `<pre>${output.textContent.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>`;
+      navigator.clipboard.writeText(html).then(() => showToast('HTML copied')).catch(() => showToast('Copy failed'));
+    }
+
+    function downloadText() {
+      const blob = new Blob([output.textContent], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'ascii-art.txt';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      showToast('Downloaded ascii-art.txt');
+    }
+
+    function randomFont() {
+      const pick = randomFonts[Math.floor(Math.random() * randomFonts.length)];
+      fontSelect.value = pick;
+      render();
+    }
+
+    textInput.addEventListener('input', render);
+    fontSelect.addEventListener('change', render);
+    spacingRange.addEventListener('input', render);
+    caseSelect.addEventListener('change', render);
+    document.getElementById('shadow-toggle').addEventListener('change', render);
+    copyTextBtn.addEventListener('click', copyAscii);
+    copyHtmlBtn.addEventListener('click', copyHtml);
+    downloadBtn.addEventListener('click', downloadText);
+    randomBtn.addEventListener('click', randomFont);
+
+    render();
+  </script>
+</body>
+</html>

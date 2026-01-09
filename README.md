@@ -1,4 +1,4 @@
-# MicroTools
+# ToolsMatic
 
 A fast, privacy-first bundle of 25 browser utilities. Everything runs locally, stays lightweight, and works offline-friendly thanks to the service worker. No logins, no uploads, just useful tools you can chain together.
 
@@ -23,7 +23,7 @@ Text-centric tools can pass content using sessionStorage so you avoid manual cop
 - Text Diff consumes the slot you choose (original vs modified).
 
 ## Offline & Updates
-- Service worker at [sw.js](sw.js) pre-caches the app. Cache name bumps on updates (e.g., `microtools-v3`).
+- Service worker at [sw.js](sw.js) pre-caches the app. Cache name bumps on updates (e.g., `toolsmatic-v3`).
 - Update banner appears when a new SW is ready; click **Update now** to activate and auto-reload.
 - For stubborn caches, hard refresh (Ctrl/Cmd+Shift+R) or unregister the SW in DevTools → Application → Service Workers.
 

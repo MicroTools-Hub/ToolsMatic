@@ -83,6 +83,44 @@ header {
   background: rgba(255, 255, 255, 0.04);
 }
 
+.nav-btn {
+  display: inline-block;
+}
+
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: auto;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  border-color: var(--accent);
+}
+
+html.dark-mode {
+  --bg: #e2e8f0;
+  --card: #f1f5f9;
+  --accent: #0891b2;
+  --accent-2: #7c3aed;
+  --text: #1e293b;
+  --muted: #64748b;
+  --border: #cbd5e1;
+  --surface: #f8fafc;
+}
+
+html.dark-mode body {
+  background: radial-gradient(circle at 20% 20%, rgba(8, 145, 178, 0.12), transparent 30%),
+    radial-gradient(circle at 80% 10%, rgba(124, 58, 237, 0.12), transparent 28%),
+    var(--bg);
+}
+
 main {
   max-width: 1200px;
   margin: 0 auto;

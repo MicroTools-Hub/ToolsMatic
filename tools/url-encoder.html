@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>URL Encoder | MicroTools</title>
+  <title>URL Encoder | ToolsMatic</title>
   <meta name="description" content="Encode and decode URLs safely in your browser. Protect special characters and clean query strings instantly." />
   <link rel="stylesheet" href="../assets/styles.css">
   <link rel="manifest" href="/manifest.webmanifest">
@@ -12,14 +12,10 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/word-counter.html">Word Counter</a>
-        <a href="/tools/password-generator.html">Password Generator</a>
-        <a href="/tools/quote-generator.html">Quote Generator</a>
-        <a href="/tools/case-converter.html">Case Converter</a>
-        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
@@ -42,7 +38,7 @@
 
     <section class="section" aria-labelledby="ue-what">
       <h2 id="ue-what">What is this tool?</h2>
-      <p>The MicroTools URL Encoder cleans and protects URLs by encoding reserved characters. It also decodes encoded strings back to human-readable form, making it easy to debug query params or webhook payloads. It is a reliable helper when you need to ensure links survive copy-paste between systems.</p>
+      <p>The ToolsMatic URL Encoder cleans and protects URLs by encoding reserved characters. It also decodes encoded strings back to human-readable form, making it easy to debug query params or webhook payloads. It is a reliable helper when you need to ensure links survive copy-paste between systems.</p>
       <p>Encoded URLs prevent spaces, quotes, and special symbols from breaking requests. Having a quick encoder nearby reduces mistakes in production links or API calls.</p>
       <h2>How to use this tool</h2>
       <p>Paste text into the input field. Click Encode to escape spaces and special characters, or Decode to make an encoded string readable again. The status bar confirms success or shows decode errors if the string is malformed.</p>
@@ -50,15 +46,15 @@
       <h2>Who should use it?</h2>
       <p>Developers preparing API requests, marketers building UTM links, support teams inspecting redirect URLs, and students learning about HTTP encoding can all work faster with a quick encoder on hand.</p>
       <p>Security analysts can double-check that redirect parameters are properly encoded, while operations teams can decode log entries to troubleshoot misrouted traffic.</p>
-      <h2>Why use MicroTools for this?</h2>
-      <p>MicroTools keeps the interface frictionless and ad-free in the workspace. It loads quickly and stays responsive even on mobile connections, letting you fix a URL seconds before you ship.</p>
-      <p>The unified design across MicroTools means you can pair this with the Base64 Encoder, JSON Formatter, or Regex Tester without changing workflows, keeping debugging chains short.</p>
+      <h2>Why use ToolsMatic for this?</h2>
+      <p>ToolsMatic keeps the interface frictionless and ad-free in the workspace. It loads quickly and stays responsive even on mobile connections, letting you fix a URL seconds before you ship.</p>
+      <p>The unified design across ToolsMatic means you can pair this with the Base64 Encoder, JSON Formatter, or Regex Tester without changing workflows, keeping debugging chains short.</p>
       <h2>Privacy & performance</h2>
       <p>Encoding and decoding rely on built-in JavaScript functions that run locally. Nothing is transmitted or stored. The page is lightweight and free of external dependencies, preserving strong performance scores.</p>
       <p>Because there are no external requests, you can encode sensitive links in a private window or on slow connections without risking leakage or latency. Everything happens instantly on your device.</p>
     </section>
   </main>
-  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const inEl = document.getElementById('url-input');
@@ -90,3 +86,5 @@
   </script>
 </body>
 </html>
+
+

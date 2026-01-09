@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HTML Minifier | MicroTools</title>
+  <title>HTML Minifier | ToolsMatic</title>
   <meta name="description" content="Minify HTML by stripping whitespace and comments locally. Paste markup and get a lean output instantly." />
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="../assets/styles.css">
@@ -12,14 +12,10 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/word-counter.html">Word Counter</a>
-        <a href="/tools/password-generator.html">Password Generator</a>
-        <a href="/tools/quote-generator.html">Quote Generator</a>
-        <a href="/tools/case-converter.html">Case Converter</a>
-        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
@@ -42,7 +38,7 @@
 
     <section class="section" aria-labelledby="hm-what">
       <h2 id="hm-what">What is this tool?</h2>
-      <p>The MicroTools HTML Minifier removes comments and unnecessary whitespace from markup. It is useful for quick optimizations before sharing snippets or embedding widgets. By collapsing markup in the browser, it gives you a ready-to-ship version without running a build step.</p>
+      <p>The ToolsMatic HTML Minifier removes comments and unnecessary whitespace from markup. It is useful for quick optimizations before sharing snippets or embedding widgets. By collapsing markup in the browser, it gives you a ready-to-ship version without running a build step.</p>
       <p>The minifier keeps tag order intact, making it safe for small embeds, landing pages, and email-friendly snippets that must stay lightweight. It is handy when you want to trim copy-and-paste fragments without opening a full IDE.</p>
       <h2>How to use this tool</h2>
       <p>Paste HTML, click Minify, and copy the output. The tool strips comments, collapses multiple spaces, and trims new lines while preserving tag order.</p>
@@ -51,10 +47,10 @@
       <h2>Who should use it?</h2>
       <p>Developers preparing embeds, marketers cleaning email templates, and students learning about payload size can all benefit from a lightweight minifier.</p>
       <p>Support and implementation teams can also trim third-party widgets before handing them to customers, ensuring faster loads and fewer issues in constrained environments.</p>
-      <h2>Why use MicroTools for this?</h2>
-      <p>MicroTools keeps the process immediate and offline-friendly. There is no dependency to install and no ads inside the workspace.</p>
-      <p>The shared MicroTools interface means you can move from minifying HTML to compressing images or encoding URLs without context switching, keeping prep work for launches efficient. Controls stay familiar, so you spend time on content rather than relearning UI.</p>
-      <p>Because it is single-purpose and quick, it complements other MicroTools like CSV to JSON during handoffs where size and clarity matter.</p>
+      <h2>Why use ToolsMatic for this?</h2>
+      <p>ToolsMatic keeps the process immediate and offline-friendly. There is no dependency to install and no ads inside the workspace.</p>
+      <p>The shared ToolsMatic interface means you can move from minifying HTML to compressing images or encoding URLs without context switching, keeping prep work for launches efficient. Controls stay familiar, so you spend time on content rather than relearning UI.</p>
+      <p>Because it is single-purpose and quick, it complements other ToolsMatic like CSV to JSON during handoffs where size and clarity matter.</p>
       <h2>Tips and edge cases</h2>
       <p>Minification is whitespace- and comment-focused. It does not rewrite attributes, remove optional tags, or inline assets. If your snippet relies on exact whitespace for formatting (such as pre/code examples), avoid minifying that portion. For email templates, always test in a staging inbox—some clients are sensitive to removed line breaks, so keep an original copy as a reference.</p>
       <p>If you need aggressive HTML minification with attribute collapsing or inline CSS processing, pair this tool with a build step later. Use this page for quick wins before sharing or embedding snippets in docs, PR comments, or support replies. Because the output is deterministic, it’s easy to diff before and after to spot unexpected removals.</p>
@@ -64,7 +60,7 @@
       <p>Offline-friendly behavior means you can clean up HTML on a plane, in a lab, or anywhere network access is limited without exposing code.</p>
     </section>
   </main>
-  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const htmlInput = document.getElementById('html-input');
@@ -88,7 +84,7 @@
       htmlOutput.value='';
       htmlStatus.textContent='';
       htmlInput.focus();
-      if (window.microTools) window.microTools.showToast('Cleared', 'info');
+      if (window.ToolsMatic) window.ToolsMatic.showToast('Cleared', 'info');
     });
 
     htmlCopy.addEventListener('click', async () => {
@@ -97,10 +93,10 @@
       try {
         await navigator.clipboard.writeText(value);
         htmlStatus.textContent = 'Copied minified HTML.';
-        if (window.microTools) window.microTools.showToast('Copied', 'success');
+        if (window.ToolsMatic) window.ToolsMatic.showToast('Copied', 'success');
       } catch (err) {
         htmlStatus.textContent = 'Copy failed.';
-        if (window.microTools) window.microTools.showToast('Copy failed', 'error');
+        if (window.ToolsMatic) window.ToolsMatic.showToast('Copy failed', 'error');
       }
     });
 
@@ -108,3 +104,5 @@
   </script>
 </body>
 </html>
+
+

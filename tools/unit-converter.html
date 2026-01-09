@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unit Converter | MicroTools</title>
+  <title>Unit Converter | ToolsMatic</title>
   <meta name="description" content="Convert length, weight, and temperature quickly in your browser. No installs or logins needed." />
   <link rel="manifest" href="/manifest.webmanifest">
   <script src="/assets/site.js" defer></script>
@@ -12,14 +12,10 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/word-counter.html">Word Counter</a>
-        <a href="/tools/password-generator.html">Password Generator</a>
-        <a href="/tools/quote-generator.html">Quote Generator</a>
-        <a href="/tools/case-converter.html">Case Converter</a>
-        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
@@ -51,7 +47,7 @@
 
     <section class="section" aria-labelledby="uc-what">
       <h2 id="uc-what">What is this tool?</h2>
-      <p>The MicroTools Unit Converter handles everyday conversions for length, weight, and temperature. It is designed for quick checks while writing specs, recipes, or travel notes. The goal is to give you accurate numbers instantly so you do not need to open a spreadsheet or install an app.</p>
+      <p>The ToolsMatic Unit Converter handles everyday conversions for length, weight, and temperature. It is designed for quick checks while writing specs, recipes, or travel notes. The goal is to give you accurate numbers instantly so you do not need to open a spreadsheet or install an app.</p>
       <p>With common units preloaded, it supports the most frequent scenarios: meters to feet, kilograms to pounds, and Celsius to Fahrenheit or Kelvin. That keeps the experience focused and fast.</p>
       <h2>How to use this tool</h2>
       <p>Select a type, choose the source and target units, enter a value, and click Convert. Results show instantly in the result box. Switch units as needed to compare values across systems.</p>
@@ -59,15 +55,15 @@
       <h2>Who should use it?</h2>
       <p>Travelers converting weather or distances, developers localizing apps, cooks adapting recipes, and students doing homework all benefit from a fast, reliable converter without ads or clutter.</p>
       <p>Operations teams planning logistics can cross-check weights and distances, while educators can offer students a simple way to understand relationships between units during lessons.</p>
-      <h2>Why use MicroTools for this?</h2>
-      <p>MicroTools keeps everything local and light. No account, no extra pop-ups—just the numbers you need. The interface stays minimal so you can focus on the conversion.</p>
-      <p>The consistent MicroTools design means you can keep this open alongside the timezone converter or number converter when documenting specs for distributed teams. Familiar controls reduce friction.</p>
+      <h2>Why use ToolsMatic for this?</h2>
+      <p>ToolsMatic keeps everything local and light. No account, no extra pop-ups—just the numbers you need. The interface stays minimal so you can focus on the conversion.</p>
+      <p>The consistent ToolsMatic design means you can keep this open alongside the timezone converter or number converter when documenting specs for distributed teams. Familiar controls reduce friction.</p>
       <h2>Privacy & performance</h2>
       <p>Conversions run in plain JavaScript with no network calls. Inputs stay on your device, and the page uses a handful of lines of code to maintain strong performance.</p>
       <p>Because nothing leaves the browser, you can use it offline-friendly or on limited networks. The light code path keeps the page responsive even on older laptops and mobile devices.</p>
     </section>
   </main>
-  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const units = {
@@ -141,3 +137,5 @@
   </script>
 </body>
 </html>
+
+

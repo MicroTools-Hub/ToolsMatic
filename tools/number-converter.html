@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Number Converter | MicroTools</title>
+  <title>Number Converter | ToolsMatic</title>
   <meta name="description" content="Convert numbers between decimal, hexadecimal, and binary instantly. Works offline in your browser." />
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="../assets/styles.css">
@@ -12,14 +12,10 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/word-counter.html">Word Counter</a>
-        <a href="/tools/password-generator.html">Password Generator</a>
-        <a href="/tools/quote-generator.html">Quote Generator</a>
-        <a href="/tools/case-converter.html">Case Converter</a>
-        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
@@ -42,7 +38,7 @@
 
     <section class="section" aria-labelledby="nc-what">
       <h2 id="nc-what">What is this tool?</h2>
-      <p>The MicroTools Number Converter flips values between decimal, hexadecimal, and binary. It is helpful for developers, students, and hardware tinkerers who need quick base conversions without a calculator. It keeps your focus on the math you care about instead of fiddling with syntax or separators.</p>
+      <p>The ToolsMatic Number Converter flips values between decimal, hexadecimal, and binary. It is helpful for developers, students, and hardware tinkerers who need quick base conversions without a calculator. It keeps your focus on the math you care about instead of fiddling with syntax or separators.</p>
       <p>By presenting all three bases together, it makes it easier to spot patterns, check bitmasks, and translate color codes or register values quickly.</p>
       <h2>How to use this tool</h2>
       <p>Enter a value, choose the base of that input, and click Convert. The tool outputs the other bases immediately, handling lowercase hex and stripping whitespace automatically.</p>
@@ -51,15 +47,15 @@
       <h2>Who should use it?</h2>
       <p>Developers working with color codes or bitmasks, embedded engineers translating registers, and learners studying number systems all benefit from a fast converter.</p>
       <p>Security analysts reviewing hashes, firmware engineers testing addresses, and students in computer architecture courses can keep this open as a lightweight helper.</p>
-      <h2>Why use MicroTools for this?</h2>
-      <p>MicroTools keeps the interface distraction-free and loads instantly, so you can check a value mid-debug without leaving the browser.</p>
-      <p>The familiar MicroTools layout lets you pair this with the UUID Maker or Regex Tester while examining payloads, avoiding context switching between tools.</p>
+      <h2>Why use ToolsMatic for this?</h2>
+      <p>ToolsMatic keeps the interface distraction-free and loads instantly, so you can check a value mid-debug without leaving the browser.</p>
+      <p>The familiar ToolsMatic layout lets you pair this with the UUID Maker or Regex Tester while examining payloads, avoiding context switching between tools.</p>
       <h2>Privacy & performance</h2>
       <p>Conversion runs locally with built-in JavaScript parsing. No data leaves the page, and the script is tiny for strong performance.</p>
       <p>With no external requests, the converter works offline-friendly and remains fast on low-powered machines. Your inputs are never transmitted, keeping sensitive values private.</p>
     </section>
   </main>
-  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const inputEl = document.getElementById('num-input');
@@ -86,3 +82,5 @@
   </script>
 </body>
 </html>
+
+

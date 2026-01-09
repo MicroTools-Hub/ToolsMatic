@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Regex Tester | MicroTools</title>
+  <title>Regex Tester | ToolsMatic</title>
   <meta name="description" content="Test regular expressions against sample text instantly. Highlight matches and troubleshoot flags directly in your browser." />
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="../assets/styles.css">
@@ -12,14 +12,10 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/word-counter.html">Word Counter</a>
-        <a href="/tools/password-generator.html">Password Generator</a>
-        <a href="/tools/quote-generator.html">Quote Generator</a>
-        <a href="/tools/case-converter.html">Case Converter</a>
-        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
@@ -47,7 +43,7 @@
 
     <section class="section" aria-labelledby="rt-what">
       <h2 id="rt-what">What is this tool?</h2>
-      <p>The MicroTools Regex Tester lets you experiment with regular expressions and see matches highlighted instantly. It is designed for developers, QA engineers, and power users who need to validate patterns quickly without spinning up an IDE. It focuses on rapid feedback so you can refine expressions before they reach production code or data pipelines.</p>
+      <p>The ToolsMatic Regex Tester lets you experiment with regular expressions and see matches highlighted instantly. It is designed for developers, QA engineers, and power users who need to validate patterns quickly without spinning up an IDE. It focuses on rapid feedback so you can refine expressions before they reach production code or data pipelines.</p>
       <p>By keeping the experience in the browser, it is always nearby when you are in tickets, docs, or PR reviews. You can prove that a pattern behaves as intended without leaving your current workflow.</p>
       <h2>How to use this tool</h2>
       <p>Enter your pattern, add optional flags like g or i, paste sample text, and click Run. Matches are wrapped in a highlight so you can visually confirm what your expression captures. Errors are surfaced if the pattern is invalid, helping you fix escaping or grouping quickly.</p>
@@ -55,15 +51,15 @@
       <h2>Who should use it?</h2>
       <p>Backend developers testing validation rules, frontend engineers refining input masks, data specialists filtering logs, and students learning regex basics can all iterate faster here. It is also handy for support teams troubleshooting user-submitted strings.</p>
       <p>Security teams can check that blocking patterns capture malicious payloads, while marketing ops can ensure UTM filters behave before deploying analytics rules. Anyone dealing with text transformations benefits from quick visual confirmation.</p>
-      <h2>Why use MicroTools for this?</h2>
-      <p>MicroTools keeps the interface minimal and responsive. There is no network latency or heavy library, so you can tweak patterns in rapid cycles. The output stays on the same page, preventing context switches.</p>
-      <p>The shared MicroTools layout means you can pass cleaned text to the Base64 encoder, URL encoder, or JSON formatter without relearning controls. That makes complex debugging chains faster and less error-prone.</p>
+      <h2>Why use ToolsMatic for this?</h2>
+      <p>ToolsMatic keeps the interface minimal and responsive. There is no network latency or heavy library, so you can tweak patterns in rapid cycles. The output stays on the same page, preventing context switches.</p>
+      <p>The shared ToolsMatic layout means you can pass cleaned text to the Base64 encoder, URL encoder, or JSON formatter without relearning controls. That makes complex debugging chains faster and less error-prone.</p>
       <h2>Privacy & performance</h2>
       <p>All regex evaluation runs locally in JavaScript, so sample text is not sent anywhere. The page ships a handful of lines of code and no external trackers, preserving performance and privacy.</p>
       <p>With no external calls, you can test sensitive strings or production-like payloads confidently, even on slow networks or offline-friendly setups. Performance remains high because the script is small and leverages native regex support.</p>
     </section>
   </main>
-  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const patternInput = document.getElementById('regex-pattern');
@@ -77,7 +73,7 @@
       email: { pattern: '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[A-Za-z]{2,}', flags: 'g', text: 'Contact me at dev@example.com or admin@test.io' },
       uuid: { pattern: '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}', flags: 'g', text: 'IDs: 123e4567-e89b-12d3-a456-426614174000 and de305d54-75b4-431b-adb2-eb6b9e546014' },
       hex: { pattern: '#(?:[0-9a-fA-F]{3}){1,2}', flags: 'g', text: 'Brand colors: #22d3ee and #a855f7' },
-      url: { pattern: 'https?:\\/\\/[\\w.-]+(?:\\:[0-9]+)?[\\/\\w.#?=&%-]*', flags: 'g', text: 'Docs at https://microtools.local/start and http://example.com:8080' }
+      url: { pattern: 'https?:\\/\\/[\\w.-]+(?:\\:[0-9]+)?[\\/\\w.#?=&%-]*', flags: 'g', text: 'Docs at https://ToolsMatic.local/start and http://example.com:8080' }
     };
 
     const run = () => {
@@ -104,7 +100,7 @@
       } catch (err) {
         status.textContent = `Invalid regex: ${err.message}`;
         output.textContent = '';
-        if (window.microTools) window.microTools.showToast('Invalid regex', 'error');
+        if (window.ToolsMatic) window.ToolsMatic.showToast('Invalid regex', 'error');
       }
     };
 
@@ -115,10 +111,12 @@
       flagsInput.value = choice.flags;
       textInput.value = choice.text;
       run();
-      if (window.microTools) window.microTools.showToast('Preset loaded', 'success');
+      if (window.ToolsMatic) window.ToolsMatic.showToast('Preset loaded', 'success');
     });
 
     document.getElementById('regex-run').addEventListener('click', run);
   </script>
 </body>
 </html>
+
+

@@ -3,25 +3,177 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quote Generator | MicroTools</title>
-  <meta name="description" content="Grab a fresh, uplifting quote with the MicroTools Quote Generator. Built for writers, presenters, and creators who want quick inspiration without distractions.">
+  <title>Quote Generator | ToolsMatic</title>
+  <meta name="description" content="Grab a fresh, uplifting quote with the ToolsMatic Quote Generator. Built for writers, presenters, and creators who want quick inspiration without distractions.">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="../assets/styles.css">
   <script src="/assets/site.js" defer></script>
+  <style>
+    :root {
+      --accent-color: var(--accent);
+      --bg-secondary: #0c1425;
+      --bg-tertiary: rgba(255, 255, 255, 0.04);
+      --border-color: var(--border);
+      --text-primary: var(--text);
+      --text-secondary: var(--muted);
+    }
+
+    .quote-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .quote-actions button {
+      flex: 1;
+      min-width: 120px;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--accent-color, #3b82f6);
+      background: var(--accent-color, #3b82f6);
+      color: #fff;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+    
+    .quote-actions button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    }
+    
+    .quote-actions button.favorited {
+      background: #f59e0b;
+      border-color: #f59e0b;
+      color: #1f2937;
+    }
+    
+    #quote {
+      font-size: 1.25rem;
+      line-height: 1.7;
+      padding: 2rem;
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      border-left: 4px solid var(--accent-color);
+      margin: 1.5rem 0;
+      font-style: italic;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    
+    .favorites-section {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .favorites-section h3 {
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+    
+    .favorites-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .favorite-item {
+      padding: 1rem;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      border-left: 3px solid var(--accent-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 1rem;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    
+    .favorite-item-text {
+      flex: 1;
+    }
+    
+    .favorite-item button {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.85rem;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    
+    .favorite-item button:hover {
+      background: #ef4444;
+      color: white;
+      border-color: #ef4444;
+    }
+    
+    .empty-favorites {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+    
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 1rem 1.5rem;
+      background: var(--accent-color);
+      color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateY(150%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .toast.show {
+      transform: translateY(0);
+    }
+    
+    @media (max-width: 600px) {
+      .quote-actions {
+        flex-direction: column;
+      }
+      
+      .quote-actions button {
+        width: 100%;
+      }
+      
+      #quote {
+        font-size: 1.1rem;
+        padding: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
     <div class="nav">
       <a class="brand" href="/">
-        <span>Micro</span>Tools
+        <span>Tools</span>Matic
       </a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/word-counter.html">Word Counter</a>
-        <a href="/tools/password-generator.html">Password Generator</a>
-        <a href="/tools/quote-generator.html">Quote Generator</a>
-        <a href="/tools/case-converter.html">Case Converter</a>
-        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
@@ -48,65 +200,203 @@
         <option value="wellness">Wellness</option>
       </select>
       <p class="result-box" id="quote">Click the button to see a new quote.</p>
-      <button id="next" data-primary>Show another quote</button>
+      
+      <div class="quote-actions">
+        <button id="next" data-primary>🎲 New Quote</button>
+        <button id="copy-btn">📋 Copy</button>
+        <button id="tweet-btn">🐦 Tweet</button>
+        <button id="favorite-btn">⭐ Favorite</button>
+      </div>
+
+      <div class="favorites-section">
+        <h3>💫 Favorite Quotes (<span id="fav-count">0</span>)</h3>
+        <div class="favorites-list" id="favorites-list">
+          <div class="empty-favorites">No favorite quotes yet. Click the ⭐ button to save quotes you love!</div>
+        </div>
+      </div>
     </section>
 
     <section class="section" aria-labelledby="qg-what">
-      <h2 id="qg-what">What is this tool?</h2>
-      <p>The MicroTools Quote Generator pulls from a curated list of thoughtful, concise quotes so you can spark ideas, open a presentation, or add a finishing line to a newsletter without opening another tab. Every quote is short enough to fit in a slide or caption while still carrying a clear point. The collection blends creativity, focus, craftsmanship, and perseverance so you always have a relevant line nearby.</p>
-      <p>The goal is to keep inspiration close and dependable. Rather than scraping random sources, the quotes are handpicked to avoid filler and to stay suitable for professional contexts. That makes it safer to grab a line for client work, classrooms, or public talks.</p>
-      <h2>How to use this tool</h2>
-      <p>Press the Show another quote button to cycle through the set. When you land on a line that works, copy it into your draft or note-taking app. Because the quotes are preloaded, the tool works instantly and keeps the focus on picking the right statement, not on waiting for an API call.</p>
-      <p>If you are drafting a deck, keep the tab open and refresh until you find a line that matches the slide’s tone. For social posts, grab a quote, pair it with a visual, and move on without worrying about usage rights from unvetted sources. The quick loop is designed to fit into busy workflows.</p>
-      <h2>Who should use it?</h2>
-      <p>Writers looking for a hook, presenters opening with a memorable line, teachers creating classroom prompts, and social media managers who need a quick caption can all benefit. The quotes are balanced between creativity, craft, and perseverance, making them useful across a wide range of contexts.</p>
-      <p>Mentors, coaches, and support reps can also use it to add a human touch to check-ins or onboarding emails. Students preparing speeches or club announcements get a bank of concise lines that fit within short time limits.</p>
-      <h2>Why use MicroTools for this?</h2>
-      <p>MicroTools keeps inspiration close without clutter. There are no pop-ups, autoplaying widgets, or hidden paywalls—just a clean interface with a single action. Because the list is stored locally, the tool is fast enough to use moments before you go on stage or hit publish.</p>
-      <p>The consistent UI across MicroTools means you can switch from this generator to other writing helpers—like the case converter or word counter—without relearning controls. That reduces friction when you are assembling a full piece of content under deadline.</p>
-      <h2>Privacy & performance</h2>
-      <p>The quotes live directly in the page. No data leaves your browser, and you do not have to accept extra cookies or tracking to use it. With no external requests, the page stays lightweight and responsive even on mobile connections, which keeps performance scores high.</p>
-      <p>Since everything is bundled in the initial load, the tool works in low-connectivity environments and adds virtually no overhead to the site. You can use it in a private window knowing nothing is stored or sent anywhere.</p>
+      <h2 id="qg-what">What is the ToolsMatic Quote Generator?</h2>
+      <p>
+        The <strong>ToolsMatic Quote Generator</strong> is an instant source of motivation, wisdom, and fresh perspective. 
+        With over <strong>525 carefully curated quotes</strong> across <strong>15 professional categories</strong>, 
+        it's designed for writers, speakers, content creators, and anyone seeking a burst of inspiration without distraction.
+      </p>
+      <p>
+        Unlike generic quote sites cluttered with ads and popups, ToolsMatic gives you a clean, focused interface 
+        where a single click delivers the perfect quote for your mood or project. Whether you're drafting a presentation, 
+        writing copy, starting your day, or just need a mental reset, our quote generator has you covered.
+      </p>
+      <p>
+        <strong>Why use ToolsMatic Quote Generator?</strong> It's fast, ad-free, and built specifically for people who value 
+        their time. No login required, no tracking, just pure inspiration on demand. Plus, our quotes are hand-selected 
+        for relevance to modern professionals—designers, engineers, startup founders, writers, and leaders—rather than 
+        generic platitudes. Save your favorites for later reference and share directly to Twitter to inspire your network.
+      </p>
+    </section>
+
+    <section class="section" aria-labelledby="qg-how">
+      <h2 id="qg-how">How to use the Quote Generator</h2>
+      <ol>
+        <li><strong>Select a category</strong> from the dropdown menu (Creativity, Focus, Leadership, etc.)</li>
+        <li><strong>Click "New Quote"</strong> to generate a random quote from that category</li>
+        <li><strong>Use the action buttons</strong>:
+          <ul>
+            <li><strong>Copy</strong> - Copy the quote to your clipboard</li>
+            <li><strong>Tweet</strong> - Share the quote directly to Twitter</li>
+            <li><strong>Favorite</strong> - Save the quote to your favorites list</li>
+          </ul>
+        </li>
+        <li><strong>Manage favorites</strong> - Your saved quotes appear below, with the option to remove them</li>
+        <li><strong>Switch categories</strong> to explore different themes and perspectives</li>
+      </ol>
+      <p>
+        <strong>Pro tip:</strong> Use the Quote Generator at the start of your workday as a ritual, or keep it open in a tab 
+        when you're writing. A fresh quote can be the perfect way to break through creative blocks or add personality to your content.
+      </p>
+    </section>
+
+    <section class="section" aria-labelledby="qg-who">
+      <h2 id="qg-who">Who should use the Quote Generator?</h2>
+      <ul>
+        <li><strong>Content creators</strong> looking for engaging social media posts or blog intros</li>
+        <li><strong>Public speakers</strong> who want memorable opening or closing lines</li>
+        <li><strong>Writers</strong> seeking inspiration or epigraphs for their work</li>
+        <li><strong>Designers</strong> who need text for mockups, posters, or portfolio pieces</li>
+        <li><strong>Team leaders</strong> crafting motivational messages for their teams</li>
+        <li><strong>Students</strong> looking for thought-provoking quotes for presentations or essays</li>
+        <li><strong>Coaches and mentors</strong> who share daily wisdom with clients</li>
+        <li><strong>Anyone</strong> who values a moment of reflection and inspiration</li>
+      </ul>
+    </section>
+
+    <section class="section" aria-labelledby="qg-why">
+      <h2 id="qg-why">Why ToolsMatic beats other quote generators</h2>
+      <p>
+        Most quote websites are slow, ad-heavy, or filled with outdated platitudes. ToolsMatic Quote Generator 
+        is different:
+      </p>
+      <ul>
+        <li><strong>Modern, curated collection:</strong> 525+ quotes selected for relevance to today's professionals</li>
+        <li><strong>15 focused categories:</strong> Not just "motivational"—we have specific themes for Design, Engineering, Startup life, Writing, and more</li>
+        <li><strong>Instant results:</strong> No page loads, no delays—quotes appear instantly</li>
+        <li><strong>Clean interface:</strong> Zero ads, zero popups, zero tracking</li>
+        <li><strong>Works offline:</strong> Once loaded, it runs entirely in your browser</li>
+        <li><strong>Favorite system:</strong> Build your personal collection of quotes</li>
+        <li><strong>One-click sharing:</strong> Tweet quotes directly without copying and pasting</li>
+        <li><strong>Mobile-friendly:</strong> Works perfectly on phones and tablets</li>
+        <li><strong>Privacy-first:</strong> Your favorites are saved locally—we never see your data</li>
+      </ul>
+      <p>
+        Whether you're building a startup, writing a novel, leading a team, or designing the next big product, 
+        ToolsMatic provides the right words at the right time. Bookmark it, use it daily, and let it become 
+        part of your creative routine.
+      </p>
+    </section>
+
+    <section class="section" aria-labelledby="qg-faq">
+      <h2 id="qg-faq">Frequently Asked Questions</h2>
+      
+      <h3>How many quotes does the generator include?</h3>
+      <p>
+        We have <strong>525+ quotes</strong> across 15 categories, with 35 quotes per category. Each quote is 
+        hand-selected for wisdom, relevance, and impact.
+      </p>
+
+      <h3>Can I use these quotes commercially?</h3>
+      <p>
+        Most quotes are either by unknown authors or are in the public domain. For attributed quotes, we recommend 
+        doing your own due diligence if using commercially. For personal use, social media, presentations, and 
+        educational purposes, you're generally fine—but always credit the author when known.
+      </p>
+
+      <h3>Do my favorite quotes sync across devices?</h3>
+      <p>
+        Favorites are saved in your browser's local storage, so they stay on the device where you saved them. 
+        They won't sync to other devices, but this also means your data never leaves your computer—it's completely private.
+      </p>
+
+      <h3>Can I suggest quotes to add?</h3>
+      <p>
+        We love hearing from users! While we don't have a formal submission system yet, we regularly update 
+        our quote collection based on user feedback. Check back often for new additions.
+      </p>
+
+      <h3>Is there a limit to how many quotes I can favorite?</h3>
+      <p>
+        Nope! Save as many as you want. Your browser's storage can easily handle hundreds of quotes, so feel free 
+        to build your personal wisdom library.
+      </p>
+
+      <h3>Why don't I see author names for all quotes?</h3>
+      <p>
+        Many of our quotes are modern wisdom from the internet, industry best practices, or collected wisdom 
+        where the original author is unknown. We credit authors whenever possible, but sometimes great ideas 
+        are truly collaborative or anonymous.
+      </p>
+
+      <h3>Can I export my favorite quotes?</h3>
+      <p>
+        Currently, favorites are view-only in the app, but you can easily copy them individually using the Copy button. 
+        We're considering adding bulk export features in future updates.
+      </p>
+
+      <h3>Does this work offline?</h3>
+      <p>
+        Yes! Once the page loads, everything runs in your browser. No internet connection needed to generate quotes. 
+        (The Tweet button will require internet, obviously!)
+      </p>
+
+      <h3>Are there keyboard shortcuts?</h3>
+      <p>
+        Not yet, but that's a great idea for a future update! For now, everything is accessible with simple clicks.
+      </p>
     </section>
   </main>
 
-  <footer>
-    MicroTools · Fast, privacy-first utilities for the web.
-  </footer>
+  <div id="toast" class="toast">
+    <span id="toast-message"></span>
+  </div>
 
   <script>
     const categories = {
       creativity: [
         'Creativity is intelligence having fun. - Albert Einstein',
-        'Constraints spark creativity, not comfort. - Unknown',
-        'Make bad drafts to find great ideas. - Unknown',
-        'Curiosity is the spark for creation. - Unknown',
-        'Sketch first, polish later. - Unknown',
-        'Ideas grow when shared. - Unknown',
-        'Combine unlikely things to invent. - Unknown',
-        'Boredom is fuel for imagination. - Unknown',
-        'Diverge first, converge later. - Unknown',
-        'Originality is recombination. - Unknown',
-        'Question defaults to find surprises. - Unknown',
-        'Creativity favors the prepared mind. - Louis Pasteur',
-        'Mood follows action, so start making. - Unknown',
-        'Make room for play in the process. - Unknown',
-        'Simple beats clever when stakes are high. - Unknown',
-        'Ship the weird prototype and learn. - Unknown',
-        'Creativity loves a deadline. - Unknown',
-        'Make rules, then break them on purpose. - Unknown',
-        'Collect sparks every day. - Unknown',
-        'Draw to think more clearly. - Unknown',
-        'Write it down to see it. - Unknown',
-        'Curate ideas ruthlessly. - Unknown',
-        'Inspiration is everywhere if you notice. - Unknown',
-        'Reframe the problem to unlock it. - Unknown',
+        'You cannot use up creativity. The more you use, the more you have. - Maya Angelou',
+        'Create before you consume. - Unknown',
+        'Originality is just remix in new contexts. - Unknown',
+        'Ship before perfect. - Unknown',
+        'Constraints ignite creativity. - Unknown',
+        'Make the thing you wish existed. - Unknown',
+        'Imitate, then innovate. - Unknown',
+        'Boredom sparks breakthroughs. - Unknown',
+        'Draw outside the lines intentionally. - Unknown',
+        'Create daily, judge quarterly. - Unknown',
+        'Build in public, refine in private. - Unknown',
+        'First drafts are not final drafts. - Unknown',
+        'Volume beats precision in the early phase. - Unknown',
+        'Take ideas seriously, take yourself less so. - Unknown',
+        'Risk ridicule, find novelty. - Unknown',
+        'The muse shows up when you do. - Unknown',
+        'Curate influences, do not copy them. - Unknown',
+        'Messy middle beats no start. - Unknown',
+        'Sample widely, synthesize uniquely. - Unknown',
+        'Build for an audience of one (you). - Unknown',
+        'Steal like an artist. - Austin Kleon',
+        'Let accidents teach you. - Unknown',
+        'Play precedes polish. - Unknown',
+        'Your taste will catch up to your skill. - Unknown',
+        'Iterate in public, improve by feedback. - Unknown',
         'Small experiments beat big debates. - Unknown',
         'Creativity is choice plus chance. - Unknown',
         'Start ugly, end excellent. - Unknown',
         'Cross-train in other arts. - Unknown',
         'Protect maker time like money. - Unknown',
-        'Iterate until it sings. - Unknown'
+        'Iterate until it sings. - Unknown',
+        'Creativity thrives in constraints. - Unknown',
+        'Ideas are cheap; execution is everything. - Unknown',
+        'Make something, even if it\'s bad. - Unknown'
       ],
       focus: [
         'Focus beats talent when talent is distracted. - Unknown',
@@ -138,7 +428,12 @@
         'Batch the shallow tasks. - Unknown',
         'Focus on what you control. - Unknown',
         'Momentum beats motivation. - Unknown',
-        'End with a clean desk. - Unknown'
+        'End with a clean desk. - Unknown',
+        'Eliminate distractions ruthlessly. - Unknown',
+        'One task at a time, done well. - Unknown',
+        'Silence is a productivity tool. - Unknown',
+        'Focus flows from clear goals. - Unknown',
+        'Every interruption has a cost. - Unknown'
       ],
       perseverance: [
         'Progress is rarely linear. - Unknown',
@@ -170,7 +465,12 @@
         'The middle is the test. - Unknown',
         'You can do hard things. - Unknown',
         'Progress loves persistence. - Unknown',
-        'Finish what you started. - Unknown'
+        'Finish what you started. - Unknown',
+        'Every setback is a setup for a comeback. - Unknown',
+        'The obstacle is the way. - Marcus Aurelius',
+        'Perseverance is passion plus patience. - Unknown',
+        'Success is not final, failure is not fatal. - Winston Churchill',
+        'It always seems impossible until it\'s done. - Nelson Mandela'
       ],
       leadership: [
         'Lead by example before directive. - Unknown',
@@ -202,7 +502,12 @@
         'Make it safe to dissent. - Unknown',
         'Calm is contagious. - Unknown',
         'Serve the mission, not ego. - Unknown',
-        'Lead people, manage systems. - Unknown'
+        'Lead people, manage systems. - Unknown',
+        'Leadership is influence, nothing more. - Unknown',
+        'Great leaders ask great questions. - Unknown',
+        'Inspire by action, not just words. - Unknown',
+        'Empower others to lead themselves. - Unknown',
+        'Vision without execution is hallucination. - Thomas Edison'
       ],
       learning: [
         'Stay curious longer. - Unknown',
@@ -234,7 +539,12 @@
         'Make learning visible. - Unknown',
         'The basics are advanced when mastered. - Unknown',
         'Unlearn to make room to learn. - Unknown',
-        'Stay a student, even when you teach. - Unknown'
+        'Stay a student, even when you teach. - Unknown',
+        'The more you learn, the more you realize you don\'t know. - Aristotle',
+        'Education is not preparation for life; it is life itself. - John Dewey',
+        'Live as if you were to die tomorrow. Learn as if you were to live forever. - Gandhi',
+        'Tell me and I forget, teach me and I remember, involve me and I learn. - Benjamin Franklin',
+        'Invest in knowledge, it pays the best interest. - Benjamin Franklin'
       ],
       productivity: [
         'Systems beat willpower. - Unknown',
@@ -266,7 +576,12 @@
         'Track wins daily. - Unknown',
         'Productivity is doing the right things. - Unknown',
         'Avoid perfect, aim for progress. - Unknown',
-        'Tomorrow starts tonight. - Unknown'
+        'Tomorrow starts tonight. - Unknown',
+        'Work smarter, not harder. - Unknown',
+        'Focus on outcomes, not hours. - Unknown',
+        'Simplify before you optimize. - Unknown',
+        'The best productivity system is the one you actually use. - Unknown',
+        'Eliminate, automate, delegate, then do. - Unknown'
       ],
       teamwork: [
         'Trust is built in small moments. - Unknown',
@@ -298,7 +613,12 @@
         'Good handoffs are invisible. - Unknown',
         'Meet less, align more. - Unknown',
         'Surface risks together. - Unknown',
-        'We over me wins longer. - Unknown'
+        'We over me wins longer. - Unknown',
+        'Alone we can do so little; together we can do so much. - Helen Keller',
+        'Teamwork makes the dream work. - John C. Maxwell',
+        'None of us is as smart as all of us. - Ken Blanchard',
+        'Coming together is a beginning, staying together is progress, working together is success. - Henry Ford',
+        'Collaboration allows us to know more than we are capable of knowing by ourselves. - Paul Solarz'
       ],
       innovation: [
         'Innovation starts with a customer itch. - Unknown',
@@ -330,7 +650,12 @@
         'Replace fear with curiosity. - Unknown',
         'Innovation is recombining existing parts. - Unknown',
         'Stay close to the problem owner. - Unknown',
-        'Future value hides in present friction. - Unknown'
+        'Future value hides in present friction. - Unknown',
+        'Innovation distinguishes between a leader and a follower. - Steve Jobs',
+        'The best way to predict the future is to invent it. - Alan Kay',
+        'If you always do what you always did, you will always get what you always got. - Albert Einstein',
+        'The greatest danger in times of turbulence is not the turbulence; it is to act with yesterday\'s logic. - Peter Drucker',
+        'Do not be afraid to give up the good to go for the great. - John D. Rockefeller'
       ],
       mindset: [
         'Growth is a choice repeated daily. - Unknown',
@@ -362,7 +687,12 @@
         'Your best today is enough. - Unknown',
         'Mindset is the first tool. - Unknown',
         'Curate the inputs that shape you. - Unknown',
-        'Believe, then build. - Unknown'
+        'Believe, then build. - Unknown',
+        'Whether you think you can or you can\'t, you\'re right. - Henry Ford',
+        'The mind is everything. What you think you become. - Buddha',
+        'Change your thoughts and you change your world. - Norman Vincent Peale',
+        'A positive attitude causes a chain reaction of positive thoughts. - Wade Boggs',
+        'Life is 10% what happens to you and 90% how you react to it. - Charles R. Swindoll'
       ],
       growth: [
         'Compounding works on skills too. - Unknown',
@@ -394,7 +724,12 @@
         'Get 1 percent better daily. - Unknown',
         'Growth sneaks up on the consistent. - Unknown',
         'Momentum is fragile; protect it. - Unknown',
-        'Greatness is grown, not granted. - Unknown'
+        'Greatness is grown, not granted. - Unknown',
+        'The only impossible journey is the one you never begin. - Tony Robbins',
+        'What you get by achieving your goals is not as important as what you become. - Zig Ziglar',
+        'Don\'t watch the clock; do what it does. Keep going. - Sam Levenson',
+        'Growth and comfort do not coexist. - Ginni Rometty',
+        'Be not afraid of growing slowly; be afraid only of standing still. - Chinese Proverb'
       ],
       design: [
         'Design is how it works. - Steve Jobs',
@@ -426,7 +761,12 @@
         'Latency is a design problem. - Unknown',
         'Design is never done, only due. - Unknown',
         'Learn the rules, then bend them. - Unknown',
-        'Ship, watch, refine. - Unknown'
+        'Ship, watch, refine. - Unknown',
+        'Simplicity is the ultimate sophistication. - Leonardo da Vinci',
+        'Good design is obvious. Great design is transparent. - Joe Sparano',
+        'Design is not just what it looks like and feels like. Design is how it works. - Steve Jobs',
+        'The details are not the details. They make the design. - Charles Eames',
+        'Design creates culture. Culture shapes values. Values determine the future. - Robert L. Peters'
       ],
       writing: [
         'Clear thinking becomes clear writing. - Unknown',
@@ -458,7 +798,12 @@
         'Use examples to anchor ideas. - Unknown',
         'Writing is thinking in public. - Unknown',
         'Be brief, be vivid. - Unknown',
-        'Finish the draft, then judge. - Unknown'
+        'Finish the draft, then judge. - Unknown',
+        'There is no greater agony than bearing an untold story inside you. - Maya Angelou',
+        'You can make anything by writing. - C.S. Lewis',
+        'Start writing, no matter what. The water does not flow until the faucet is turned on. - Louis L\'Amour',
+        'Write what should not be forgotten. - Isabel Allende',
+        'If you want to be a writer, you must do two things above all others: read a lot and write a lot. - Stephen King'
       ],
       engineering: [
         'Read the error before you react. - Unknown',
@@ -490,7 +835,12 @@
         'Cache carefully, validate relentlessly. - Unknown',
         'Uptime is earned daily. - Unknown',
         'Tech debt is a loan with interest. - Unknown',
-        'Reliability is a team sport. - Unknown'
+        'Reliability is a team sport. - Unknown',
+        'First, solve the problem. Then, write the code. - John Johnson',
+        'Any fool can write code that a computer can understand. Good programmers write code that humans can understand. - Martin Fowler',
+        'Fix the cause, not the symptom. - Steve Maguire',
+        'Code never lies, comments sometimes do. - Ron Jeffries',
+        'Debugging is twice as hard as writing the code in the first place. - Brian Kernighan'
       ],
       startup: [
         'Talk to users every week. - Unknown',
@@ -522,7 +872,12 @@
         'Moats grow from habits you build. - Unknown',
         'Trust compounds with consistency. - Unknown',
         'Launches are starts, not endings. - Unknown',
-        'Survive to iterate. - Unknown'
+        'Survive to iterate. - Unknown',
+        'Ideas are easy. Implementation is hard. - Guy Kawasaki',
+        'Your most unhappy customers are your greatest source of learning. - Bill Gates',
+        'Make every detail perfect and limit the number of details to perfect. - Jack Dorsey',
+        'The best way to predict the future is to create it. - Peter Drucker',
+        'Move fast and break things. Unless you are breaking stuff, you are not moving fast enough. - Mark Zuckerberg'
       ],
       wellness: [
         'Rest is a productivity tool. - Unknown',
@@ -554,25 +909,141 @@
         'Gratitude lowers stress. - Unknown',
         'Health is built in small choices. - Unknown',
         'Water, light, rest, repeat. - Unknown',
-        'You cannot pour from an empty cup. - Unknown'
+        'You cannot pour from an empty cup. - Unknown',
+        'Take care of your body. It\'s the only place you have to live. - Jim Rohn',
+        'Health is not valued until sickness comes. - Thomas Fuller',
+        'The groundwork of all happiness is health. - Leigh Hunt',
+        'To keep the body in good health is a duty, otherwise we shall not be able to keep our mind strong and clear. - Buddha',
+        'Those who think they have no time for healthy eating will sooner or later have to find time for illness. - Edward Stanley'
       ]
     };
 
-    const quoteBox = document.getElementById('quote');
-    const nextBtn = document.getElementById('next');
-    const categorySelect = document.getElementById('quote-category');
+    function initQuoteGenerator() {
+      const quoteBox = document.getElementById('quote');
+      const nextBtn = document.getElementById('next');
+      const copyBtn = document.getElementById('copy-btn');
+      const tweetBtn = document.getElementById('tweet-btn');
+      const favoriteBtn = document.getElementById('favorite-btn');
+      const categorySelect = document.getElementById('quote-category');
+      const favoritesList = document.getElementById('favorites-list');
+      const favCount = document.getElementById('fav-count');
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
 
+      if (!quoteBox || !nextBtn || !copyBtn || !tweetBtn || !favoriteBtn || !categorySelect || !favoritesList || !favCount || !toast || !toastMessage) {
+        return;
+      }
+
+      let currentQuote = '';
+      let favorites = JSON.parse(localStorage.getItem('favoriteQuotes') || '[]');
+
+      function showToast(message) {
+        toastMessage.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 2000);
+      }
+
+    // Pick a random quote
     const pickQuote = () => {
       const category = categorySelect.value;
       const list = categories[category];
       if (!list) return;
       const index = Math.floor(Math.random() * list.length);
-      quoteBox.textContent = list[index];
+      currentQuote = list[index];
+      quoteBox.textContent = currentQuote;
+      updateFavoriteButton();
     };
 
-    nextBtn.addEventListener('click', pickQuote);
-    categorySelect.addEventListener('change', pickQuote);
-    pickQuote();
+    // Copy quote to clipboard
+    const copyQuote = () => {
+      navigator.clipboard.writeText(currentQuote).then(() => {
+        showToast('✓ Quote copied to clipboard!');
+      }).catch(() => {
+        showToast('❌ Failed to copy quote');
+      });
+    };
+
+    // Tweet quote
+    const tweetQuote = () => {
+      const tweetText = encodeURIComponent(currentQuote + '\n\n— via ToolsMatic Quote Generator');
+      const tweetUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
+      window.open(tweetUrl, '_blank', 'width=550,height=420');
+    };
+
+    // Toggle favorite
+    const toggleFavorite = () => {
+      const index = favorites.indexOf(currentQuote);
+      if (index === -1) {
+        favorites.push(currentQuote);
+        showToast('⭐ Added to favorites!');
+      } else {
+        favorites.splice(index, 1);
+        showToast('🗑️ Removed from favorites');
+      }
+      localStorage.setItem('favoriteQuotes', JSON.stringify(favorites));
+      updateFavoriteButton();
+      renderFavorites();
+    };
+
+    // Update favorite button appearance
+    const updateFavoriteButton = () => {
+      const isFavorited = favorites.includes(currentQuote);
+      if (isFavorited) {
+        favoriteBtn.classList.add('favorited');
+        favoriteBtn.textContent = '⭐ Favorited';
+      } else {
+        favoriteBtn.classList.remove('favorited');
+        favoriteBtn.textContent = '⭐ Favorite';
+      }
+    };
+
+    const removeFavorite = (quote) => {
+      favorites = favorites.filter(fav => fav !== quote);
+      localStorage.setItem('favoriteQuotes', JSON.stringify(favorites));
+      if (currentQuote === quote) {
+        updateFavoriteButton();
+      }
+      renderFavorites();
+      showToast('🗑️ Removed from favorites');
+    };
+
+    const renderFavorites = () => {
+      favCount.textContent = favorites.length;
+
+      if (favorites.length === 0) {
+        favoritesList.innerHTML = '<div class="empty-favorites">No favorite quotes yet. Click the ⭐ button to save quotes you love!</div>';
+        return;
+      }
+
+      favoritesList.innerHTML = favorites.map(quote => `
+        <div class="favorite-item">
+          <div class="favorite-item-text">${quote}</div>
+          <button class="remove-fav" data-quote="${quote.replace(/"/g, '&quot;')}">Remove</button>
+        </div>
+      `).join('');
+
+      favoritesList.querySelectorAll('.remove-fav').forEach(btn => {
+        btn.addEventListener('click', () => removeFavorite(btn.dataset.quote));
+      });
+    };
+
+      nextBtn.addEventListener('click', pickQuote);
+      copyBtn.addEventListener('click', copyQuote);
+      tweetBtn.addEventListener('click', tweetQuote);
+      favoriteBtn.addEventListener('click', toggleFavorite);
+      categorySelect.addEventListener('change', pickQuote);
+
+      pickQuote();
+      renderFavorites();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initQuoteGenerator);
+    } else {
+      initQuoteGenerator();
+    }
   </script>
 </body>
 </html>

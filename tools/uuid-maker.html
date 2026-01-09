@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UUID Maker | MicroTools</title>
+  <title>UUID Maker | ToolsMatic</title>
   <meta name="description" content="Generate secure UUIDs locally with one click. Uses crypto-grade randomness when available." />
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="../assets/styles.css">
@@ -12,14 +12,10 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/word-counter.html">Word Counter</a>
-        <a href="/tools/password-generator.html">Password Generator</a>
-        <a href="/tools/quote-generator.html">Quote Generator</a>
-        <a href="/tools/case-converter.html">Case Converter</a>
-        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
@@ -33,7 +29,7 @@
 
     <section class="section" aria-labelledby="uuid-what">
       <h2 id="uuid-what">What is this tool?</h2>
-      <p>The MicroTools UUID Maker creates random version 4 UUIDs using browser cryptography when available. It is perfect for unique identifiers in tests, prototypes, database seeds, or demo environments. The output follows the standard UUID format, making it safe for drop-in use across services and databases.</p>
+      <p>The ToolsMatic UUID Maker creates random version 4 UUIDs using browser cryptography when available. It is perfect for unique identifiers in tests, prototypes, database seeds, or demo environments. The output follows the standard UUID format, making it safe for drop-in use across services and databases.</p>
       <p>By keeping the experience to two buttons—generate and copy—it removes friction while still using secure randomness. You get dependable IDs without touching a CLI.</p>
       <h2>How to use this tool</h2>
       <p>Click Generate UUID to get a new identifier. Use Copy to place it on your clipboard for quick pasting into configs or code. You can generate as many as you need; each call uses fresh randomness.</p>
@@ -41,15 +37,15 @@
       <h2>Who should use it?</h2>
       <p>Developers seeding databases, QA teams creating test accounts, product managers mocking data, and students learning about identifiers can all rely on a quick generator without opening a terminal.</p>
       <p>Support teams can create correlation IDs for ticket tracking, and analytics engineers can attach UUIDs to events during local testing. Anyone who wants collision-resistant identifiers on demand can keep this tab handy.</p>
-      <h2>Why use MicroTools for this?</h2>
-      <p>MicroTools avoids bloated dependencies and accounts. The generator loads in a blink, keeps focus on the output, and avoids ads inside the tool area so you can stay on task.</p>
-      <p>The shared design across MicroTools makes this a natural companion to JSON Formatter and Password Generator during setup flows. Minimal UI and zero pop-ups keep you moving quickly.</p>
+      <h2>Why use ToolsMatic for this?</h2>
+      <p>ToolsMatic avoids bloated dependencies and accounts. The generator loads in a blink, keeps focus on the output, and avoids ads inside the tool area so you can stay on task.</p>
+      <p>The shared design across ToolsMatic makes this a natural companion to JSON Formatter and Password Generator during setup flows. Minimal UI and zero pop-ups keep you moving quickly.</p>
       <h2>Privacy & performance</h2>
       <p>UUIDs are generated locally with crypto.randomUUID when supported, or a secure fallback using crypto.getRandomValues. Nothing leaves the page. The script is minimal, preserving performance across devices.</p>
       <p>Because generation is client-side and dependency-free, it remains fast on low-powered machines and safe for offline-friendly environments. No telemetry or logging is involved, protecting identifiers you create for sensitive contexts.</p>
     </section>
   </main>
-  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const output = document.getElementById('uuid-output');
@@ -73,3 +69,5 @@
   </script>
 </body>
 </html>
+
+

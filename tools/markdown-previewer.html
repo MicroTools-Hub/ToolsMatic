@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Markdown Previewer | MicroTools</title>
+  <title>Markdown Previewer | ToolsMatic</title>
   <meta name="description" content="Preview lightweight Markdown safely in your browser. Headings, emphasis, code, and lists render instantly with no external libraries." />
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="../assets/styles.css">
@@ -12,14 +12,10 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/word-counter.html">Word Counter</a>
-        <a href="/tools/password-generator.html">Password Generator</a>
-        <a href="/tools/quote-generator.html">Quote Generator</a>
-        <a href="/tools/case-converter.html">Case Converter</a>
-        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
@@ -46,7 +42,7 @@
 
     <section class="section" aria-labelledby="md-what">
         <h2 id="md-what">What is this tool?</h2>
-        <p>The MicroTools Markdown Previewer lets you check headings, emphasis, lists, and code before publishing. It is a safe, lightweight renderer built for quick reviews of README snippets, documentation notes, and blog drafts. By converting only the essentials, it avoids surprises when you push content to repositories or CMSs.</p>
+        <p>The ToolsMatic Markdown Previewer lets you check headings, emphasis, lists, and code before publishing. It is a safe, lightweight renderer built for quick reviews of README snippets, documentation notes, and blog drafts. By converting only the essentials, it avoids surprises when you push content to repositories or CMSs.</p>
         <p>It focuses on predictable output, making it perfect for short documentation blocks, changelog entries, and snippets you paste into tickets. You get a reliable view without installing desktop editors.</p>
         <h2>How to use this tool</h2>
         <p>Write or paste Markdown in the input area and click Render. The preview shows sanitized HTML so you can confirm structure without risking embedded scripts. Use Clear to reset and start a new snippet. Basic syntax for headings, bold, italics, inline code, code blocks, and unordered lists is supported.</p>
@@ -54,15 +50,15 @@
         <h2>Who should use it?</h2>
         <p>Developers editing README files, technical writers shaping docs, educators preparing course notes, and marketers formatting release notes can all spot formatting issues quickly. It is also useful on restricted machines where installing a Markdown app is not possible.</p>
         <p>Support and success teams can preview FAQ snippets or canned responses, while students can test assignment writeups before submitting to course platforms that accept Markdown.</p>
-        <h2>Why use MicroTools for this?</h2>
-        <p>MicroTools keeps rendering simple and predictable. There are no plugins or remote calls, and the preview lives on the same page as the editor. That means you can iterate rapidly without context switching.</p>
-        <p>The unified UI across MicroTools means you can jump to the word counter or case converter to polish text, then return here to verify formatting. This keeps editing loops short when shipping documentation under deadline.</p>
+        <h2>Why use ToolsMatic for this?</h2>
+        <p>ToolsMatic keeps rendering simple and predictable. There are no plugins or remote calls, and the preview lives on the same page as the editor. That means you can iterate rapidly without context switching.</p>
+        <p>The unified UI across ToolsMatic means you can jump to the word counter or case converter to polish text, then return here to verify formatting. This keeps editing loops short when shipping documentation under deadline.</p>
         <h2>Privacy & performance</h2>
         <p>All parsing happens locally and starts from escaped text to avoid HTML injection. No content is uploaded or logged. The renderer uses a few string replacements instead of heavy libraries, preserving performance and battery life.</p>
         <p>Because nothing leaves the browser, you can preview internal documentation or NDA-bound notes safely. The lightweight script keeps performance high on low-power laptops and mobile devices, maintaining fast feedback as you edit.</p>
       </section>
   </main>
-  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const input = document.getElementById('md-input');
@@ -97,9 +93,9 @@
       if (!html) return;
       try {
         await navigator.clipboard.writeText(html);
-        if (window.microTools) window.microTools.showToast('HTML copied', 'success');
+        if (window.ToolsMatic) window.ToolsMatic.showToast('HTML copied', 'success');
       } catch (err) {
-        if (window.microTools) window.microTools.showToast('Copy failed', 'error');
+        if (window.ToolsMatic) window.ToolsMatic.showToast('Copy failed', 'error');
       }
     });
 
@@ -113,10 +109,10 @@
       link.download = 'markdown-preview.html';
       link.click();
       URL.revokeObjectURL(url);
-      if (window.microTools) window.microTools.showToast('Downloaded HTML', 'success');
+      if (window.ToolsMatic) window.ToolsMatic.showToast('Downloaded HTML', 'success');
     });
 
-    const handoff = window.microTools;
+    const handoff = window.ToolsMatic;
     const getValue = () => input.value.trim();
     const pipe = (target, slot) => {
       const value = getValue();
@@ -136,3 +132,5 @@
   </script>
 </body>
 </html>
+
+

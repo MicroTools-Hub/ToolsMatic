@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSV Inspector | MicroTools</title>
+  <title>CSV Inspector | ToolsMatic</title>
   <meta name="description" content="Validate, preview, and convert CSV locally. Detect row mismatches, header issues, and export JSON without uploads.">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="../assets/styles.css">
@@ -12,12 +12,10 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/csv-to-json.html">CSV to JSON</a>
-        <a href="/tools/json-formatter.html">JSON Formatter</a>
-        <a href="/tools/regex-tester.html">Regex Tester</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
@@ -81,7 +79,7 @@
     </section>
   </main>
 
-  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const input = document.getElementById('csv-input');
@@ -189,7 +187,7 @@
       a.download = 'csv-export.json';
       a.click();
       URL.revokeObjectURL(url);
-      if (window.microTools) window.microTools.showToast('Exported JSON', 'success');
+      if (window.ToolsMatic) window.ToolsMatic.showToast('Exported JSON', 'success');
     };
 
     analyzeBtn.addEventListener('click', inspect);
@@ -198,3 +196,5 @@
   </script>
 </body>
 </html>
+
+

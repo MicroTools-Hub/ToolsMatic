@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Timezone Converter | MicroTools</title>
+  <title>Timezone Converter | ToolsMatic</title>
   <meta name="description" content="Convert times across major timezones instantly. Pick two zones and see the matching time without leaving your browser." />
   <link rel="stylesheet" href="../assets/styles.css">
   <link rel="manifest" href="/manifest.webmanifest">
@@ -12,14 +12,10 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/word-counter.html">Word Counter</a>
-        <a href="/tools/password-generator.html">Password Generator</a>
-        <a href="/tools/quote-generator.html">Quote Generator</a>
-        <a href="/tools/case-converter.html">Case Converter</a>
-        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
@@ -43,7 +39,7 @@
 
     <section class="section" aria-labelledby="tz-what">
       <h2 id="tz-what">What is this tool?</h2>
-      <p>The MicroTools Timezone Converter shows what a time in one city equals in another. It helps teams schedule across regions without opening a calendar app. By centering only the inputs you need, it delivers a fast way to avoid missed meetings or late-night calls.</p>
+      <p>The ToolsMatic Timezone Converter shows what a time in one city equals in another. It helps teams schedule across regions without opening a calendar app. By centering only the inputs you need, it delivers a fast way to avoid missed meetings or late-night calls.</p>
       <p>It uses common zones that cover major hubs, giving you clarity for most collaboration scenarios. The output includes day information, which helps spot date rollovers.</p>
       <h2>How to use this tool</h2>
       <p>Select the source timezone, the destination timezone, set a time, and click Convert. The result shows the converted time along with today’s date in the destination zone.</p>
@@ -51,15 +47,15 @@
       <h2>Who should use it?</h2>
       <p>Remote teams planning meetings, event organizers coordinating speakers, support teams handling global SLAs, and travelers checking call windows all gain clarity quickly.</p>
       <p>Product managers coordinating releases across regions and customer success reps scheduling onboarding with international clients can keep this open to avoid guesswork.</p>
-      <h2>Why use MicroTools for this?</h2>
-      <p>MicroTools is fast, local, and distraction-free. It focuses on the conversion instead of burying you in menus, making it ideal when you just need a time match.</p>
-      <p>The unified MicroTools feel means you can pair this with the unit converter or number converter while assembling regional documentation, staying in one consistent workflow.</p>
+      <h2>Why use ToolsMatic for this?</h2>
+      <p>ToolsMatic is fast, local, and distraction-free. It focuses on the conversion instead of burying you in menus, making it ideal when you just need a time match.</p>
+      <p>The unified ToolsMatic feel means you can pair this with the unit converter or number converter while assembling regional documentation, staying in one consistent workflow.</p>
       <h2>Privacy & performance</h2>
       <p>Conversions rely on the browser’s Intl API; no data is sent to servers. The code is lightweight, keeping the page quick even on slower networks.</p>
       <p>Because there are no external requests, you can use it on slow or offline-friendly connections. Inputs stay local, which is helpful when planning sensitive meetings.</p>
     </section>
   </main>
-  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const zones = [
@@ -110,3 +106,5 @@
   </script>
 </body>
 </html>
+
+

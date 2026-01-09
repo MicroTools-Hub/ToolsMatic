@@ -3,179 +3,734 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gradient Generator | MicroTools</title>
-  <meta name="description" content="Blend colors, set angles, and copy CSS backgrounds with the MicroTools Gradient Generator. Fast, local, and perfect for designers and developers." />
+  <title>CSS Gradient Generator - Create Beautiful Gradients | ToolsMatic</title>
+  <meta name="description" content="Create stunning CSS gradients with live preview. Linear, radial, and conic gradients, multiple color stops, angle control, and instant CSS code. Export as PNG or JPG." />
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="../assets/styles.css">
-  <script src="/assets/site.js" defer></script>
+  <script src="../assets/site.js" defer></script>
+  <style>
+    .gradient-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    
+    .gradient-preview-box {
+      width: 100%;
+      height: 300px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: all 0.2s ease;
+    }
+    
+    .color-stop-item {
+      display: grid;
+      grid-template-columns: 40px 1fr 60px 30px;
+      gap: 8px;
+      align-items: center;
+      padding: 10px;
+      background: var(--surface);
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+    
+    .color-stop-item input[type="color"] {
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    
+    .color-stop-item input[type="range"] {
+      width: 100%;
+      cursor: pointer;
+      height: 6px;
+    }
+    
+    .color-stop-item input[type="number"] {
+      width: 60px;
+      padding: 6px;
+    }
+    
+    .gradient-type-btns {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .gradient-type-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .gradient-type-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+    
+    .gradient-type-btn:hover:not(.active) {
+      background: var(--hover);
+    }
+    
+    .preset-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 15px;
+    }
+    
+    .preset-btn {
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+    
+    .angle-control {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .angle-control input[type="range"] {
+      flex: 1;
+      height: 6px;
+      cursor: pointer;
+    }
+    
+    .angle-display {
+      width: 45px;
+      text-align: right;
+      font-weight: bold;
+    }
+    
+    .quick-angles {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-top: 10px;
+    }
+    
+    .quick-angle-btn {
+      padding: 6px 8px;
+      font-size: 12px;
+    }
+    
+    .radial-pos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 10px;
+    }
+    
+    .export-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    @media (max-width: 768px) {
+      .gradient-controls {
+        grid-template-columns: 1fr;
+      }
+      
+      .gradient-preview-box {
+        height: 250px;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/">
-        <span>Micro</span>Tools
-      </a>
+      <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/word-counter.html">Word Counter</a>
-        <a href="/tools/password-generator.html">Password Generator</a>
-        <a href="/tools/quote-generator.html">Quote Generator</a>
-        <a href="/tools/case-converter.html">Case Converter</a>
-        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
 
   <main>
     <section class="tool-shell">
-      <h1>Gradient Generator</h1>
-      <div class="inline-controls" style="flex-wrap:wrap;gap:8px;">
-        <label class="label" for="angle">Angle (deg)</label>
-        <input id="angle" type="number" class="small-input" value="135" min="0" max="360">
-        <button id="add-color" class="ghost">Add color stop</button>
+      <h1>Advanced CSS Gradient Generator</h1>
+      
+      <div class="gradient-controls">
+        <!-- Left Panel: Controls -->
+        <div>
+          <!-- Gradient Type Selector -->
+          <label class="label">Gradient Type</label>
+          <div class="gradient-type-btns">
+            <button class="gradient-type-btn active" data-type="linear">Linear</button>
+            <button class="gradient-type-btn" data-type="radial">Radial</button>
+            <button class="gradient-type-btn" data-type="conic">Conic</button>
+          </div>
+
+          <!-- Linear Direction Controls -->
+          <div id="linearControls">
+            <label class="label">Angle</label>
+            <div class="angle-control">
+              <input type="range" id="gradAngle" min="0" max="360" value="90">
+              <span class="angle-display" id="angleDisplay">90°</span>
+            </div>
+            <div class="quick-angles">
+              <button class="ghost quick-angle-btn" onclick="setAngle(0)">Top</button>
+              <button class="ghost quick-angle-btn" onclick="setAngle(90)">Right</button>
+              <button class="ghost quick-angle-btn" onclick="setAngle(180)">Bottom</button>
+              <button class="ghost quick-angle-btn" onclick="setAngle(270)">Left</button>
+              <button class="ghost quick-angle-btn" onclick="setAngle(45)">↗</button>
+              <button class="ghost quick-angle-btn" onclick="setAngle(135)">↘</button>
+              <button class="ghost quick-angle-btn" onclick="setAngle(225)">↙</button>
+              <button class="ghost quick-angle-btn" onclick="setAngle(315)">↖</button>
+            </div>
+          </div>
+
+          <!-- Radial Controls -->
+          <div id="radialControls" style="display: none;">
+            <label class="label">Shape</label>
+            <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+              <button class="ghost" onclick="setRadialShape('circle')">Circle</button>
+              <button class="ghost" onclick="setRadialShape('ellipse')">Ellipse</button>
+            </div>
+            <label class="label">Position</label>
+            <div class="radial-pos-grid">
+              <button class="ghost quick-angle-btn" onclick="setRadialPos('top left')">↖</button>
+              <button class="ghost quick-angle-btn" onclick="setRadialPos('top center')">↑</button>
+              <button class="ghost quick-angle-btn" onclick="setRadialPos('top right')">↗</button>
+              <button class="ghost quick-angle-btn" onclick="setRadialPos('center left')">←</button>
+              <button class="ghost quick-angle-btn" onclick="setRadialPos('center')">◉</button>
+              <button class="ghost quick-angle-btn" onclick="setRadialPos('center right')">→</button>
+              <button class="ghost quick-angle-btn" onclick="setRadialPos('bottom left')">↙</button>
+              <button class="ghost quick-angle-btn" onclick="setRadialPos('bottom center')">↓</button>
+              <button class="ghost quick-angle-btn" onclick="setRadialPos('bottom right')">↘</button>
+            </div>
+          </div>
+
+          <!-- Conic Controls -->
+          <div id="conicControls" style="display: none;">
+            <label class="label">Starting Angle</label>
+            <div class="angle-control">
+              <input type="range" id="conicAngle" min="0" max="360" value="0">
+              <span class="angle-display" id="conicAngleDisplay">0°</span>
+            </div>
+          </div>
+
+          <!-- Color Stops -->
+          <div style="margin-top: 25px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+              <label class="label" style="margin: 0;">Color Stops</label>
+              <button class="ghost" id="addColorBtn" onclick="addColorStop()">+ Add</button>
+            </div>
+            <div id="colorStops"></div>
+          </div>
+
+          <!-- Preset Gradients -->
+          <div style="margin-top: 25px;">
+            <label class="label">Presets</label>
+            <div class="preset-grid">
+              <button class="ghost preset-btn" onclick="applyPreset('instagram')">Instagram</button>
+              <button class="ghost preset-btn" onclick="applyPreset('neon')">Neon</button>
+              <button class="ghost preset-btn" onclick="applyPreset('pastel')">Pastel</button>
+              <button class="ghost preset-btn" onclick="applyPreset('sunset')">Sunset</button>
+              <button class="ghost preset-btn" onclick="applyPreset('ocean')">Ocean</button>
+              <button class="ghost preset-btn" onclick="applyPreset('cyberpunk')">Cyberpunk</button>
+              <button class="ghost preset-btn" onclick="applyPreset('forest')">Forest</button>
+              <button class="ghost preset-btn" onclick="applyPreset('cherry')">Cherry</button>
+              <button class="ghost preset-btn" onclick="applyPreset('lavender')">Lavender</button>
+              <button class="ghost preset-btn" onclick="applyPreset('midnight')">Midnight</button>
+              <button class="ghost preset-btn" onclick="applyPreset('fire')">Fire</button>
+              <button class="ghost preset-btn" onclick="applyPreset('aurora')">Aurora</button>
+            </div>
+          </div>
+
+          <!-- Advanced Options -->
+          <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border);">
+            <label class="label">Advanced Options</label>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+              <button class="ghost" onclick="randomizeGradient()">🎲 Randomize</button>
+              <button class="ghost" onclick="reverseGradient()">↔️ Reverse</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Panel: Preview & Code -->
+        <div>
+          <!-- Live Preview -->
+          <div style="margin-bottom: 20px;">
+            <label class="label">Live Preview</label>
+            <div id="gradientPreview" class="gradient-preview-box"></div>
+          </div>
+
+          <!-- CSS Code Output -->
+          <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+              <label class="label" style="margin: 0;">CSS Code</label>
+              <button class="ghost" onclick="copyGradientCSS()">📋 Copy</button>
+            </div>
+            <div class="result-box" id="cssCode" style="max-height: 150px; overflow-y: auto;"></div>
+          </div>
+
+          <!-- Export Options -->
+          <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border);">
+            <label class="label">Export as Image</label>
+            <div class="export-controls">
+              <div>
+                <label class="label" style="font-size: 12px;">Width (px)</label>
+                <input type="number" id="exportWidth" value="1080" min="100" max="4000">
+              </div>
+              <div>
+                <label class="label" style="font-size: 12px;">Height (px)</label>
+                <input type="number" id="exportHeight" value="1080" min="100" max="4000">
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 12px;">
+              <button class="ghost" onclick="exportGradient('png')" style="flex: 1;">🖼️ Export PNG</button>
+              <button class="ghost" onclick="exportGradient('jpg')" style="flex: 1;">🖼️ Export JPG</button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div id="color-list" class="stack" style="display:flex;flex-direction:column;gap:8px;margin-top:8px;"></div>
-      <div id="color-chips" class="inline-controls" style="margin:8px 0;flex-wrap:wrap;gap:8px;"></div>
-      <div class="inline-controls" style="margin-top:8px;flex-wrap:wrap;gap:8px;">
-        <button id="copy" data-primary>Copy CSS</button>
-        <button id="copy-tailwind">Copy Tailwind</button>
-        <button id="swap">Shuffle colors</button>
-      </div>
-      <div class="gradient-preview" id="preview"></div>
-      <div class="result-box" id="css-output"></div>
-      <div class="result-box" id="tw-output"></div>
     </section>
 
-    <section class="section" aria-labelledby="gg-what">
-      <h2 id="gg-what">What is this tool?</h2>
-      <p>The MicroTools Gradient Generator helps you design smooth linear gradients for backgrounds, buttons, and overlays. You can pick two colors, set an angle, and immediately see the result along with copy-ready CSS. It exists to bridge the gap between quick experimentation and production-safe output so you do not have to open a heavy design suite for a simple background.</p>
-      <p>Because gradients are native CSS, the preview you see here matches what ships to production. That fidelity means you can trust the result for marketing sites, product UIs, or decks without extra tweaking.</p>
-      <h2>How to use this tool</h2>
-      <p>Choose two colors with the pickers or paste hex values. Adjust the angle to control the direction of the blend. The preview updates instantly and the CSS output box shows the exact declaration to drop into your stylesheet. Click Copy CSS to send the declaration to your clipboard.</p>
-      <p>Experiment by rotating the angle in small increments to see how light and shadow shift across components. If you are preparing design tokens, pick brand colors, set a consistent angle (like 135 degrees), and reuse the CSS line in multiple components for visual cohesion. Regenerate as often as you need; everything updates live.</p>
-      <h2>Who should use it?</h2>
-      <p>Designers looking to match a brand palette, developers styling a landing page, and marketers building quick mockups can all rely on this tool. It is also handy for students learning CSS who want to see how angle values map to visual directions.</p>
-      <p>Engineers working in Tailwind or inline styles can copy the declaration as-is. Slide creators and content teams can grab the CSS and convert it to design tool fills to keep decks aligned with product visuals.</p>
-      <h2>Why use MicroTools for this?</h2>
-      <p>MicroTools keeps the interaction tight: no logins, no canvas lag, and no external libraries. The gradient preview uses native CSS, so what you see is exactly what ships in production. Because the output is a single line, it is easy to paste into Tailwind configs, inline styles, or plain CSS files.</p>
-      <p>The consistent UI across MicroTools means you can jump from gradients to the color picker to refine your palette, or to the image compressor to optimize assets, without changing mental models. That speed matters when you are polishing details close to launch.</p>
-      <h2>Privacy & performance</h2>
-      <p>All calculations and previews are rendered locally. Color choices stay in your browser; there is no call to remote APIs. The page ships minimal JavaScript and leans on native inputs, which keeps performance high even on low-powered devices.</p>
-      <p>With no tracking scripts or remote dependencies, performance remains strong on mobile data and older laptops. You can finalize gradients offline-friendly, knowing nothing is stored or transmitted.</p>
+    <section class="section">
+      <h2>What is This Tool?</h2>
+      <p>The CSS Gradient Generator is a professional-grade tool for creating beautiful, custom gradients with instant live preview. Design linear gradients at any angle, radial gradients with multiple shapes, and conic gradients with full color control. Export your gradients as production-ready CSS code or high-resolution images. Perfect for web designers, developers, digital artists, and anyone creating visuals for websites, applications, presentations, or print media.</p>
+      
+      <h2>How to Use This Tool</h2>
+      <p>Start by selecting your gradient type: Linear (directional), Radial (circular), or Conic (rotating colors). For linear gradients, adjust the angle using the slider or preset buttons. For radial gradients, choose between circle or ellipse shapes and set the center position. For conic gradients, control the starting angle. Add unlimited color stops using the color picker, adjust their positions along the gradient, and watch changes update in real-time. Copy the generated CSS code directly into your project, or export as PNG/JPG images up to 4000x4000 pixels.</p>
+      
+      <h2>Who Should Use It?</h2>
+      <p><strong>Web Designers:</strong> Create stunning website backgrounds, hero sections, buttons, cards, and UI elements. Generate professional gradients without Photoshop or Figma.</p>
+      <p><strong>Developers:</strong> Instantly get production-ready CSS code to paste into stylesheets. No image assets needed—pure CSS for better performance and scalability.</p>
+      <p><strong>Digital Artists:</strong> Create gradient backgrounds for digital art, illustrations, and creative projects. Export high-resolution images for print or screen use.</p>
+      <p><strong>Content Creators:</strong> Make eye-catching social media graphics, YouTube thumbnails, and promotional materials with beautiful gradients.</p>
+      
+      <h2>Why Use ToolsMatic for This?</h2>
+      <p><strong>Live Preview:</strong> See changes instantly as you design. Real-time feedback speeds up the creative process dramatically.</p>
+      <p><strong>Multiple Gradient Types:</strong> Linear, radial, and conic gradients cover all use cases. Position radial gradients anywhere on the canvas.</p>
+      <p><strong>12 Beautiful Presets:</strong> Instagram, Neon, Pastel, Sunset, Ocean, Cyberpunk, Forest, Cherry, Lavender, Midnight, Fire, and Aurora presets provide instant inspiration.</p>
+      <p><strong>Export Options:</strong> Copy CSS code directly, download PNG/JPG images up to 4000x4000 pixels, or use as-is in your designs.</p>
+      
+      <h2>Privacy & Performance</h2>
+      <p>All gradient generation happens in your browser—no server uploads, no tracking, no data collection. Your creative work stays on your device. Image export uses client-side canvas rendering for instant downloads without server processing. Completely private, completely free, zero setup required.</p>
     </section>
   </main>
 
-  <footer>
-    MicroTools · Fast, privacy-first utilities for the web.
-  </footer>
+  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
 
   <script>
-    const angleInput = document.getElementById('angle');
-    const preview = document.getElementById('preview');
-    const cssOutput = document.getElementById('css-output');
-    const twOutput = document.getElementById('tw-output');
-    const copyBtn = document.getElementById('copy');
-    const copyTailwindBtn = document.getElementById('copy-tailwind');
-    const swapBtn = document.getElementById('swap');
-    const addBtn = document.getElementById('add-color');
-    const colorList = document.getElementById('color-list');
-    const colorChips = document.getElementById('color-chips');
-
-    let colors = ['#22d3ee', '#a855f7'];
-
-    const clampAngle = (val) => Math.max(0, Math.min(360, val));
-
-    const renderChips = () => {
-      colorChips.innerHTML = colors.map((c) => `<span style="display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,0.03);">` +
-        `<span style="width:16px;height:16px;border-radius:50%;background:${c};border:1px solid rgba(255,255,255,0.3);"></span>` +
-        `<span style="font-size:12px;color:${c.toLowerCase()==='#ffffff' ? '#0b1222' : 'var(--muted)'};">${c}</span>` +
-      `</span>`).join('');
+    // Gradient State
+    let gradientState = {
+      type: 'linear',
+      angle: 90,
+      colors: [
+        { color: '#FF6B6B', position: 0 },
+        { color: '#4ECDC4', position: 100 }
+      ],
+      radialShape: 'circle',
+      radialPos: 'center',
+      conicAngle: 0
     };
 
-    const update = () => {
-      const angle = clampAngle(parseInt(angleInput.value, 10) || 0);
-      angleInput.value = angle;
-      const stops = colors.join(', ');
-      const css = `background: linear-gradient(${angle}deg, ${stops});`;
-      const tw = `bg-[linear-gradient(${angle}deg,_${colors.join(',_')})]`;
-      preview.style.background = `linear-gradient(${angle}deg, ${stops})`;
-      cssOutput.textContent = css;
-      twOutput.textContent = tw;
-      renderChips();
-    };
-
-    const renderList = () => {
-      colorList.innerHTML = '';
-      colors.forEach((color, idx) => {
-        const row = document.createElement('div');
-        row.className = 'inline-controls';
-        row.style.gap = '8px';
-        row.innerHTML = `<label class="label">Color ${idx + 1}</label>` +
-          `<input type="color" data-idx="${idx}" value="${color}" class="small-input">` +
-          `<button class="ghost" data-remove="${idx}" ${colors.length <= 2 ? 'disabled' : ''}>Remove</button>`;
-        colorList.appendChild(row);
-      });
-      colorList.querySelectorAll('input[type=color]').forEach((input) => {
-        input.addEventListener('input', (e) => {
-          const i = Number(e.target.getAttribute('data-idx'));
-          colors[i] = e.target.value;
-          update();
-        });
-      });
-      colorList.querySelectorAll('button[data-remove]').forEach((btn) => {
-        btn.addEventListener('click', (e) => {
-          const i = Number(e.target.getAttribute('data-remove'));
-          if (colors.length <= 2) return;
-          colors.splice(i, 1);
-          renderList();
-          update();
-        });
-      });
-    };
-
-    const addColor = () => {
-      const last = colors[colors.length - 1];
-      colors.push(last);
-      renderList();
-      update();
-    };
-
-    const shuffle = () => {
-      if (colors.length < 2) return;
-      colors = colors.sort(() => Math.random() - 0.5);
-      renderList();
-      update();
-    };
-
-    const copyCss = async () => {
-      if (!cssOutput.textContent) return;
-      try {
-        await navigator.clipboard.writeText(cssOutput.textContent);
-        if (window.microTools) window.microTools.showToast('CSS copied', 'success');
-      } catch (err) {
-        cssOutput.textContent = `${cssOutput.textContent} (copy failed)`;
-        if (window.microTools) window.microTools.showToast('Copy failed', 'error');
+    // Preset Gradients
+    const gradientPresets = {
+      instagram: {
+        type: 'linear',
+        angle: 45,
+        colors: [
+          { color: '#F09433', position: 0 },
+          { color: '#E6683C', position: 25 },
+          { color: '#DC2743', position: 50 },
+          { color: '#CC2366', position: 75 },
+          { color: '#BC1888', position: 100 }
+        ]
+      },
+      neon: {
+        type: 'linear',
+        angle: 90,
+        colors: [
+          { color: '#00FF00', position: 0 },
+          { color: '#FF00FF', position: 50 },
+          { color: '#00FFFF', position: 100 }
+        ]
+      },
+      pastel: {
+        type: 'linear',
+        angle: 135,
+        colors: [
+          { color: '#FFB6C1', position: 0 },
+          { color: '#DDA0DD', position: 50 },
+          { color: '#B0E0E6', position: 100 }
+        ]
+      },
+      sunset: {
+        type: 'linear',
+        angle: 90,
+        colors: [
+          { color: '#FF6B35', position: 0 },
+          { color: '#FFA500', position: 25 },
+          { color: '#FFD700', position: 50 },
+          { color: '#FF69B4', position: 100 }
+        ]
+      },
+      ocean: {
+        type: 'radial',
+        radialShape: 'circle',
+        radialPos: 'center',
+        colors: [
+          { color: '#87CEEB', position: 0 },
+          { color: '#4169E1', position: 50 },
+          { color: '#000080', position: 100 }
+        ]
+      },
+      cyberpunk: {
+        type: 'linear',
+        angle: 45,
+        colors: [
+          { color: '#0D47A1', position: 0 },
+          { color: '#7B1FA2', position: 33 },
+          { color: '#F50057', position: 66 },
+          { color: '#00BCD4', position: 100 }
+        ]
+      },
+      forest: {
+        type: 'linear',
+        angle: 180,
+        colors: [
+          { color: '#2D5016', position: 0 },
+          { color: '#4CAF50', position: 50 },
+          { color: '#8BC34A', position: 100 }
+        ]
+      },
+      cherry: {
+        type: 'conic',
+        conicAngle: 0,
+        colors: [
+          { color: '#C41E3A', position: 0 },
+          { color: '#E75C78', position: 50 },
+          { color: '#FFC0CB', position: 100 }
+        ]
+      },
+      lavender: {
+        type: 'linear',
+        angle: 135,
+        colors: [
+          { color: '#967BB6', position: 0 },
+          { color: '#B19CD9', position: 50 },
+          { color: '#E6D5E8', position: 100 }
+        ]
+      },
+      midnight: {
+        type: 'radial',
+        radialShape: 'circle',
+        radialPos: 'center',
+        colors: [
+          { color: '#0F0C29', position: 0 },
+          { color: '#302B63', position: 50 },
+          { color: '#24243E', position: 100 }
+        ]
+      },
+      fire: {
+        type: 'linear',
+        angle: 90,
+        colors: [
+          { color: '#FFA500', position: 0 },
+          { color: '#FF4500', position: 33 },
+          { color: '#DC143C', position: 66 },
+          { color: '#8B0000', position: 100 }
+        ]
+      },
+      aurora: {
+        type: 'linear',
+        angle: 45,
+        colors: [
+          { color: '#00FF7F', position: 0 },
+          { color: '#00CED1', position: 50 },
+          { color: '#FF1493', position: 100 }
+        ]
       }
     };
 
-    const copyTailwind = async () => {
-      if (!twOutput.textContent) return;
-      try {
-        await navigator.clipboard.writeText(twOutput.textContent);
-        if (window.microTools) window.microTools.showToast('Tailwind class copied', 'success');
-      } catch (err) {
-        if (window.microTools) window.microTools.showToast('Copy failed', 'error');
+    // Initialize
+    function init() {
+      updateTypeControls('linear');
+      renderColorStops();
+      updatePreview();
+      
+      // Angle slider
+      document.getElementById('gradAngle').addEventListener('input', (e) => {
+        gradientState.angle = parseInt(e.target.value);
+        document.getElementById('angleDisplay').textContent = e.target.value + '°';
+        updatePreview();
+      });
+      
+      // Conic angle slider
+      document.getElementById('conicAngle').addEventListener('input', (e) => {
+        gradientState.conicAngle = parseInt(e.target.value);
+        document.getElementById('conicAngleDisplay').textContent = e.target.value + '°';
+        updatePreview();
+      });
+      
+      // Type buttons
+      document.querySelectorAll('.gradient-type-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const type = btn.dataset.type;
+          changeGradientType(type);
+        });
+      });
+    }
+
+    function updateTypeControls(type) {
+      document.querySelectorAll('.gradient-type-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.type === type);
+      });
+      
+      document.getElementById('linearControls').style.display = type === 'linear' ? 'block' : 'none';
+      document.getElementById('radialControls').style.display = type === 'radial' ? 'block' : 'none';
+      document.getElementById('conicControls').style.display = type === 'conic' ? 'block' : 'none';
+    }
+
+    function changeGradientType(type) {
+      gradientState.type = type;
+      updateTypeControls(type);
+      updatePreview();
+    }
+
+    function setAngle(angle) {
+      gradientState.angle = angle;
+      document.getElementById('gradAngle').value = angle;
+      document.getElementById('angleDisplay').textContent = angle + '°';
+      updatePreview();
+    }
+
+    function setRadialShape(shape) {
+      gradientState.radialShape = shape;
+      updatePreview();
+    }
+
+    function setRadialPos(pos) {
+      gradientState.radialPos = pos;
+      updatePreview();
+    }
+
+    function renderColorStops() {
+      const container = document.getElementById('colorStops');
+      container.innerHTML = '';
+      
+      gradientState.colors.forEach((stop, idx) => {
+        const div = document.createElement('div');
+        div.className = 'color-stop-item';
+        
+        div.innerHTML = `
+          <input type="color" value="${stop.color}" onchange="updateColor(${idx}, this.value)">
+          <input type="range" min="0" max="100" value="${stop.position}" onchange="updatePosition(${idx}, this.value)">
+          <input type="number" min="0" max="100" value="${stop.position}" onchange="updatePosition(${idx}, this.value)">
+          <button class="ghost" onclick="removeColor(${idx})" ${gradientState.colors.length === 2 ? 'disabled' : ''} style="padding: 6px 8px; font-size: 12px;">🗑️</button>
+        `;
+        container.appendChild(div);
+      });
+      
+      document.getElementById('addColorBtn').disabled = gradientState.colors.length >= 6;
+    }
+
+    function updateColor(idx, color) {
+      gradientState.colors[idx].color = color;
+      updatePreview();
+    }
+
+    function updatePosition(idx, position) {
+      gradientState.colors[idx].position = parseInt(position);
+      renderColorStops();
+      updatePreview();
+    }
+
+    function addColorStop() {
+      if (gradientState.colors.length < 6) {
+        const lastPos = gradientState.colors[gradientState.colors.length - 1].position;
+        gradientState.colors.push({
+          color: '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0'),
+          position: Math.min(lastPos + 20, 100)
+        });
+        renderColorStops();
+        updatePreview();
       }
-    };
+    }
 
-    angleInput.addEventListener('input', update);
-    addBtn.addEventListener('click', addColor);
-    copyBtn.addEventListener('click', copyCss);
-    copyTailwindBtn.addEventListener('click', copyTailwind);
-    swapBtn.addEventListener('click', shuffle);
+    function removeColor(idx) {
+      if (gradientState.colors.length > 2) {
+        gradientState.colors.splice(idx, 1);
+        renderColorStops();
+        updatePreview();
+      }
+    }
 
-    renderList();
-    update();
+    function updatePreview() {
+      const preview = document.getElementById('gradientPreview');
+      const css = generateGradientCSS();
+      
+      preview.style.background = css;
+      document.getElementById('cssCode').textContent = `background: ${css};`;
+    }
+
+    function generateGradientCSS() {
+      const colorStr = gradientState.colors
+        .sort((a, b) => a.position - b.position)
+        .map(s => `${s.color} ${s.position}%`)
+        .join(', ');
+      
+      let css = '';
+      switch(gradientState.type) {
+        case 'linear':
+          css = `linear-gradient(${gradientState.angle}deg, ${colorStr})`;
+          break;
+        case 'radial':
+          css = `radial-gradient(${gradientState.radialShape} at ${gradientState.radialPos}, ${colorStr})`;
+          break;
+        case 'conic':
+          css = `conic-gradient(from ${gradientState.conicAngle}deg, ${colorStr})`;
+          break;
+      }
+      return css;
+    }
+
+    function copyGradientCSS() {
+      const css = document.getElementById('cssCode').textContent;
+      navigator.clipboard.writeText(css).then(() => {
+        if (window.ToolsMatic) window.ToolsMatic.showToast('CSS copied!', 'success');
+      });
+    }
+
+    function applyPreset(presetName) {
+      const preset = gradientPresets[presetName];
+      gradientState.type = preset.type;
+      gradientState.angle = preset.angle || 90;
+      gradientState.radialShape = preset.radialShape || 'circle';
+      gradientState.radialPos = preset.radialPos || 'center';
+      gradientState.conicAngle = preset.conicAngle || 0;
+      gradientState.colors = JSON.parse(JSON.stringify(preset.colors));
+      
+      updateTypeControls(preset.type);
+      renderColorStops();
+      if (document.getElementById('gradAngle')) {
+        document.getElementById('gradAngle').value = gradientState.angle;
+        document.getElementById('angleDisplay').textContent = gradientState.angle + '°';
+      }
+      updatePreview();
+      if (window.ToolsMatic) window.ToolsMatic.showToast(`${presetName.charAt(0).toUpperCase() + presetName.slice(1)} preset applied!`, 'success');
+    }
+
+    function randomizeGradient() {
+      const randomColor = () => '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+      const numColors = Math.floor(Math.random() * 5) + 2;
+      gradientState.colors = [];
+      
+      for (let i = 0; i < numColors; i++) {
+        gradientState.colors.push({
+          color: randomColor(),
+          position: Math.round((100 / (numColors - 1)) * i)
+        });
+      }
+      
+      const types = ['linear', 'radial', 'conic'];
+      gradientState.type = types[Math.floor(Math.random() * types.length)];
+      gradientState.angle = Math.floor(Math.random() * 360);
+      
+      updateTypeControls(gradientState.type);
+      renderColorStops();
+      if (document.getElementById('gradAngle')) {
+        document.getElementById('gradAngle').value = gradientState.angle;
+        document.getElementById('angleDisplay').textContent = gradientState.angle + '°';
+      }
+      updatePreview();
+      if (window.ToolsMatic) window.ToolsMatic.showToast('Random gradient generated!', 'success');
+    }
+
+    function reverseGradient() {
+      gradientState.colors.reverse();
+      gradientState.colors = gradientState.colors.map((c, idx, arr) => ({
+        color: c.color,
+        position: 100 - c.position
+      }));
+      renderColorStops();
+      updatePreview();
+      if (window.ToolsMatic) window.ToolsMatic.showToast('Gradient reversed!', 'success');
+    }
+
+    function exportGradient(format) {
+      const width = parseInt(document.getElementById('exportWidth').value);
+      const height = parseInt(document.getElementById('exportHeight').value);
+      
+      if (width < 100 || width > 4000 || height < 100 || height > 4000) {
+        if (window.ToolsMatic) window.ToolsMatic.showToast('Dimensions must be 100-4000px', 'error');
+        return;
+      }
+      
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      
+      // Apply gradient to canvas
+      if (gradientState.type === 'linear') {
+        const angle = gradientState.angle * Math.PI / 180;
+        const gradient = ctx.createLinearGradient(
+          width/2 - Math.cos(angle - Math.PI/2) * width/2,
+          height/2 - Math.sin(angle - Math.PI/2) * height/2,
+          width/2 + Math.cos(angle - Math.PI/2) * width/2,
+          height/2 + Math.sin(angle - Math.PI/2) * height/2
+        );
+        gradientState.colors.forEach(c => gradient.addColorStop(c.position / 100, c.color));
+        ctx.fillStyle = gradient;
+      } else if (gradientState.type === 'radial') {
+        const posMap = {
+          'center': [width/2, height/2],
+          'top left': [0, 0],
+          'top center': [width/2, 0],
+          'top right': [width, 0],
+          'center left': [0, height/2],
+          'center right': [width, height/2],
+          'bottom left': [0, height],
+          'bottom center': [width/2, height],
+          'bottom right': [width, height]
+        };
+        const pos = posMap[gradientState.radialPos] || [width/2, height/2];
+        const gradient = ctx.createRadialGradient(pos[0], pos[1], 0, pos[0], pos[1], Math.max(width, height)/2);
+        gradientState.colors.forEach(c => gradient.addColorStop(c.position / 100, c.color));
+        ctx.fillStyle = gradient;
+      } else if (gradientState.type === 'conic') {
+        const gradient = ctx.createConicGradient(gradientState.conicAngle * Math.PI / 180, width/2, height/2);
+        gradientState.colors.forEach(c => gradient.addColorStop(c.position / 100, c.color));
+        ctx.fillStyle = gradient;
+      }
+      
+      ctx.fillRect(0, 0, width, height);
+      
+      canvas.toBlob(blob => {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `gradient.${format}`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        if (window.ToolsMatic) window.ToolsMatic.showToast(`Gradient exported as ${format.toUpperCase()}!`, 'success');
+      }, `image/${format}`);
+    }
+
+    // Initialize on page load
+    init();
   </script>
 </body>
 </html>
+

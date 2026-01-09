@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QR Code Maker | MicroTools</title>
+  <title>QR Code Maker | ToolsMatic</title>
   <meta name="description" content="Generate QR codes locally for links and text. No uploads or external requests—rendered instantly in your browser." />
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="../assets/styles.css">
@@ -12,14 +12,10 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/word-counter.html">Word Counter</a>
-        <a href="/tools/password-generator.html">Password Generator</a>
-        <a href="/tools/quote-generator.html">Quote Generator</a>
-        <a href="/tools/case-converter.html">Case Converter</a>
-        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
@@ -43,7 +39,7 @@
 
     <section class="section" aria-labelledby="qr-what">
       <h2 id="qr-what">What is this tool?</h2>
-      <p>The MicroTools QR Code Maker turns any short text or URL into a crisp QR code. It is useful for sharing Wi-Fi info, event links, product pages, or quick notes without sending data to a remote service. You get a reliable code that is printable, scannable, and unbranded—ideal for professional use.</p>
+      <p>The ToolsMatic QR Code Maker turns any short text or URL into a crisp QR code. It is useful for sharing Wi-Fi info, event links, product pages, or quick notes without sending data to a remote service. You get a reliable code that is printable, scannable, and unbranded—ideal for professional use.</p>
       <p>The generator focuses on the essentials: text in, PNG out. That simplicity keeps it dependable for last-minute needs like booth signage, classroom handouts, or shipping labels.</p>
       <h2>How to use this tool</h2>
       <p>Enter your text, choose a size, and click Generate. The code renders instantly below. Use Download PNG to save it and drop it into slides, flyers, or emails. Because rendering is local, you can regenerate repeatedly until it looks right.</p>
@@ -51,15 +47,15 @@
       <h2>Who should use it?</h2>
       <p>Event organizers printing check-in posters, marketers pointing to campaigns, teachers sharing classroom resources, and makers labeling hardware all gain a quick way to package a link into a scannable square.</p>
       <p>Field teams can attach QR stickers to equipment for manuals, and support reps can send quick codes for self-serve guides. Anyone who needs a one-step way to connect people from physical space to digital content can rely on this page.</p>
-      <h2>Why use MicroTools for this?</h2>
-      <p>MicroTools stays fast, focused, and offline-friendly. There are no watermarks or remote requests, and you can produce a code moments before you need it. The interface keeps the controls simple so you can get back to your task.</p>
-      <p>The consistent layout across MicroTools makes it easy to pair this with the URL encoder or Base64 encoder when prepping links. You avoid learning new controls and can create codes even on devices with tight restrictions.</p>
+      <h2>Why use ToolsMatic for this?</h2>
+      <p>ToolsMatic stays fast, focused, and offline-friendly. There are no watermarks or remote requests, and you can produce a code moments before you need it. The interface keeps the controls simple so you can get back to your task.</p>
+      <p>The consistent layout across ToolsMatic makes it easy to pair this with the URL encoder or Base64 encoder when prepping links. You avoid learning new controls and can create codes even on devices with tight restrictions.</p>
       <h2>Privacy & performance</h2>
       <p>QR generation happens fully in the page using JavaScript and canvas. Your text never leaves the browser. The implementation is lightweight and avoids external libraries, which keeps load times and performance scores high.</p>
       <p>Because no network calls occur, you can generate codes in low-connectivity environments or private windows. Sensitive URLs stay local, and the output appears instantly without waiting on external APIs.</p>
     </section>
   </main>
-  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
 
   <script>
     // Minimal QR generation adapted from a small matrix algorithm
@@ -176,7 +172,7 @@
         return canvas.toDataURL('image/png');
       };
 
-      window.__microQr = (text, size, fg, bg) => paint(generate(text || 'MicroTools'), size, fg, bg);
+      window.__microQr = (text, size, fg, bg) => paint(generate(text || 'ToolsMatic'), size, fg, bg);
     })();
 
     const preview = document.getElementById('qr-preview');
@@ -193,7 +189,7 @@
         const input = textInput.value.trim();
         if (input.length === 0) status.textContent = 'Using placeholder URL while the input is empty.';
         if (input.length > 160) throw new Error('Input too long. Keep under 160 characters for reliable scans.');
-        const url = window.__microQr(input || 'https://microtools.local', size, fore.value, back.value);
+        const url = window.__microQr(input || 'https://ToolsMatic.local', size, fore.value, back.value);
         preview.style.backgroundImage = `url(${url})`;
         preview.textContent = '';
         download.href = url;
@@ -218,3 +214,5 @@
   </script>
 </body>
 </html>
+
+

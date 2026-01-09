@@ -103,7 +103,25 @@
     });
   };
 
-  const handoffKey = 'microtools-handoff';
+  const initThemeToggle = () => {
+    const toggleBtn = document.getElementById('theme-toggle');
+    if (!toggleBtn) return;
+    const isDark = localStorage.getItem('mt-theme') === 'dark';
+    if (isDark) {
+      document.documentElement.classList.add('dark-mode');
+      toggleBtn.textContent = '☀️';
+    } else {
+      toggleBtn.textContent = '🌙';
+    }
+    toggleBtn.addEventListener('click', () => {
+      const isDarkMode = document.documentElement.classList.toggle('dark-mode');
+      localStorage.setItem('mt-theme', isDarkMode ? 'dark' : 'light');
+      toggleBtn.textContent = isDarkMode ? '☀️' : '🌙';
+      if (window.toolsMatic) window.toolsMatic.showToast(isDarkMode ? 'Dark mode on' : 'Light mode on', 'info');
+    });
+  };
+
+  const handoffKey = 'toolsmatic-handoff';
 
   const setHandoff = (payload) => {
     try {
@@ -132,8 +150,15 @@
     window.location.href = target;
   };
 
-  window.microTools = { showToast, handoffAndGo, consumeHandoff };
+  window.toolsMatic = { showToast, handoffAndGo, consumeHandoff };
   ensureAds();
   registerSW();
   bindKeyboard();
+
+  // Initialize theme toggle when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initThemeToggle);
+  } else {
+    initThemeToggle();
+  }
 })();

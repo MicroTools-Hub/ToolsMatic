@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Base64 Encoder | MicroTools</title>
-  <meta name="description" content="Encode or decode Base64 text instantly with the MicroTools Base64 Encoder. All processing stays in your browser." />
+  <title>Base64 Encoder | ToolsMatic</title>
+  <meta name="description" content="Encode or decode Base64 text instantly with the ToolsMatic Base64 Encoder. All processing stays in your browser." />
   <link rel="manifest" href="/manifest.webmanifest">
   <script src="/assets/site.js" defer></script>
   <link rel="stylesheet" href="../assets/styles.css">
@@ -12,14 +12,10 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/"><span>Micro</span>Tools</a>
+      <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/word-counter.html">Word Counter</a>
-        <a href="/tools/password-generator.html">Password Generator</a>
-        <a href="/tools/quote-generator.html">Quote Generator</a>
-        <a href="/tools/case-converter.html">Case Converter</a>
-        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
@@ -42,7 +38,7 @@
 
     <section class="section" aria-labelledby="b64-what">
       <h2 id="b64-what">What is this tool?</h2>
-      <p>The MicroTools Base64 Encoder converts plain text to Base64 and back. It is useful for quickly packaging data for URLs, basic auth headers, or debugging payloads without installing command-line utilities. The page gives you a reliable, zero-install way to check encodings when you are away from your usual toolkit.</p>
+      <p>The ToolsMatic Base64 Encoder converts plain text to Base64 and back. It is useful for quickly packaging data for URLs, basic auth headers, or debugging payloads without installing command-line utilities. The page gives you a reliable, zero-install way to check encodings when you are away from your usual toolkit.</p>
       <p>Base64 is often used in HTTP bodies, email attachments, and small inline assets. Having a clean encoder and decoder ready in the browser saves time and prevents mistakes when handling tokens or embedded strings.</p>
       <h2>How to use this tool</h2>
       <p>Paste text in the input box. Click Encode to turn it into Base64 or Decode to bring a Base64 string back to readable text. The status bar confirms success or shows decode errors so you know when a string is malformed.</p>
@@ -50,15 +46,15 @@
       <h2>Who should use it?</h2>
       <p>Developers preparing test payloads, support engineers reading encoded screenshots or tokens, and learners exploring how Base64 works can all benefit. It is also handy when you need a quick encode on a locked-down machine where installing tools is not allowed.</p>
       <p>Security and DevOps teams can confirm that secrets are not accidentally exposed in encoded form, while marketers embedding small assets can ensure their strings are well-formed before sending campaigns.</p>
-      <h2>Why use MicroTools for this?</h2>
+      <h2>Why use ToolsMatic for this?</h2>
       <p>There are no pop-ups, no accounts, and no extra dependencies. The tool loads instantly and keeps focus on the conversion. Because it is web-based, it works anywhere you have a browser—desktop or mobile.</p>
-      <p>The consistent MicroTools layout means you can switch to the URL encoder, JSON formatter, or Regex tester without relearning controls. That makes it easy to chain small tasks together during debugging.</p>
+      <p>The consistent ToolsMatic layout means you can switch to the URL encoder, JSON formatter, or Regex tester without relearning controls. That makes it easy to chain small tasks together during debugging.</p>
       <h2>Privacy & performance</h2>
       <p>Encoding and decoding run fully in your browser using built-in JavaScript functions. Nothing is uploaded, logged, or stored. The page ships minimal code, maintaining strong performance and keeping battery impact low.</p>
       <p>Because there are zero external calls, you can use the encoder offline-friendly or on restricted networks. Your inputs remain on your device, which is critical when handling tokens or snippets that must stay confidential.</p>
     </section>
   </main>
-  <footer>MicroTools · Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const input = document.getElementById('b64-input');
@@ -105,3 +101,5 @@
   </script>
 </body>
 </html>
+
+

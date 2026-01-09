@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Case Converter | MicroTools</title>
-  <meta name="description" content="Convert text between upper, lower, title, and sentence case instantly with the MicroTools Case Converter. Runs locally for writers and editors who need quick formatting."/>
+  <title>Case Converter | ToolsMatic</title>
+  <meta name="description" content="Convert text between upper, lower, title, and sentence case instantly with the ToolsMatic Case Converter. Runs locally for writers and editors who need quick formatting."/>
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="../assets/styles.css">
   <script src="/assets/site.js" defer></script>
@@ -13,15 +13,11 @@
   <header>
     <div class="nav">
       <a class="brand" href="/">
-        <span>Micro</span>Tools
+        ToolsMatic
       </a>
       <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/tools/word-counter.html">Word Counter</a>
-        <a href="/tools/password-generator.html">Password Generator</a>
-        <a href="/tools/quote-generator.html">Quote Generator</a>
-        <a href="/tools/case-converter.html">Case Converter</a>
-        <a href="/tools/gradient-generator.html">Gradient Generator</a>
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
       </div>
     </div>
   </header>
@@ -54,7 +50,7 @@
 
     <section class="section" aria-labelledby="cc-what">
       <h2 id="cc-what">What is this tool?</h2>
-      <p>The MicroTools Case Converter rewrites your text into lowercase, uppercase, title case, or sentence case with a single click. It helps you keep copy consistent across headlines, captions, and UI labels without retyping. The goal is to remove tedious manual edits so you can focus on the message instead of formatting.</p>
+      <p>The ToolsMatic Case Converter rewrites your text into lowercase, uppercase, title case, or sentence case with a single click. It helps you keep copy consistent across headlines, captions, and UI labels without retyping. The goal is to remove tedious manual edits so you can focus on the message instead of formatting.</p>
       <p>Because the converter lives in the browser, it pairs well with any writing environment—CMS, docs, design tools, or chat platforms. It gives predictable, opinionated outputs that match common style guides for digital products and marketing content.</p>
       <h2>How to use this tool</h2>
       <p>Paste text into the first field, select the case you need, and the converted version appears in the output box immediately. Use lowercase for accessibility-friendly URLs, uppercase for labels, title case for headlines, and sentence case for long-form paragraphs. Copy the result straight into your document or CMS.</p>
@@ -62,9 +58,9 @@
       <h2>Who should use it?</h2>
       <p>Writers tightening headings, product teams aligning button labels, editors enforcing style guides, and students formatting essays can all speed up their workflow. It is also handy for support teams who paste consistent responses across chats and tickets.</p>
       <p>Designers and UX writers can test how long strings appear in uppercase within tight layouts, while engineers can normalize incoming text before using it in mocks or data fixtures. Anyone tasked with maintaining consistency across multiple channels benefits from the one-click conversions.</p>
-      <h2>Why use MicroTools for this?</h2>
-      <p>MicroTools keeps the interface lean so you can focus on the text. There is nothing to install, no sign-up wall, and no ads inside the tool area. The conversions are opinionated but predictable, which makes the output easy to trust and reuse.</p>
-      <p>The shared MicroTools design means you can jump between the case converter, word counter, and text diff checker without relearning controls. That reduces context switching, especially when polishing copy right before a deadline.</p>
+      <h2>Why use ToolsMatic for this?</h2>
+      <p>ToolsMatic keeps the interface lean so you can focus on the text. There is nothing to install, no sign-up wall, and no ads inside the tool area. The conversions are opinionated but predictable, which makes the output easy to trust and reuse.</p>
+      <p>The shared ToolsMatic design means you can jump between the case converter, word counter, and text diff checker without relearning controls. That reduces context switching, especially when polishing copy right before a deadline.</p>
       <h2>Privacy & performance</h2>
       <p>Conversion happens locally in your browser, so sensitive snippets never leave the page. The JavaScript is minimal and ships alongside the HTML, keeping load times short and Lighthouse performance strong even on mobile data.</p>
       <p>No network calls, trackers, or extra libraries are involved. You can safely paste NDA-bound text, switch casing, and close the tab knowing nothing was transmitted or stored.</p>
@@ -72,7 +68,7 @@
   </main>
 
   <footer>
-    MicroTools · Fast, privacy-first utilities for the web.
+    ToolsMatic · Fast, privacy-first utilities for the web.
   </footer>
 
   <script>
@@ -124,13 +120,13 @@
       if (!output.value) return;
       try {
         await navigator.clipboard.writeText(output.value);
-        if (window.microTools) window.microTools.showToast('Copied output', 'success');
+        if (window.ToolsMatic) window.ToolsMatic.showToast('Copied output', 'success');
       } catch (err) {
-        if (window.microTools) window.microTools.showToast('Copy failed', 'error');
+        if (window.ToolsMatic) window.ToolsMatic.showToast('Copy failed', 'error');
       }
     });
 
-    const handoff = window.microTools;
+    const handoff = window.ToolsMatic;
     const getPipeValue = () => (output.value.trim() || input.value.trim());
     const pipe = (target, slot) => {
       const value = getPipeValue();
@@ -151,3 +147,4 @@
   </script>
 </body>
 </html>
+
