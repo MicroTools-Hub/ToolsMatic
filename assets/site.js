@@ -17,56 +17,6 @@
     }
   };
 
-  const createUpdateBanner = (onApply) => {
-    const existing = document.querySelector('.update-banner');
-    if (existing) existing.remove();
-    const bar = document.createElement('div');
-    bar.className = 'update-banner';
-    bar.innerHTML = '<span>New version ready. Refresh to get the latest tools.</span>';
-    const btn = document.createElement('button');
-    btn.textContent = 'Update now';
-    btn.addEventListener('click', onApply);
-    bar.appendChild(btn);
-    document.body.appendChild(bar);
-  };
-
-  const registerSW = () => {
-    if (!('serviceWorker' in navigator)) return;
-    let refreshing = false;
-
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (refreshing) return;
-      refreshing = true;
-      window.location.reload();
-    });
-
-    navigator.serviceWorker
-      .register('/sw.js')
-      .then((reg) => {
-        const prompt = (worker) => {
-          if (!worker) return;
-          createUpdateBanner(() => {
-            worker.postMessage('SKIP_WAITING');
-          });
-        };
-
-        if (reg.waiting) {
-          prompt(reg.waiting);
-        }
-
-        reg.addEventListener('updatefound', () => {
-          const newWorker = reg.installing;
-          if (!newWorker) return;
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              prompt(newWorker);
-            }
-          });
-        });
-      })
-      .catch(() => {});
-  };
-
   const ensureToastHost = () => {
     let host = document.querySelector('.toast-host');
     if (!host) {
@@ -152,7 +102,6 @@
 
   window.toolsMatic = { showToast, handoffAndGo, consumeHandoff };
   ensureAds();
-  registerSW();
   bindKeyboard();
 
   // Initialize theme toggle when DOM is ready

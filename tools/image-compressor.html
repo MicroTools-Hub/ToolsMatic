@@ -119,6 +119,12 @@
     };
 
     copyBtn.addEventListener('click', copyImage);
+    downloadLink.addEventListener('click', (e) => {
+      if (!currentDataUrl) {
+        e.preventDefault();
+        statusBox.textContent = 'Compress an image before downloading.';
+      }
+    });
     resetBtn.addEventListener('click', () => {
       fileInput.value = '';
       preview.style.backgroundImage = 'none';

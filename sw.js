@@ -1,65 +1,60 @@
-const CACHE_NAME = 'microtools-v3';
-const ASSETS = [
-  '/',
-  '/index.html',
-  '/assets/styles.css',
-  '/assets/site.js',
-  '/tools/word-counter.html',
-  '/tools/password-generator.html',
-  '/tools/quote-generator.html',
-  '/tools/case-converter.html',
-  '/tools/gradient-generator.html',
-  '/tools/json-formatter.html',
-  '/tools/base64-encoder.html',
-  '/tools/image-compressor.html',
-  '/tools/qr-code-maker.html',
-  '/tools/contrast-checker.html',
-  '/tools/jwt-inspector.html',
-  '/tools/csv-inspector.html',
-  '/tools/bmi-calculator.html',
-  '/tools/markdown-previewer.html',
-  '/tools/regex-tester.html',
-  '/tools/uuid-maker.html',
-  '/tools/url-encoder.html',
-  '/tools/color-picker.html',
-  '/tools/unit-converter.html',
-  '/tools/timezone-converter.html',
-  '/tools/text-diff-checker.html',
-  '/tools/lorem-ipsum-generator.html',
-  '/tools/csv-to-json.html',
-  '/tools/html-minifier.html',
-  '/tools/number-converter.html'
-];
+const CACHE_PREFIX = 'tm-static';
+const CACHE_VERSION = 'v1';
+const STATIC_CACHE = `${CACHE_PREFIX}-${CACHE_VERSION}`;
+const STATIC_DESTINATIONS = new Set(['style', 'script', 'image', 'font']);
+const STATIC_PATTERN = /\.(?:css|js|mjs|png|jpe?g|gif|svg|webp|ico|woff2?|ttf|eot|otf)$/i;
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)).then(() => self.skipWaiting())
-  );
-});
-
-self.addEventListener('message', (event) => {
-  if (event.data === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
+  event.waitUntil(self.skipWaiting());
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))).then(() => self.clients.claim())
+    (async () => {
+      const keys = await caches.keys();
+      await Promise.all(keys.filter((key) => key !== STATIC_CACHE).map((key) => caches.delete(key)));
+      await self.clients.claim();
+    })()
   );
+});
+
+self.addEventListener('message', (event) => {
+  if (!event.data) return;
+  if (event.data === 'SKIP_WAITING' || event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   if (request.method !== 'GET') return;
-  event.respondWith(
-    caches.match(request).then((cached) => {
-      if (cached) return cached;
-      return fetch(request).then((resp) => {
-        const clone = resp.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
-        return resp;
-      }).catch(() => cached);
-    })
-  );
+
+  const accept = request.headers.get('accept') || '';
+  const url = new URL(request.url);
+  const isHTML = request.mode === 'navigate' || accept.includes('text/html');
+  const isStatic = STATIC_DESTINATIONS.has(request.destination) || STATIC_PATTERN.test(url.pathname);
+
+  if (isHTML) {
+    event.respondWith(fetch(request, { cache: 'no-store' }).catch(() => caches.match(request)));
+    return;
+  }
+
+  if (isStatic) {
+    event.respondWith(
+      (async () => {
+        const cache = await caches.open(STATIC_CACHE);
+        const cached = await cache.match(request);
+        if (cached) return cached;
+
+        const response = await fetch(request);
+        if (response && response.ok && response.type !== 'opaque') {
+          cache.put(request, response.clone());
+        }
+        return response;
+      })()
+    );
+    return;
+  }
+
+  event.respondWith(fetch(request));
 });

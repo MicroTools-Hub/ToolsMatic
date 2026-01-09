@@ -163,5 +163,38 @@
   <footer>
     ToolsMatic · Fast, privacy-first utilities for the web. · <a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a> · <a href="/contact.html">Contact</a>
   </footer>
+
+  <script>
+    (function () {
+      if (!('serviceWorker' in navigator)) return;
+
+      const register = () => {
+        navigator.serviceWorker
+          .register('/sw.js')
+          .then((reg) => {
+            const applyUpdate = (worker) => worker && worker.postMessage({ type: 'SKIP_WAITING' });
+
+            if (reg.waiting) applyUpdate(reg.waiting);
+
+            reg.addEventListener('updatefound', () => {
+              const newWorker = reg.installing;
+              if (!newWorker) return;
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  applyUpdate(newWorker);
+                }
+              });
+            });
+          })
+          .catch(() => {});
+      };
+
+      if (document.readyState === 'complete') {
+        register();
+      } else {
+        window.addEventListener('load', register);
+      }
+    })();
+  </script>
 </body>
 </html>

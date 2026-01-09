@@ -179,6 +179,7 @@
     const textInput = document.getElementById('qr-text');
     const sizeInput = document.getElementById('qr-size');
     const download = document.getElementById('qr-download');
+    let currentDataUrl = '';
     const status = document.getElementById('qr-status');
     const fore = document.getElementById('qr-fore');
     const back = document.getElementById('qr-back');
@@ -190,24 +191,32 @@
         if (input.length === 0) status.textContent = 'Using placeholder URL while the input is empty.';
         if (input.length > 160) throw new Error('Input too long. Keep under 160 characters for reliable scans.');
         const url = window.__microQr(input || 'https://ToolsMatic.local', size, fore.value, back.value);
+        currentDataUrl = url;
         preview.style.backgroundImage = `url(${url})`;
         preview.textContent = '';
-        download.href = url;
         status.textContent = `QR ready at ${size}px. Contrast ratio depends on your colors—verify with a quick scan.`;
       } catch (err) {
         preview.textContent = 'Input too long for quick QR (keep under ~70 bytes).';
         preview.style.backgroundImage = 'none';
+        currentDataUrl = '';
         status.textContent = err.message;
       }
     };
     document.getElementById('qr-generate').addEventListener('click', render);
-    document.getElementById('qr-clear').addEventListener('click', () => { textInput.value=''; preview.textContent='QR preview'; preview.style.backgroundImage='none'; status.textContent='Cleared. Add text to generate.'; });
+    document.getElementById('qr-clear').addEventListener('click', () => { textInput.value=''; preview.textContent='QR preview'; preview.style.backgroundImage='none'; currentDataUrl=''; status.textContent='Cleared. Add text to generate.'; });
     document.getElementById('qr-copy').addEventListener('click', async () => {
-      if (!download.href) return;
-      try { const data = await (await fetch(download.href)).blob(); await navigator.clipboard.write([new ClipboardItem({ 'image/png': data })]); status.textContent = 'PNG copied to clipboard.'; window.microToast?.('QR copied'); } catch (err) { status.textContent = `Copy failed: ${err.message}`; }
+      if (!currentDataUrl) { status.textContent = 'Generate a QR first, then copy.'; return; }
+      try { const data = await (await fetch(currentDataUrl)).blob(); await navigator.clipboard.write([new ClipboardItem({ 'image/png': data })]); status.textContent = 'PNG copied to clipboard.'; window.microToast?.('QR copied'); } catch (err) { status.textContent = `Copy failed: ${err.message}`; }
     });
-    document.getElementById('qr-download').addEventListener('click', (e) => {
-      if (!download.href) e.preventDefault();
+    document.getElementById('qr-download').addEventListener('click', () => {
+      if (!currentDataUrl) { status.textContent = 'Generate a QR first, then download.'; return; }
+      const link = document.createElement('a');
+      link.href = currentDataUrl;
+      link.download = 'qr-code.png';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.microToast?.('QR downloaded');
     });
     [fore, back].forEach(el => el.addEventListener('input', () => status.textContent = 'Adjusted colors—regenerate to apply.'));
     render();
