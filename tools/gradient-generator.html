@@ -190,6 +190,17 @@
 
   <main>
     <section class="tool-shell">
+      <div class="mobile-notice" style="background: var(--primary); color: white; padding: 15px; border-radius: 10px; margin-bottom: 20px; display: none; text-align: center;">
+        <p style="margin: 0; font-size: 14px; line-height: 1.6;">
+          📱 <strong>Mobile Tip:</strong> For the best experience with all features, consider switching to Desktop Site in your browser menu. This gives you easier access to all color controls and advanced options!
+        </p>
+      </div>
+      <script>
+        // Show notice only on mobile devices
+        if (window.innerWidth <= 768) {
+          document.querySelector('.mobile-notice').style.display = 'block';
+        }
+      </script>
       <h1>Advanced CSS Gradient Generator</h1>
       
       <div class="gradient-controls">
