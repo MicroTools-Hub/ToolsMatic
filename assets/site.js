@@ -101,6 +101,8 @@
   };
 
   window.toolsMatic = { showToast, handoffAndGo, consumeHandoff };
+  // Back-compat alias for pages using `ToolsMatic` casing
+  window.ToolsMatic = window.toolsMatic;
   ensureAds();
   bindKeyboard();
 

@@ -85,13 +85,40 @@
     .preset-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
+      gap: 10px;
       margin-top: 15px;
     }
     
     .preset-btn {
-      padding: 8px 12px;
-      font-size: 13px;
+      padding: 12px 14px;
+      font-size: 14px;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+    
+    .custom-color-btn {
+      padding: 15px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-bottom: 15px;
+      transition: all 0.2s;
+    }
+    
+    .custom-color-btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    
+    .custom-color-input {
+      display: none;
     }
     
     .angle-control {
@@ -234,9 +261,19 @@
             <div id="colorStops"></div>
           </div>
 
+          <!-- Custom Color Picker -->
+          <div style="margin-top: 25px;">
+            <label class="label">Custom Color</label>
+            <button class="custom-color-btn" onclick="document.getElementById('customColorInput').click()">
+              <span style="font-size: 24px;">🎨</span>
+              <span>Pick Your Own Color</span>
+            </button>
+            <input type="color" id="customColorInput" class="custom-color-input" onchange="applyCustomColor(this.value)">
+          </div>
+
           <!-- Preset Gradients -->
           <div style="margin-top: 25px;">
-            <label class="label">Presets</label>
+            <label class="label">Gradient Presets</label>
             <div class="preset-grid">
               <button class="ghost preset-btn" onclick="applyPreset('instagram')">Instagram</button>
               <button class="ghost preset-btn" onclick="applyPreset('neon')">Neon</button>
@@ -250,6 +287,44 @@
               <button class="ghost preset-btn" onclick="applyPreset('midnight')">Midnight</button>
               <button class="ghost preset-btn" onclick="applyPreset('fire')">Fire</button>
               <button class="ghost preset-btn" onclick="applyPreset('aurora')">Aurora</button>
+              <button class="ghost preset-btn" onclick="applyPreset('peach')">Peach</button>
+              <button class="ghost preset-btn" onclick="applyPreset('mint')">Mint</button>
+              <button class="ghost preset-btn" onclick="applyPreset('rose')">Rose</button>
+              <button class="ghost preset-btn" onclick="applyPreset('tropical')">Tropical</button>
+              <button class="ghost preset-btn" onclick="applyPreset('candy')">Candy</button>
+              <button class="ghost preset-btn" onclick="applyPreset('autumn')">Autumn</button>
+              <button class="ghost preset-btn" onclick="applyPreset('winter')">Winter</button>
+              <button class="ghost preset-btn" onclick="applyPreset('spring')">Spring</button>
+              <button class="ghost preset-btn" onclick="applyPreset('summer')">Summer</button>
+              <button class="ghost preset-btn" onclick="applyPreset('vampire')">Vampire</button>
+              <button class="ghost preset-btn" onclick="applyPreset('cosmic')">Cosmic</button>
+              <button class="ghost preset-btn" onclick="applyPreset('desert')">Desert</button>
+              <button class="ghost preset-btn" onclick="applyPreset('arctic')">Arctic</button>
+              <button class="ghost preset-btn" onclick="applyPreset('volcano')">Volcano</button>
+              <button class="ghost preset-btn" onclick="applyPreset('emerald')">Emerald</button>
+              <button class="ghost preset-btn" onclick="applyPreset('sapphire')">Sapphire</button>
+              <button class="ghost preset-btn" onclick="applyPreset('ruby')">Ruby</button>
+              <button class="ghost preset-btn" onclick="applyPreset('gold')">Gold</button>
+              <button class="ghost preset-btn" onclick="applyPreset('silver')">Silver</button>
+              <button class="ghost preset-btn" onclick="applyPreset('bronze')">Bronze</button>
+              <button class="ghost preset-btn" onclick="applyPreset('cotton')">Cotton</button>
+              <button class="ghost preset-btn" onclick="applyPreset('bubblegum')">Bubblegum</button>
+              <button class="ghost preset-btn" onclick="applyPreset('lemon')">Lemon</button>
+              <button class="ghost preset-btn" onclick="applyPreset('grape')">Grape</button>
+              <button class="ghost preset-btn" onclick="applyPreset('watermelon')">Watermelon</button>
+              <button class="ghost preset-btn" onclick="applyPreset('blueberry')">Blueberry</button>
+              <button class="ghost preset-btn" onclick="applyPreset('strawberry')">Strawberry</button>
+              <button class="ghost preset-btn" onclick="applyPreset('mango')">Mango</button>
+              <button class="ghost preset-btn" onclick="applyPreset('kiwi')">Kiwi</button>
+              <button class="ghost preset-btn" onclick="applyPreset('matrix')">Matrix</button>
+              <button class="ghost preset-btn" onclick="applyPreset('neon-pink')">Neon Pink</button>
+              <button class="ghost preset-btn" onclick="applyPreset('neon-blue')">Neon Blue</button>
+              <button class="ghost preset-btn" onclick="applyPreset('royal')">Royal</button>
+              <button class="ghost preset-btn" onclick="applyPreset('valentine')">Valentine</button>
+              <button class="ghost preset-btn" onclick="applyPreset('halloween')">Halloween</button>
+              <button class="ghost preset-btn" onclick="applyPreset('christmas')">Christmas</button>
+              <button class="ghost preset-btn" onclick="applyPreset('earth')">Earth</button>
+              <button class="ghost preset-btn" onclick="applyPreset('mars')">Mars</button>
             </div>
           </div>
 
@@ -458,6 +533,366 @@
           { color: '#00CED1', position: 50 },
           { color: '#FF1493', position: 100 }
         ]
+      },
+      peach: {
+        type: 'linear',
+        angle: 90,
+        colors: [
+          { color: '#FFDFBA', position: 0 },
+          { color: '#FFB88C', position: 50 },
+          { color: '#FF9770', position: 100 }
+        ]
+      },
+      mint: {
+        type: 'linear',
+        angle: 135,
+        colors: [
+          { color: '#98FF98', position: 0 },
+          { color: '#7FFFD4', position: 50 },
+          { color: '#00FA9A', position: 100 }
+        ]
+      },
+      rose: {
+        type: 'radial',
+        radialShape: 'circle',
+        radialPos: 'center',
+        colors: [
+          { color: '#FF69B4', position: 0 },
+          { color: '#FF1493', position: 50 },
+          { color: '#C71585', position: 100 }
+        ]
+      },
+      tropical: {
+        type: 'linear',
+        angle: 45,
+        colors: [
+          { color: '#FFD700', position: 0 },
+          { color: '#FF6347', position: 33 },
+          { color: '#20B2AA', position: 66 },
+          { color: '#9370DB', position: 100 }
+        ]
+      },
+      candy: {
+        type: 'linear',
+        angle: 90,
+        colors: [
+          { color: '#FF69B4', position: 0 },
+          { color: '#FFB6C1', position: 25 },
+          { color: '#DDA0DD', position: 50 },
+          { color: '#DA70D6', position: 75 },
+          { color: '#FF00FF', position: 100 }
+        ]
+      },
+      autumn: {
+        type: 'linear',
+        angle: 180,
+        colors: [
+          { color: '#FF4500', position: 0 },
+          { color: '#FFA500', position: 33 },
+          { color: '#DAA520', position: 66 },
+          { color: '#8B4513', position: 100 }
+        ]
+      },
+      winter: {
+        type: 'radial',
+        radialShape: 'circle',
+        radialPos: 'center',
+        colors: [
+          { color: '#E0F2F1', position: 0 },
+          { color: '#B2EBF2', position: 50 },
+          { color: '#4DD0E1', position: 100 }
+        ]
+      },
+      spring: {
+        type: 'linear',
+        angle: 45,
+        colors: [
+          { color: '#FFE4E1', position: 0 },
+          { color: '#FFB6C1', position: 33 },
+          { color: '#98FB98', position: 66 },
+          { color: '#87CEEB', position: 100 }
+        ]
+      },
+      summer: {
+        type: 'linear',
+        angle: 90,
+        colors: [
+          { color: '#FFD700', position: 0 },
+          { color: '#FFA07A', position: 50 },
+          { color: '#1E90FF', position: 100 }
+        ]
+      },
+      vampire: {
+        type: 'linear',
+        angle: 180,
+        colors: [
+          { color: '#8B0000', position: 0 },
+          { color: '#DC143C', position: 50 },
+          { color: '#000000', position: 100 }
+        ]
+      },
+      cosmic: {
+        type: 'conic',
+        conicAngle: 0,
+        colors: [
+          { color: '#000080', position: 0 },
+          { color: '#4B0082', position: 25 },
+          { color: '#8B00FF', position: 50 },
+          { color: '#FF00FF', position: 75 },
+          { color: '#000080', position: 100 }
+        ]
+      },
+      desert: {
+        type: 'linear',
+        angle: 90,
+        colors: [
+          { color: '#F4A460', position: 0 },
+          { color: '#D2691E', position: 50 },
+          { color: '#8B4513', position: 100 }
+        ]
+      },
+      arctic: {
+        type: 'linear',
+        angle: 180,
+        colors: [
+          { color: '#F0F8FF', position: 0 },
+          { color: '#B0E0E6', position: 50 },
+          { color: '#4682B4', position: 100 }
+        ]
+      },
+      volcano: {
+        type: 'radial',
+        radialShape: 'circle',
+        radialPos: 'center',
+        colors: [
+          { color: '#FFD700', position: 0 },
+          { color: '#FF4500', position: 33 },
+          { color: '#8B0000', position: 66 },
+          { color: '#000000', position: 100 }
+        ]
+      },
+      emerald: {
+        type: 'linear',
+        angle: 135,
+        colors: [
+          { color: '#50C878', position: 0 },
+          { color: '#00A86B', position: 50 },
+          { color: '#006400', position: 100 }
+        ]
+      },
+      sapphire: {
+        type: 'linear',
+        angle: 90,
+        colors: [
+          { color: '#0F52BA', position: 0 },
+          { color: '#082567', position: 50 },
+          { color: '#000080', position: 100 }
+        ]
+      },
+      ruby: {
+        type: 'radial',
+        radialShape: 'circle',
+        radialPos: 'center',
+        colors: [
+          { color: '#E0115F', position: 0 },
+          { color: '#C41E3A', position: 50 },
+          { color: '#8B0000', position: 100 }
+        ]
+      },
+      gold: {
+        type: 'linear',
+        angle: 45,
+        colors: [
+          { color: '#FFD700', position: 0 },
+          { color: '#FFA500', position: 50 },
+          { color: '#FF8C00', position: 100 }
+        ]
+      },
+      silver: {
+        type: 'linear',
+        angle: 90,
+        colors: [
+          { color: '#F8F8FF', position: 0 },
+          { color: '#C0C0C0', position: 50 },
+          { color: '#808080', position: 100 }
+        ]
+      },
+      bronze: {
+        type: 'linear',
+        angle: 135,
+        colors: [
+          { color: '#CD7F32', position: 0 },
+          { color: '#8B4513', position: 50 },
+          { color: '#654321', position: 100 }
+        ]
+      },
+      cotton: {
+        type: 'radial',
+        radialShape: 'circle',
+        radialPos: 'center',
+        colors: [
+          { color: '#FFFAFA', position: 0 },
+          { color: '#FFE4E1', position: 50 },
+          { color: '#FFB6C1', position: 100 }
+        ]
+      },
+      bubblegum: {
+        type: 'linear',
+        angle: 90,
+        colors: [
+          { color: '#FFC1CC', position: 0 },
+          { color: '#FF69B4', position: 50 },
+          { color: '#FF1493', position: 100 }
+        ]
+      },
+      lemon: {
+        type: 'linear',
+        angle: 180,
+        colors: [
+          { color: '#FFFACD', position: 0 },
+          { color: '#FFFF00', position: 50 },
+          { color: '#FFD700', position: 100 }
+        ]
+      },
+      grape: {
+        type: 'linear',
+        angle: 45,
+        colors: [
+          { color: '#8B008B', position: 0 },
+          { color: '#9370DB', position: 50 },
+          { color: '#BA55D3', position: 100 }
+        ]
+      },
+      watermelon: {
+        type: 'linear',
+        angle: 90,
+        colors: [
+          { color: '#FF6B6B', position: 0 },
+          { color: '#FF1744', position: 50 },
+          { color: '#4CAF50', position: 100 }
+        ]
+      },
+      blueberry: {
+        type: 'radial',
+        radialShape: 'circle',
+        radialPos: 'center',
+        colors: [
+          { color: '#8A2BE2', position: 0 },
+          { color: '#4B0082', position: 50 },
+          { color: '#191970', position: 100 }
+        ]
+      },
+      strawberry: {
+        type: 'linear',
+        angle: 135,
+        colors: [
+          { color: '#FF6B6B', position: 0 },
+          { color: '#FF1744', position: 50 },
+          { color: '#C62828', position: 100 }
+        ]
+      },
+      mango: {
+        type: 'linear',
+        angle: 90,
+        colors: [
+          { color: '#FFEB3B', position: 0 },
+          { color: '#FFA726', position: 50 },
+          { color: '#FF6F00', position: 100 }
+        ]
+      },
+      kiwi: {
+        type: 'linear',
+        angle: 180,
+        colors: [
+          { color: '#8BC34A', position: 0 },
+          { color: '#558B2F', position: 50 },
+          { color: '#33691E', position: 100 }
+        ]
+      },
+      matrix: {
+        type: 'linear',
+        angle: 180,
+        colors: [
+          { color: '#00FF00', position: 0 },
+          { color: '#008000', position: 50 },
+          { color: '#003300', position: 100 }
+        ]
+      },
+      'neon-pink': {
+        type: 'linear',
+        angle: 45,
+        colors: [
+          { color: '#FF10F0', position: 0 },
+          { color: '#FF00FF', position: 50 },
+          { color: '#C71585', position: 100 }
+        ]
+      },
+      'neon-blue': {
+        type: 'linear',
+        angle: 90,
+        colors: [
+          { color: '#00FFFF', position: 0 },
+          { color: '#0080FF', position: 50 },
+          { color: '#0000FF', position: 100 }
+        ]
+      },
+      royal: {
+        type: 'linear',
+        angle: 135,
+        colors: [
+          { color: '#4B0082', position: 0 },
+          { color: '#8B008B', position: 33 },
+          { color: '#FFD700', position: 66 },
+          { color: '#FF0000', position: 100 }
+        ]
+      },
+      valentine: {
+        type: 'radial',
+        radialShape: 'circle',
+        radialPos: 'center',
+        colors: [
+          { color: '#FFC0CB', position: 0 },
+          { color: '#FF69B4', position: 50 },
+          { color: '#FF1493', position: 100 }
+        ]
+      },
+      halloween: {
+        type: 'linear',
+        angle: 90,
+        colors: [
+          { color: '#FFA500', position: 0 },
+          { color: '#FF4500', position: 33 },
+          { color: '#8B008B', position: 66 },
+          { color: '#000000', position: 100 }
+        ]
+      },
+      christmas: {
+        type: 'linear',
+        angle: 45,
+        colors: [
+          { color: '#FF0000', position: 0 },
+          { color: '#228B22', position: 50 },
+          { color: '#FFFFFF', position: 100 }
+        ]
+      },
+      earth: {
+        type: 'radial',
+        radialShape: 'circle',
+        radialPos: 'center',
+        colors: [
+          { color: '#87CEEB', position: 0 },
+          { color: '#228B22', position: 50 },
+          { color: '#8B4513', position: 100 }
+        ]
+      },
+      mars: {
+        type: 'linear',
+        angle: 90,
+        colors: [
+          { color: '#CD5C5C', position: 0 },
+          { color: '#8B4513', position: 50 },
+          { color: '#A0522D', position: 100 }
+        ]
       }
     };
 
@@ -608,6 +1043,29 @@
       navigator.clipboard.writeText(css).then(() => {
         if (window.ToolsMatic) window.ToolsMatic.showToast('CSS copied!', 'success');
       });
+    }
+
+    function applyCustomColor(color) {
+      gradientState.type = 'linear';
+      gradientState.angle = 90;
+      gradientState.colors = [
+        { color: color, position: 0 },
+        { color: adjustBrightness(color, -40), position: 100 }
+      ];
+      
+      updateTypeControls('linear');
+      renderColorStops();
+      updatePreview();
+      if (window.ToolsMatic) window.ToolsMatic.showToast('Custom color applied!', 'success');
+    }
+    
+    function adjustBrightness(color, percent) {
+      const num = parseInt(color.replace('#', ''), 16);
+      const amt = Math.round(2.55 * percent);
+      const R = Math.max(0, Math.min(255, (num >> 16) + amt));
+      const G = Math.max(0, Math.min(255, (num >> 8 & 0x00FF) + amt));
+      const B = Math.max(0, Math.min(255, (num & 0x0000FF) + amt));
+      return '#' + (0x1000000 + (R << 16) + (G << 8) + B).toString(16).slice(1);
     }
 
     function applyPreset(presetName) {
