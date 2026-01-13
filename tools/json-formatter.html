@@ -567,16 +567,19 @@
     };
 
     const reverseJSON = () => {
-      if (!jsonData) {
+      const parsed = parseJSON();
+      if (!parsed) {
         showStatus('Format JSON first', 'error');
         return;
       }
-      if (Array.isArray(jsonData)) {
-        jsonData.reverse();
-        input.value = JSON.stringify(jsonData, null, 2);
-        formatJSON();
+      if (Array.isArray(parsed)) {
+        const reversed = parsed.reverse();
+        input.value = JSON.stringify(reversed, null, state.indentSize);
+        jsonData = reversed;
+        output.value = JSON.stringify(reversed, null, state.indentSize);
+        showStatus('↩️ Array reversed successfully', 'success');
       } else {
-        showStatus('Can only reverse arrays', 'info');
+        showStatus('⚠️ Can only reverse arrays', 'info');
       }
     };
 
@@ -868,13 +871,39 @@
     });
 
     document.getElementById('expand-all').addEventListener('click', () => {
-      document.querySelectorAll('.tree-item').forEach(item => item.classList.remove('collapsed'));
-      showStatus('🔓 All nodes expanded', 'success');
+      if (!jsonData) {
+        showStatus('⚠️ Format JSON first', 'info');
+        return;
+      }
+      // Switch to tree view tab
+      document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.querySelector('[data-tab="tree"]').classList.add('active');
+      document.getElementById('tree-tab').classList.add('active');
+      // Render and expand
+      renderTree();
+      setTimeout(() => {
+        document.querySelectorAll('.tree-item').forEach(item => item.classList.remove('collapsed'));
+        showStatus('🔓 All nodes expanded', 'success');
+      }, 100);
     });
 
     document.getElementById('collapse-all').addEventListener('click', () => {
-      document.querySelectorAll('.tree-item').forEach(item => item.classList.add('collapsed'));
-      showStatus('🔒 All nodes collapsed', 'success');
+      if (!jsonData) {
+        showStatus('⚠️ Format JSON first', 'info');
+        return;
+      }
+      // Switch to tree view tab
+      document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.querySelector('[data-tab="tree"]').classList.add('active');
+      document.getElementById('tree-tab').classList.add('active');
+      // Render and collapse
+      renderTree();
+      setTimeout(() => {
+        document.querySelectorAll('.tree-item').forEach(item => item.classList.add('collapsed'));
+        showStatus('🔒 All nodes collapsed', 'success');
+      }, 100);
     });
 
     // Auto-format on input
