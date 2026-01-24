@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
@@ -264,15 +264,15 @@
       
       <div class="quote-actions">
         <button id="next" data-primary>🎲 New Quote</button>
-        <button id="copy-btn">📋 Copy</button>
-        <button id="tweet-btn">🐦 Tweet</button>
-        <button id="favorite-btn">⭐ Favorite</button>
+        <button id="copy-btn">ðŸ“‹ Copy</button>
+        <button id="tweet-btn">ðŸ¦ Tweet</button>
+        <button id="favorite-btn">â­ Favorite</button>
       </div>
 
       <div class="favorites-section">
-        <h3>💫 Favorite Quotes (<span id="fav-count">0</span>)</h3>
+        <h3>ðŸ’« Favorite Quotes (<span id="fav-count">0</span>)</h3>
         <div class="favorites-list" id="favorites-list">
-          <div class="empty-favorites">No favorite quotes yet. Click the ⭐ button to save quotes you love!</div>
+          <div class="empty-favorites">No favorite quotes yet. Click the â­ button to save quotes you love!</div>
         </div>
       </div>
     </section>
@@ -292,7 +292,7 @@
       <p>
         <strong>Why use ToolsMatic Quote Generator?</strong> It's fast, ad-free, and built specifically for people who value 
         their time. No login required, no tracking, just pure inspiration on demand. Plus, our quotes are hand-selected 
-        for relevance to modern professionals—designers, engineers, startup founders, writers, and leaders—rather than 
+        for relevance to modern professionalsâ€”designers, engineers, startup founders, writers, and leadersâ€”rather than 
         generic platitudes. Save your favorites for later reference and share directly to Twitter to inspire your network.
       </p>
     </section>
@@ -340,14 +340,14 @@
       </p>
       <ul>
         <li><strong>Modern, curated collection:</strong> 525+ quotes selected for relevance to today's professionals</li>
-        <li><strong>15 focused categories:</strong> Not just "motivational"—we have specific themes for Design, Engineering, Startup life, Writing, and more</li>
-        <li><strong>Instant results:</strong> No page loads, no delays—quotes appear instantly</li>
+        <li><strong>15 focused categories:</strong> Not just "motivational"â€”we have specific themes for Design, Engineering, Startup life, Writing, and more</li>
+        <li><strong>Instant results:</strong> No page loads, no delaysâ€”quotes appear instantly</li>
         <li><strong>Clean interface:</strong> Zero ads, zero popups, zero tracking</li>
         <li><strong>Works offline:</strong> Once loaded, it runs entirely in your browser</li>
         <li><strong>Favorite system:</strong> Build your personal collection of quotes</li>
         <li><strong>One-click sharing:</strong> Tweet quotes directly without copying and pasting</li>
         <li><strong>Mobile-friendly:</strong> Works perfectly on phones and tablets</li>
-        <li><strong>Privacy-first:</strong> Your favorites are saved locally—we never see your data</li>
+        <li><strong>Privacy-first:</strong> Your favorites are saved locallyâ€”we never see your data</li>
       </ul>
       <p>
         Whether you're building a startup, writing a novel, leading a team, or designing the next big product, 
@@ -369,13 +369,13 @@
       <p>
         Most quotes are either by unknown authors or are in the public domain. For attributed quotes, we recommend 
         doing your own due diligence if using commercially. For personal use, social media, presentations, and 
-        educational purposes, you're generally fine—but always credit the author when known.
+        educational purposes, you're generally fineâ€”but always credit the author when known.
       </p>
 
       <h3>Do my favorite quotes sync across devices?</h3>
       <p>
         Favorites are saved in your browser's local storage, so they stay on the device where you saved them. 
-        They won't sync to other devices, but this also means your data never leaves your computer—it's completely private.
+        They won't sync to other devices, but this also means your data never leaves your computerâ€”it's completely private.
       </p>
 
       <h3>Can I suggest quotes to add?</h3>
@@ -1020,15 +1020,15 @@
     // Copy quote to clipboard
     const copyQuote = () => {
       navigator.clipboard.writeText(currentQuote).then(() => {
-        showToast('✓ Quote copied to clipboard!');
+        showToast('âœ“ Quote copied to clipboard!');
       }).catch(() => {
-        showToast('❌ Failed to copy quote');
+        showToast('âŒ Failed to copy quote');
       });
     };
 
     // Tweet quote
     const tweetQuote = () => {
-      const tweetText = encodeURIComponent(currentQuote + '\n\n— via ToolsMatic Quote Generator');
+      const tweetText = encodeURIComponent(currentQuote + '\n\nâ€” via ToolsMatic Quote Generator');
       const tweetUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
       window.open(tweetUrl, '_blank', 'width=550,height=420');
     };
@@ -1038,10 +1038,10 @@
       const index = favorites.indexOf(currentQuote);
       if (index === -1) {
         favorites.push(currentQuote);
-        showToast('⭐ Added to favorites!');
+        showToast('â­ Added to favorites!');
       } else {
         favorites.splice(index, 1);
-        showToast('🗑️ Removed from favorites');
+        showToast('ðŸ—‘ï¸ Removed from favorites');
       }
       localStorage.setItem('favoriteQuotes', JSON.stringify(favorites));
       updateFavoriteButton();
@@ -1053,10 +1053,10 @@
       const isFavorited = favorites.includes(currentQuote);
       if (isFavorited) {
         favoriteBtn.classList.add('favorited');
-        favoriteBtn.textContent = '⭐ Favorited';
+        favoriteBtn.textContent = 'â­ Favorited';
       } else {
         favoriteBtn.classList.remove('favorited');
-        favoriteBtn.textContent = '⭐ Favorite';
+        favoriteBtn.textContent = 'â­ Favorite';
       }
     };
 
@@ -1067,14 +1067,14 @@
         updateFavoriteButton();
       }
       renderFavorites();
-      showToast('🗑️ Removed from favorites');
+      showToast('ðŸ—‘ï¸ Removed from favorites');
     };
 
     const renderFavorites = () => {
       favCount.textContent = favorites.length;
 
       if (favorites.length === 0) {
-        favoritesList.innerHTML = '<div class="empty-favorites">No favorite quotes yet. Click the ⭐ button to save quotes you love!</div>';
+        favoritesList.innerHTML = '<div class="empty-favorites">No favorite quotes yet. Click the â­ button to save quotes you love!</div>';
         return;
       }
 
@@ -1108,3 +1108,5 @@
   </script>
 </body>
 </html>
+
+

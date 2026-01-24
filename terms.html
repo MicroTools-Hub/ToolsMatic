@@ -16,6 +16,68 @@
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="assets/styles.css">
   <script src="/assets/site.js" defer></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 25%, #2d1b4e 50%, #1a1a2e 75%, #0f172a 100%);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(34, 211, 238, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(45, 27, 78, 0.4) 100%);
+      border: 1px solid rgba(34, 211, 238, 0.2);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .section h1 {
+      background: linear-gradient(135deg, #22d3ee 0%, #ec4899 50%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 900;
+    }
+
+    .section h3 {
+      color: #ec4899;
+      font-weight: 700;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .section p, .section ul {
+      color: #cbd5e1;
+      line-height: 1.8;
+    }
+
+    .section a {
+      color: #22d3ee;
+    }
+
+    .section a:hover {
+      color: #ec4899;
+    }
+  </style>
   <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
@@ -24,7 +86,7 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/">ToolsMatic</a>
+      <a class="brand" href="/">✨ ToolsMatic</a>
       <div class="nav-links">
         <a href="/" class="nav-btn">All tools</a>
         <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
@@ -34,7 +96,7 @@
 
   <main>
     <section class="section">
-      <h1>Terms of Service</h1>
+      <h1>📜 Terms of Service</h1>
       <p>These terms explain how you may use the ToolsMatic website and its browser utilities. By using the site, you agree to these terms.</p>
       <h3>Quick summary</h3>
       <ul>
@@ -58,8 +120,15 @@
     </section>
   </main>
 
-  <footer>
-    ToolsMatic · Fast, privacy-first utilities for the web. · <a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a> · <a href="/contact.html">Contact</a>
+  <footer style="position: relative; z-index: 1; display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+      <a href="/terms.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;">📜 Terms</a>
+      <a href="/privacy.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;">🔒 Privacy Policy</a>
+      <a href="/contact.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;">💬 Contact</a>
+    </div>
+    <div style="text-align: center; font-size: 14px;">
+      ToolsMatic · Fast, privacy-first utilities for the web.
+    </div>
   </footer>
 </body>
 </html>

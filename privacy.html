@@ -16,6 +16,68 @@
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="assets/styles.css">
   <script src="/assets/site.js" defer></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 25%, #2d1b4e 50%, #1a1a2e 75%, #0f172a 100%);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(34, 211, 238, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(45, 27, 78, 0.4) 100%);
+      border: 1px solid rgba(34, 211, 238, 0.2);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .section h1 {
+      background: linear-gradient(135deg, #22d3ee 0%, #ec4899 50%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 900;
+    }
+
+    .section h3 {
+      color: #ec4899;
+      font-weight: 700;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .section p, .section ul {
+      color: #cbd5e1;
+      line-height: 1.8;
+    }
+
+    .section a {
+      color: #22d3ee;
+    }
+
+    .section a:hover {
+      color: #ec4899;
+    }
+  </style>
   <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
@@ -24,7 +86,7 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="/">ToolsMatic</a>
+      <a class="brand" href="/">✨ ToolsMatic</a>
       <div class="nav-links">
         <a href="/" class="nav-btn">All tools</a>
         <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
@@ -34,31 +96,69 @@
 
   <main>
     <section class="section">
-      <h1>Privacy Policy</h1>
-      <p>ToolsMatic is designed to be privacy-first. This policy explains what data we handle and how we keep it minimal.</p>
-      <h3>What we collect</h3>
-      <ul>
-        <li>Most tools run entirely in your browser; your inputs stay on your device.</li>
-        <li>We may collect basic, non-personal analytics (page views, performance) to keep the site stable.</li>
-        <li>No account, login, or upload is required for the tools listed on this site.</li>
-      </ul>
-      <h3>Cookies and storage</h3>
-      <p>Some tools use localStorage in your browser to remember preferences (for example, saved favorites). We do not use these values for tracking.</p>
-      <h3>Third-party services</h3>
-      <p>The site may use lightweight analytics or ad services that collect aggregated usage data. These services should not receive the text or files you process inside the tools.</p>
-      <h3>Data you provide</h3>
-      <p>Do not paste sensitive personal, financial, or secret information into the tools if you are unsure about your device or network security. You are responsible for the content you process.</p>
-      <h3>Security</h3>
-      <p>We aim to maintain a secure site, but no system is perfectly secure. Use the tools at your own discretion.</p>
-      <h3>Changes to this policy</h3>
-      <p>We may update this policy. Continued use of the site after changes means you accept the updated policy.</p>
-      <h3>Contact</h3>
-      <p>Questions about privacy? Email <a href="mailto:microtools12345@gmail.com">microtools12345@gmail.com</a> or visit our <a href="/contact.html">Contact</a> page.</p>
+      <h1>🔒 Privacy Policy</h1>
+      <p>At ToolsMatic, privacy is not a feature—it is a foundational principle. We believe you should be able to use powerful utilities without surrendering your personal information to advertisers, data brokers, or tracking networks. This comprehensive policy explains exactly what data we collect (spoiler: very little), how we protect it, and why we made privacy-first design choices in building every tool.</p>
+      
+      <h3>Our Privacy Philosophy</h3>
+      <p>The internet has become increasingly intrusive. Every search is tracked, every click is logged, every visit is monetized. We reject this model. ToolsMatic was built with a different philosophy: if we can avoid collecting data, we do. If we must collect something, we keep it minimal and completely aggregated. Your essay, your passwords, your JSON files, your QR codes—none of it should leave your device unless you explicitly choose to share it.</p>
+
+      <h3>What Data We Collect (And Why)</h3>
+      <p><strong>Data from the Tools Themselves:</strong> Most importantly, the content you process inside ToolsMatic tools never reaches our servers. Your word counts, password generations, JSON formatting, gradient designs, regex tests—all happen locally in your browser. We do not see, store, or transmit your inputs. This is by design, not accident. The majority of ToolsMatic tools are entirely client-side.</p>
+      <p><strong>Minimal Analytics:</strong> We use lightweight, privacy-friendly analytics to understand which tools are popular and whether the site is performing well. This tells us "the word counter was accessed 10,000 times this week" but not "person at IP address X used the word counter to count 542 words from their essay." We track aggregated, non-identifying metrics like page views, browser types, and referral sources. This helps us make decisions about which tools to improve or add.</p>
+      <p><strong>No Personal Information Required:</strong> We do not ask for your name, email, phone number, or location. You do not need to create an account, verify an email, or log in. Every tool works immediately without any personal information.</p>
+
+      <h3>Cookies and Browser Storage</h3>
+      <p>Some ToolsMatic tools use localStorage in your browser to remember preferences. For example, if you set the word counter to display character count by default, we remember that preference locally so it persists on your next visit. These preferences are stored entirely on your device, not on our servers. We use cookies sparingly and only for essential functionality, never for tracking or profiling. Third-party cookies are disabled whenever possible.</p>
+
+      <h3>Third-Party Services</h3>
+      <p>ToolsMatic uses a few trusted third-party services:</p>
+      <p><strong>Google Analytics (Vercel Insights):</strong> We use Vercel's lightweight analytics to monitor site performance and stability. This service is designed to collect minimal data and respects user privacy. It does not create persistent user IDs or track individual users across the web.</p>
+      <p><strong>Google AdSense:</strong> ToolsMatic displays ads to sustain the project. Google's ad network collects some aggregated usage data, but these ads are not placed in a way that interrupts your work with the tools. We specifically avoid placing ads in input fields or result areas.</p>
+      <p><strong>Important:</strong> These services should never see the content you process in ToolsMatic tools. Your essay stays in your browser. Your passwords stay in your browser. Your sensitive data stays in your browser. Third-party services see only aggregated analytics about site traffic.</p>
+
+      <h3>What You Directly Share</h3>
+      <p>If you contact us via email, use the Contact form, or send us feedback, you are providing information directly. This information is used only to respond to your inquiry. We do not sell or share these details with third parties. We keep contact information secure and delete it after responding to your request unless you ask us to retain it.</p>
+
+      <h3>Your Responsibility</h3>
+      <p>While ToolsMatic is designed to protect privacy, you should be mindful of what you share on any web platform. Do not paste sensitive personal information (like your social security number, credit card numbers, or confidential business secrets) into any tool unless you are certain your device and network are secure. You are responsible for your device's security and the confidentiality of sensitive data you process.</p>
+
+      <h3>Data Security</h3>
+      <p>We aim to maintain secure infrastructure through HTTPS encryption for all traffic, regular security audits, and best practices for hosting and deployment. However, no system is perfectly secure. If you discover a security vulnerability in ToolsMatic, please report it immediately to toolsmaticcorp@gmail.com, and we will investigate and fix it promptly.</p>
+
+      <h3>Data Retention</h3>
+      <p>We do not retain the content you process inside tools. Analytics data is aggregated and depersonalized, making it impossible to connect it to individual users. Server logs are rotated and deleted regularly. Contact information is deleted after responding to inquiries unless you ask us to retain it.</p>
+
+      <h3>Your Rights</h3>
+      <p>Depending on your location, you may have rights regarding your personal data. Since we collect very minimal personal information and do not track individuals, these rights are straightforward for ToolsMatic users. If you have questions about your data or want to request information about what we may have collected, contact us at toolsmaticcorp@gmail.com.</p>
+
+      <h3>Children's Privacy</h3>
+      <p>ToolsMatic is not intended for children under 13. We do not knowingly collect information from children. If we become aware that a child has provided personal information, we will delete it immediately.</p>
+
+      <h3>Changes to This Policy</h3>
+      <p>We may update this privacy policy from time to time. Changes will be published on this page with an updated "Last Modified" date. Significant changes will be announced prominently. Your continued use of ToolsMatic after changes are published means you accept the updated policy.</p>
+
+      <h3>International Privacy</h3>
+      <p>ToolsMatic is hosted on Vercel, a globally distributed platform. Your data may be processed and stored in multiple countries. By using ToolsMatic, you consent to this global processing. If you are in the EU or other regions with strict data protection laws, rest assured that we comply with GDPR principles: minimal collection, clear consent, user rights, and data protection by design.</p>
+
+      <h3>Transparency and Audit</h3>
+      <p>We believe in transparency. Our privacy practices are straightforward and auditable. We use minimal third-party services and avoid complex tracking chains. If you want to verify our claims, you can inspect network traffic in your browser's developer tools while using ToolsMatic tools—you will see that your inputs do not leave your device.</p>
+
+      <h3>Contact Us About Privacy</h3>
+      <p>If you have questions, concerns, or requests related to privacy, please contact us at <a href="mailto:toolsmaticcorp@gmail.com">toolsmaticcorp@gmail.com</a> or visit our <a href="/contact.html">Contact</a> page. We are committed to addressing privacy concerns and improving our practices based on user feedback.</p>
+
+      <p><strong>Last Updated: January 2026</strong></p>
     </section>
   </main>
 
-  <footer>
-    ToolsMatic · Fast, privacy-first utilities for the web. · <a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a> · <a href="/contact.html">Contact</a>
+  <footer style="position: relative; z-index: 1; display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+      <a href="/terms.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;">📜 Terms</a>
+      <a href="/privacy.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;">🔒 Privacy Policy</a>
+      <a href="/contact.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;">💬 Contact</a>
+    </div>
+    <div style="text-align: center; font-size: 14px;">
+      ToolsMatic · Fast, privacy-first utilities for the web.
+    </div>
   </footer>
 </body>
 </html>

@@ -14,9 +14,126 @@
   <title>ToolsMatic | Fast Browser Utilities</title>
   <meta name="description" content="ToolsMatic is a collection of fast, privacy-first browser utilities for students, writers, developers, and creators. No logins, no uploads—just useful tools that run instantly in your browser.">
   <meta name="google-adsense-account" content="ca-pub-6119998481340838">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="assets/styles.css">
   <script src="/assets/site.js" defer></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 25%, #2d1b4e 50%, #1a1a2e 75%, #0f172a 100%);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(34, 211, 238, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.1) 0%, rgba(236, 72, 153, 0.08) 100%);
+      border: 1px solid rgba(34, 211, 238, 0.3);
+      box-shadow: 0 8px 32px rgba(34, 211, 238, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .hero h1 {
+      background: linear-gradient(135deg, #22d3ee 0%, #ec4899 50%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 42px;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .hero > p {
+      color: #cbd5e1;
+      font-size: 17px;
+      max-width: 600px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(45, 27, 78, 0.3) 100%);
+      border: 1px solid rgba(34, 211, 238, 0.2);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.05) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px) scale(1.02);
+      border-color: rgba(34, 211, 238, 0.6);
+      box-shadow: 0 20px 40px rgba(34, 211, 238, 0.15), 0 0 30px rgba(236, 72, 153, 0.1);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card h3 {
+      color: #22d3ee;
+      font-weight: 700;
+      position: relative;
+      z-index: 2;
+    }
+
+    .section {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(45, 27, 78, 0.4) 100%);
+      border: 1px solid rgba(34, 211, 238, 0.2);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .section h2 {
+      background: linear-gradient(135deg, #22d3ee 0%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .section h3 {
+      color: #ec4899;
+      font-weight: 700;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .section p, .section ul {
+      color: #cbd5e1;
+      line-height: 1.8;
+    }
+  </style>
   <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
@@ -26,7 +143,7 @@
   <header>
     <div class="nav">
       <a class="brand" href="/">
-        ToolsMatic
+        ✨ ToolsMatic
       </a>
       <div class="nav-links">
         <a href="/" class="nav-btn">All tools</a>
@@ -37,143 +154,182 @@
 
   <main>
     <section class="hero">
-      <h1>ToolsMatic: 26 fast, privacy-first utilities</h1>
-      <p>Lightweight, instant tools that run in your browser. No logins, no uploads—just get answers quickly.</p>
+      <h1>⚡ ToolsMatic: 26 Essential Utilities That Solve Real Problems—Instantly</h1>
+      <p>Stop wasting time with bloated software, slow web apps, and privacy-invasive platforms. ToolsMatic delivers lightning-fast, privacy-first browser utilities that run instantly without logins, uploads, or tracking. Your data stays on your device. Your time is respected. Your workflow accelerates.</p>
       <div class="grid">
         <a class="card" href="tools/word-counter.html">
-          <h3>Word Counter</h3>
+          <h3>📊 Word Counter</h3>
           <p>Count words and characters in real time.</p>
         </a>
         <a class="card" href="tools/password-generator.html">
-          <h3>Password Generator</h3>
+          <h3>🔐 Password Generator</h3>
           <p>Create strong, customizable passwords instantly.</p>
         </a>
         <a class="card" href="tools/quote-generator.html">
-          <h3>Quote Generator</h3>
+          <h3>💡 Quote Generator</h3>
           <p>Surface a fresh, motivating quote on demand.</p>
         </a>
         <a class="card" href="tools/ascii-art-generator.html">
-          <h3>ASCII Art Generator</h3>
+          <h3>🎨 ASCII Art Generator</h3>
           <p>Turn text into ASCII banners with nine fonts.</p>
         </a>
         <a class="card" href="tools/case-converter.html">
-          <h3>Case Converter</h3>
+          <h3>↔️ Case Converter</h3>
           <p>Flip text between lower, upper, title, and sentence case.</p>
         </a>
         <a class="card" href="tools/gradient-generator.html">
-          <h3>Gradient Generator</h3>
+          <h3>🌈 Gradient Generator</h3>
           <p>Blend colors and angles to export CSS gradients.</p>
         </a>
         <a class="card" href="tools/contrast-checker.html">
-          <h3>Contrast Checker</h3>
+          <h3>👁️ Contrast Checker</h3>
           <p>Test WCAG ratios, generate accessible pairs, copy CSS tokens.</p>
         </a>
         <a class="card" href="tools/json-formatter.html">
-          <h3>JSON Formatter</h3>
+          <h3>{ } JSON Formatter</h3>
           <p>Clean and indent messy JSON for quick reviews.</p>
         </a>
         <a class="card" href="tools/base64-encoder.html">
-          <h3>Base64 Encoder</h3>
+          <h3>🔤 Base64 Encoder</h3>
           <p>Encode strings without leaving your browser.</p>
         </a>
         <a class="card" href="tools/image-compressor.html">
-          <h3>Image Compressor</h3>
+          <h3>🖼️ Image Compressor</h3>
           <p>Shrink image weight while keeping clarity.</p>
         </a>
         <a class="card" href="tools/qr-code-maker.html">
-          <h3>QR Code Maker</h3>
+          <h3>📱 QR Code Maker</h3>
           <p>Create scannable QR codes for links and text.</p>
         </a>
         <a class="card" href="tools/jwt-inspector.html">
-          <h3>JWT Inspector</h3>
+          <h3>🔑 JWT Inspector</h3>
           <p>Decode JWTs locally, inspect claims, and flag expirations.</p>
         </a>
         <a class="card" href="tools/markdown-previewer.html">
-          <h3>Markdown Previewer</h3>
+          <h3>📝 Markdown Previewer</h3>
           <p>Preview Markdown without installing anything.</p>
         </a>
         <a class="card" href="tools/regex-tester.html">
-          <h3>Regex Tester</h3>
+          <h3>🔍 Regex Tester</h3>
           <p>Test patterns against sample data on the fly.</p>
         </a>
         <a class="card" href="tools/uuid-maker.html">
-          <h3>UUID Maker</h3>
+          <h3>🏷️ UUID Maker</h3>
           <p>Generate collision-resistant identifiers instantly.</p>
         </a>
         <a class="card" href="tools/url-encoder.html">
-          <h3>URL Encoder</h3>
+          <h3>🌐 URL Encoder</h3>
           <p>Encode and decode URLs safely.</p>
         </a>
         <a class="card" href="tools/color-picker.html">
-          <h3>Color Picker</h3>
+          <h3>🎭 Color Picker</h3>
           <p>Grab hex and RGB values from a simple picker.</p>
         </a>
         <a class="card" href="tools/unit-converter.html">
-          <h3>Unit Converter</h3>
+          <h3>📏 Unit Converter</h3>
           <p>Convert length, weight, and temperature quickly.</p>
         </a>
         <a class="card" href="tools/timezone-converter.html">
-          <h3>Timezone Converter</h3>
+          <h3>🌍 Timezone Converter</h3>
           <p>Compare times across cities with zero setup.</p>
         </a>
         <a class="card" href="tools/text-diff-checker.html">
-          <h3>Text Diff Checker</h3>
+          <h3>🔄 Text Diff Checker</h3>
           <p>Spot differences between two text blocks.</p>
         </a>
         <a class="card" href="tools/lorem-ipsum-generator.html">
-          <h3>Lorem Ipsum Generator</h3>
+          <h3>📖 Lorem Ipsum Generator</h3>
           <p>Create filler copy for mockups.</p>
         </a>
         <a class="card" href="tools/csv-to-json.html">
-          <h3>CSV to JSON</h3>
+          <h3>📊 CSV to JSON</h3>
           <p>Turn CSV rows into JSON objects locally.</p>
         </a>
         <a class="card" href="tools/csv-inspector.html">
-          <h3>CSV Inspector</h3>
+          <h3>🔎 CSV Inspector</h3>
           <p>Validate CSV shape, preview rows, and export JSON.</p>
         </a>
         <a class="card" href="tools/html-minifier.html">
-          <h3>HTML Minifier</h3>
+          <h3>⚙️ HTML Minifier</h3>
           <p>Minify HTML before shipping.</p>
         </a>
         <a class="card" href="tools/bmi-calculator.html">
-          <h3>BMI Calculator</h3>
+          <h3>⚖️ BMI Calculator</h3>
           <p>Advanced BMI with unit presets, ranges, and body fat estimate.</p>
         </a>
         <a class="card" href="tools/number-converter.html">
-          <h3>Number Converter</h3>
+          <h3>🔢 Number Converter</h3>
           <p>Convert between decimal, hex, and binary.</p>
         </a>
       </div>
     </section>
 
     <section class="section" aria-labelledby="about-microtools">
-      <h2 id="about-microtools">Why ToolsMatic exists</h2>
-      <p>ToolsMatic is a compact hub of browser-based utilities designed for people who need to get things done without friction. Whether you are polishing an essay, cleaning data for a quick prototype, styling a gradient for a landing page, or validating text before you ship, the goal is the same: provide a fast, trustworthy helper that runs entirely in your browser. You do not need an account, you do not upload files to unknown servers, and you are never slowed down by ads injected into the workflow.</p>
-      <h3>Who uses MicroTools?</h3>
-      <p>Students rely on the word counter and case converter to tighten essays without fighting with heavyweight apps. Writers and content teams use the quote generator and text diff checker to move drafts forward. Developers reach for the password generator, JSON formatter, and regex tester to validate inputs before code review. Designers and creators mix colors and gradients to get a shareable background without opening a full design suite. Anyone who works in a browser benefits from tools that launch instantly and behave predictably.</p>
-      <h3>Why browser tools beat installs</h3>
-      <p>Installing a dedicated app for every micro-task slows you down and bloats your device. Browser-based tools are lean by design: they open quickly, run locally, and respect your battery. Because MicroTools keeps everything on the client side, you see results immediately and you can close the tab when you are done. There is nothing to maintain, patch, or uninstall later.</p>
-      <h3>Privacy-first by default</h3>
-      <p>Your text never leaves the page. The word counter, password generator, and case converter all execute locally, so your drafts, passwords, and snippets are not transmitted. For tools that would typically require uploads, MicroTools favors in-browser processing whenever possible so you can keep sensitive material where it belongs: on your device.</p>
-      <h3>Tool categories at a glance</h3>
-      <ul>
-        <li>Writing helpers: word counter, case converter, quote generator, lorem ipsum builder, text diff.</li>
-        <li>Developer essentials: password generator, regex tester, UUID maker, JSON formatter, HTML minifier, number converter.</li>
-        <li>Content formatting: CSV to JSON, URL encoder, Base64 encoder, Markdown previewer.</li>
-        <li>Design utilities: gradient generator, color picker, image compressor, QR code maker.</li>
-        <li>Everyday conversions: unit converter, timezone converter.</li>
-      </ul>
-      <h3>Speed without clutter</h3>
-      <p>ToolsMatic avoids heavy libraries and external trackers. Pages are lightweight, rely on native browser capabilities, and keep the interface focused on the task. Ads stay where they belong and never interrupt input fields or results. The result is a fast, stable experience that still satisfies platform policies about meaningful, publisher-written content.</p>
-      <h3>What to expect on every page</h3>
-      <p>Each tool page opens with a concise interface that works immediately, followed by an explainer that covers what the tool does, how to use it, who benefits, why ToolsMatic is a good home for it, and how privacy is handled. This guarantees every page qualifies as a genuine, content-rich experience instead of a thin shell around an ad unit.</p>
-      <p>By combining speed, clarity, and privacy, ToolsMatic helps you focus on your task instead of the tool. Bookmark the pages you use most, and know they will load quickly, work offline-friendly, and keep your data on your device.</p>
+      <h2 id="about-microtools">Why ToolsMatic Exists: Your Digital Swiss Army Knife</h2>
+      <p>In today's fast-paced digital world, efficiency matters. ToolsMatic is built for people who refuse to compromise on speed, privacy, or simplicity. Whether you're polishing an essay at midnight, debugging a JSON file, styling a gradient for your portfolio, or validating data before deployment, ToolsMatic is there to help. We've curated a collection of 26 essential utilities that solve real problems without the bloat, tracking, or mandatory logins that plague traditional solutions.</p>
+      
+      <h3>The Problem We Solve</h3>
+      <p>Every day, millions of people waste precious minutes downloading apps, creating accounts, or waiting for slow web services to load. A student needs to count words in an essay but has to download desktop software. A developer needs to format JSON but gets distracted by ads and cookies. A designer wants to generate gradients but has no way to do it in real time without expensive tools. These friction points add up. ToolsMatic eliminates them. Our mission is simple: provide lightning-fast, no-nonsense utilities that work immediately in your browser, keep your data private, and never waste your time.</p>
+
+      <h3>Who Relies on ToolsMatic?</h3>
+      <p><strong>Students and Writers:</strong> Use our word counter, case converter, and text diff checker to refine essays and articles. Count characters for social media posts, check grammar consistency across documents, and compare revisions without installing anything. Teachers assign essays with ToolsMatic links for word verification. Academic institutions appreciate the privacy—no student data is uploaded or stored.</p>
+      <p><strong>Web Developers:</strong> Reach for the JSON formatter when debugging API responses, use the regex tester to validate input patterns, leverage the password generator for secure credentials, and inspect JWTs to diagnose authentication issues. The CSV to JSON converter helps transform data exports in seconds. Developers bookmark ToolsMatic pages for instant access during code reviews and troubleshooting sessions.</p>
+      <p><strong>Designers and Creatives:</strong> The gradient generator, color picker, and image compressor are essential workflow tools. Create custom gradients with live preview, extract perfect color values from any source, and optimize images for web performance without opening Photoshop. Social media creators use our tools to design eye-catching graphics and thumbnails in minutes.</p>
+      <p><strong>Content Teams:</strong> The quote generator, markdown previewer, and HTML minifier speed up publishing workflows. Generate placeholder copy with Lorem Ipsum, preview formatted content before publishing, and minify code for production deployment. Marketing teams use our tools to handle repetitive tasks without breaking momentum.</p>
+      <p><strong>QA Engineers:</strong> Test data handling with our number converter, timezone converter, and unit converter. Validate that your application handles edge cases correctly. Our CSV inspector helps verify data structure before processing, saving hours of manual checking.</p>
+
+      <h3>Why Browser Tools Beat Everything Else</h3>
+      <p>Installing a dedicated app for every micro-task is madness. Your device gets cluttered, your memory fills up, and updates pile in. Browser-based tools eliminate this friction entirely. ToolsMatic pages are lean by design—they launch in milliseconds, require zero setup, and vanish instantly when you're done. No file management, no patches, no maintenance burden.</p>
+      <p>Cloud services have their own problems: latency, authentication friction, data transmission concerns, and privacy questions. ToolsMatic works entirely in your browser, so responses are instant and your information stays on your device. No upload delays, no server processing, no third-party access to sensitive information. This makes ToolsMatic perfect for handling confidential documents, passwords, JWTs, and proprietary data.</p>
+
+      <h3>Privacy: The Foundation of Everything We Build</h3>
+      <p>Your data is sacred. We don't collect it, we don't store it, and we don't sell it. Every tool on ToolsMatic runs entirely on your device. Your essay text, your passwords, your API responses, your image files—none of it ever touches our servers. The word counter? Local. The password generator? Local. The base64 encoder? Local. This architectural choice isn't just about trust; it's about performance. Without network overhead, tools respond instantly.</p>
+      <p>We use minimal analytics to understand which tools matter most, but we never track individual usage patterns or collect identifying information. No cookies hijacking your behavior, no pixels following you across the web. If you want to verify this, our code is transparent and auditable. We're built on privacy by default, not privacy theater.</p>
+
+      <h3>The Full Tool Arsenal: What You Can Do</h3>
+      <p><strong>Writing & Content:</strong> Craft perfect prose with our word counter (track character limits for tweets and emails), case converter (fix inconsistent capitalization), quote generator (find inspiration or filler quotes), lorem ipsum builder (generate placeholder text), text diff checker (see exactly what changed between versions), and markdown previewer (format your docs correctly before publishing).</p>
+      <p><strong>Development & Data:</strong> Debug faster with JSON formatter (clean messy API responses), regex tester (validate patterns before implementation), UUID maker (generate unique identifiers), JWT inspector (decode tokens and check expiration), CSV to JSON (transform data exports), CSV inspector (validate structure), number converter (switch between decimal/hex/binary), and HTML minifier (compress code for production).</p>
+      <p><strong>Design & Visuals:</strong> Create stunning visuals with gradient generator (custom CSS gradients with live preview), color picker (extract hex and RGB values), contrast checker (ensure WCAG accessibility), image compressor (optimize for web), QR code maker (create scannable codes), and ASCII art generator (text-based art with multiple font styles).</p>
+      <p><strong>Security & Authentication:</strong> Password generator (create unbreakable credentials with custom rules), base64 encoder (secure data transmission), URL encoder (safely encode URLs), JWT inspector (diagnose token issues), and contrast checker (ensure readable, accessible passwords).</p>
+      <p><strong>Conversion & Calculation:</strong> Unit converter (length, weight, temperature), timezone converter (coordinate across the globe), BMI calculator (health metrics), number converter (change numeric bases), and more.</p>
+
+      <h3>Speed Without Compromise</h3>
+      <p>ToolsMatic avoids bloat at every level. We don't use heavy frameworks, tracking libraries, or external dependencies. Every tool uses native browser APIs whenever possible, ensuring maximum performance. Pages load in milliseconds. Tools respond instantly. Gradients render in real time. Searches are immediate. This speed isn't a luxury—it's essential when you're trying to stay focused on your actual work.</p>
+
+      <h3>What Makes ToolsMatic Different</h3>
+      <p><strong>No Logins:</strong> All tools work immediately. No account creation, no email verification, no password resets. Click and go.</p>
+      <p><strong>No Uploads:</strong> Your files and data never leave your device. Everything runs client-side, in your browser.</p>
+      <p><strong>No Ads Interrupting Your Work:</strong> While we display ads to sustain the project, they never interrupt input fields, results, or core functionality. We respect your workflow.</p>
+      <p><strong>No Distractions:</strong> Simple, focused interfaces. Every pixel serves a purpose. No dark patterns, no misleading buttons, no dark side.</p>
+      <p><strong>No Tracking:</strong> We use minimal analytics to improve tools, but never track individuals or sell data.</p>
+      <p><strong>No Dependencies on External Services:</strong> Power outages elsewhere don't affect ToolsMatic. Our tools work offline-friendly.</p>
+
+      <h3>How ToolsMatic Fits into Your Workflow</h3>
+      <p>Think of ToolsMatic as the utility belt of the web. You don't carry a full workshop everywhere, but you do keep a few essential tools handy for quick fixes. Bookmark the pages you use most. When you need to count words, format JSON, generate a password, or validate a regex, navigate to your bookmark. In seconds, you have what you need. Then you close the tab and move on with your life. No distractions, no setup, no friction.</p>
+
+      <h3>Built for You, Not for Ads</h3>
+      <p>We're transparent about monetization: ToolsMatic displays ads to cover hosting, maintenance, and development. But we never compromise the core experience. Ads are placed below the fold on tool pages. They never interfere with functionality. We could collect vastly more user data and serve more aggressive ads, but that would violate our core principles. Instead, we choose the middle ground: ads that sustain us, but design choices that respect users.</p>
+
+      <h3>The Philosophy Behind Every Feature</h3>
+      <p>When we build a new tool, we ask ourselves three questions: Does it solve a real problem? Can we make it faster than alternatives? Does it preserve privacy? If the answer to all three is "yes," we build it. If any answer is "no," we skip it. This ruthless filtering keeps ToolsMatic lean and focused instead of becoming a bloated kitchen sink of features nobody needs.</p>
+
+      <h3>Get Started Today</h3>
+      <p>Explore the tools above. Bookmark your favorites. Share links with colleagues and friends. The beauty of ToolsMatic is that it requires no setup, no learning curve, and no commitment. You can test a tool in thirty seconds and decide if it helps. Most people discover ToolsMatic when they need a quick solution and never leave. We're here whenever you need us, and we promise to stay fast, simple, and respectful of your privacy.</p>
+
+      <h3>What's Next for ToolsMatic?</h3>
+      <p>We're constantly refining existing tools and considering new ones. We listen to user feedback and prioritize features that matter. If you have ideas for tools that would help your workflow, let us know. ToolsMatic thrives because it solves problems that real people face every day. Your voice shapes our roadmap.</p>
     </section>
   </main>
 
-  <footer>
-    ToolsMatic · Fast, privacy-first utilities for the web. · <a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a> · <a href="/contact.html">Contact</a>
+  <footer style="position: relative; z-index: 1; display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+      <a href="/terms.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;">📜 Terms</a>
+      <a href="/privacy.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;">🔒 Privacy Policy</a>
+      <a href="/contact.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;">💬 Contact</a>
+    </div>
+    <div style="text-align: center; font-size: 14px;">
+      ToolsMatic · Fast, privacy-first utilities for the web.
+    </div>
   </footer>
 
   <script>

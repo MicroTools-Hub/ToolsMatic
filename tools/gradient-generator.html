@@ -70,16 +70,109 @@
   <link rel="stylesheet" href="../assets/styles.css">
   <script src="../assets/site.js" defer></script>
   <style>
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 25%, #2d1b4e 50%, #1a1a2e 75%, #0f172a 100%);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(34, 211, 238, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    .tool-shell {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(45, 27, 78, 0.4) 100%);
+      border: 1px solid rgba(34, 211, 238, 0.2);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .tool-shell h1 {
+      background: linear-gradient(135deg, #22d3ee 0%, #ec4899 50%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 900;
+      margin-bottom: 20px;
+    }
+
+    .gradient-preview-box {
+      box-shadow: 0 10px 40px rgba(34, 211, 238, 0.2), 0 0 30px rgba(236, 72, 153, 0.1);
+      border: 1px solid rgba(34, 211, 238, 0.3);
+    }
+
+    .gradient-type-btn.active {
+      background: linear-gradient(135deg, #22d3ee 0%, #ec4899 100%);
+      border-color: rgba(34, 211, 238, 0.6);
+    }
+
+    .custom-color-btn {
+      background: linear-gradient(135deg, #22d3ee 0%, #ec4899 100%);
+    }
+
+    button {
+      border-color: rgba(34, 211, 238, 0.3);
+    }
+
+    button:hover {
+      border-color: rgba(34, 211, 238, 0.6);
+    }
+
+    .section {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(45, 27, 78, 0.4) 100%);
+      border: 1px solid rgba(34, 211, 238, 0.2);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .section h2 {
+      background: linear-gradient(135deg, #22d3ee 0%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .section h3 {
+      color: #ec4899;
+      font-weight: 700;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .section p, .section ul {
+      color: #cbd5e1;
+      line-height: 1.8;
+    }
+
     .gradient-controls {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 30px;
       margin-bottom: 30px;
+      align-items: start;
     }
     
     .gradient-preview-box {
       width: 100%;
-      height: 300px;
+      height: 250px;
       border-radius: 12px;
       border: 2px solid var(--border);
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
@@ -226,6 +319,28 @@
       gap: 10px;
       margin-top: 15px;
     }
+
+    #presetsPanel {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+      max-height: 500px;
+      overflow-y: auto;
+      transition: all 0.3s ease;
+    }
+
+    #presetsPanel.collapsed {
+      display: none;
+    }
+
+    #togglePresetsBtn {
+      transition: transform 0.3s ease;
+    }
+
+    #togglePresetsBtn.collapsed::before {
+      content: '';
+    }
     
     @media (max-width: 768px) {
       .gradient-controls {
@@ -248,7 +363,7 @@
       <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
         <a href="/" class="nav-btn">All tools</a>
-        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">�</button>
       </div>
     </div>
   </header>
@@ -328,13 +443,24 @@
             </div>
           </div>
 
-          <!-- Color Stops -->
+          <!-- Color Stops with Live Preview Side by Side -->
           <div style="margin-top: 25px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-              <label class="label" style="margin: 0;">Color Stops</label>
-              <button class="ghost" id="addColorBtn" onclick="addColorStop()">+ Add</button>
+            <div style="display: flex; gap: 20px; align-items: flex-start;">
+              <!-- Left: Color Stops (flexible width) -->
+              <div style="flex: 1; min-width: 400px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                  <label class="label" style="margin: 0;">Color Stops</label>
+                  <button class="ghost" id="addColorBtn" onclick="addColorStop()">+ Add</button>
+                </div>
+                <div id="colorStops"></div>
+              </div>
+              
+              <!-- Right: Live Preview (fixed width) -->
+              <div style="flex: 0 0 500px;">
+                <label class="label" style="margin-bottom: 10px; display: block;">Live Preview</label>
+                <div id="gradientPreview" class="gradient-preview-box" style="height: 300px; width: 100%;"></div>
+              </div>
             </div>
-            <div id="colorStops"></div>
           </div>
 
           <!-- Custom Color Picker -->
@@ -347,10 +473,14 @@
             <input type="color" id="customColorInput" class="custom-color-input" onchange="applyCustomColor(this.value)">
           </div>
 
-          <!-- Preset Gradients -->
+          <!-- Preset Gradients (Collapsible) -->
           <div style="margin-top: 25px;">
-            <label class="label">Gradient Presets</label>
-            <div class="preset-grid">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <label class="label" style="margin: 0;">Gradient Presets</label>
+              <button class="ghost" id="togglePresetsBtn" onclick="togglePresetsPanel()" style="padding: 6px 12px; font-size: 14px;">▶ Show</button>
+            </div>
+            <div style="font-size: 15px; color: var(--text-secondary); margin-bottom: 15px; opacity: 0.9;">💡 Click "Show" to browse 50+ ready-made gradient presets</div>
+            <div id="presetsPanel" class="preset-grid collapsed">
               <button class="ghost preset-btn" onclick="applyPreset('instagram')">Instagram</button>
               <button class="ghost preset-btn" onclick="applyPreset('neon')">Neon</button>
               <button class="ghost preset-btn" onclick="applyPreset('pastel')">Pastel</button>
@@ -402,6 +532,7 @@
               <button class="ghost preset-btn" onclick="applyPreset('earth')">Earth</button>
               <button class="ghost preset-btn" onclick="applyPreset('mars')">Mars</button>
             </div>
+            </div>
           </div>
 
           <!-- Advanced Options -->
@@ -414,16 +545,10 @@
           </div>
         </div>
 
-        <!-- Right Panel: Preview & Code -->
-        <div>
-          <!-- Live Preview -->
-          <div style="margin-bottom: 20px;">
-            <label class="label">Live Preview</label>
-            <div id="gradientPreview" class="gradient-preview-box"></div>
-          </div>
-
+        <!-- Right Panel: Code & Export -->
+        <div style="display: flex; flex-direction: column;">
           <!-- CSS Code Output -->
-          <div>
+          <div style="flex: 1;">
             <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
               <label class="label" style="margin: 0;">CSS Code</label>
               <button class="ghost" onclick="copyGradientCSS()">📋 Copy</button>
@@ -449,6 +574,7 @@
               <button class="ghost" onclick="exportGradient('jpg')" style="flex: 1;">🖼️ Export JPG</button>
             </div>
           </div>
+            </div>
         </div>
       </div>
     </section>
@@ -477,7 +603,16 @@
     </section>
   </main>
 
-  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
+  <footer style="position: relative; z-index: 1; display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+      <a href="/terms.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;">📜 Terms</a>
+      <a href="/privacy.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;">🔒 Privacy Policy</a>
+      <a href="/contact.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;">💬 Contact</a>
+    </div>
+    <div style="text-align: center; font-size: 14px;">
+      ToolsMatic · Fast, privacy-first utilities for the web.
+    </div>
+  </footer>
 
   <script>
     // Gradient State
@@ -972,6 +1107,20 @@
       }
     };
 
+    // Toggle Presets Panel
+    function togglePresetsPanel() {
+      const panel = document.getElementById('presetsPanel');
+      const btn = document.getElementById('togglePresetsBtn');
+      
+      panel.classList.toggle('collapsed');
+      
+      if (panel.classList.contains('collapsed')) {
+        btn.textContent = '▶ Show';
+      } else {
+        btn.textContent = '▼ Hide';
+      }
+    }
+
     // Initialize
     function init() {
       updateTypeControls('linear');
@@ -1036,20 +1185,65 @@
 
     function renderColorStops() {
       const container = document.getElementById('colorStops');
-      container.innerHTML = '';
       
-      gradientState.colors.forEach((stop, idx) => {
-        const div = document.createElement('div');
-        div.className = 'color-stop-item';
-        
-        div.innerHTML = `
-          <input type="color" value="${stop.color}" onchange="updateColor(${idx}, this.value)">
-          <input type="range" min="0" max="100" value="${stop.position}" onchange="updatePosition(${idx}, this.value)">
-          <input type="number" min="0" max="100" value="${stop.position}" onchange="updatePosition(${idx}, this.value)">
-          <button class="ghost" onclick="removeColor(${idx})" ${gradientState.colors.length === 2 ? 'disabled' : ''} style="padding: 6px 8px; font-size: 12px;">🗑️</button>
-        `;
-        container.appendChild(div);
-      });
+      // Only update items that have changed, don't rebuild everything
+      const existingItems = container.querySelectorAll('.color-stop-item');
+      
+      if (existingItems.length !== gradientState.colors.length) {
+        // If count changed, rebuild
+        container.innerHTML = '';
+        gradientState.colors.forEach((stop, idx) => {
+          const div = document.createElement('div');
+          div.className = 'color-stop-item';
+          div.dataset.idx = idx;
+          
+          const colorInput = document.createElement('input');
+          colorInput.type = 'color';
+          colorInput.value = stop.color;
+          colorInput.addEventListener('change', (e) => updateColor(idx, e.target.value));
+          
+          const rangeInput = document.createElement('input');
+          rangeInput.type = 'range';
+          rangeInput.min = '0';
+          rangeInput.max = '100';
+          rangeInput.value = stop.position;
+          rangeInput.addEventListener('input', (e) => updatePositionRange(idx, e.target.value));
+          
+          const numberInput = document.createElement('input');
+          numberInput.type = 'number';
+          numberInput.min = '0';
+          numberInput.max = '100';
+          numberInput.value = stop.position;
+          numberInput.addEventListener('change', (e) => updatePosition(idx, e.target.value));
+          
+          const deleteBtn = document.createElement('button');
+          deleteBtn.className = 'ghost';
+          deleteBtn.textContent = '🗑️';
+          deleteBtn.style.cssText = 'padding: 6px 8px; font-size: 12px;';
+          deleteBtn.disabled = gradientState.colors.length === 2;
+          deleteBtn.addEventListener('click', () => removeColor(idx));
+          
+          div.appendChild(colorInput);
+          div.appendChild(rangeInput);
+          div.appendChild(numberInput);
+          div.appendChild(deleteBtn);
+          container.appendChild(div);
+        });
+      } else {
+        // Update existing items without rebuilding
+        existingItems.forEach((item, idx) => {
+          const stop = gradientState.colors[idx];
+          const colorInput = item.querySelector('input[type="color"]');
+          const rangeInput = item.querySelector('input[type="range"]');
+          const numberInput = item.querySelector('input[type="number"]');
+          const deleteBtn = item.querySelector('button');
+          
+          colorInput.value = stop.color;
+          rangeInput.value = stop.position;
+          numberInput.value = stop.position;
+          deleteBtn.disabled = gradientState.colors.length === 2;
+        });
+      }
       
       document.getElementById('addColorBtn').disabled = gradientState.colors.length >= 6;
     }
@@ -1061,7 +1255,17 @@
 
     function updatePosition(idx, position) {
       gradientState.colors[idx].position = parseInt(position);
-      renderColorStops();
+      const numberInput = document.querySelectorAll('.color-stop-item')[idx].querySelector('input[type="number"]');
+      const rangeInput = document.querySelectorAll('.color-stop-item')[idx].querySelector('input[type="range"]');
+      numberInput.value = position;
+      rangeInput.value = position;
+      updatePreview();
+    }
+
+    function updatePositionRange(idx, position) {
+      gradientState.colors[idx].position = parseInt(position);
+      const numberInput = document.querySelectorAll('.color-stop-item')[idx].querySelector('input[type="number"]');
+      numberInput.value = position;
       updatePreview();
     }
 
