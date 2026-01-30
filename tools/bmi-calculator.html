@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
@@ -12,7 +12,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BMI Calculator | ToolsMatic</title>
-  <meta name="description" content="Advanced BMI calculator with metric/imperial presets, healthy weight range, body fat approximation, and TDEE estimateâ€”runs fully in your browser.">
+  <meta name="description" content="Advanced BMI calculator with metric/imperial presets, healthy weight range, body fat approximation, and TDEE estimateruns fully in your browser.">
   <meta name="keywords" content="bmi calculator, body mass index calculator, bmi chart, calculate bmi, body mass index, bmi tool, health calculator, weight calculator, ideal weight calculator, bmi checker, metric bmi calculator, imperial bmi calculator, tdee calculator, body fat calculator, healthy weight calculator, free bmi calculator, online bmi tool">
   <meta name="author" content="ToolsMatic">
   <meta name="robots" content="index, follow">
@@ -22,14 +22,14 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://toolsmatic.me/tools/bmi-calculator.html">
   <meta property="og:title" content="BMI Calculator | ToolsMatic">
-  <meta property="og:description" content="Advanced BMI calculator with metric/imperial presets, healthy weight range, body fat approximation, and TDEE estimateâ€”runs fully in your browser.">
+  <meta property="og:description" content="Advanced BMI calculator with metric/imperial presets, healthy weight range, body fat approximation, and TDEE estimateruns fully in your browser.">
   <meta property="og:image" content="https://toolsmatic.me/assets/og-image.png">
   
   <!-- Twitter Card Tags -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://toolsmatic.me/tools/bmi-calculator.html">
   <meta name="twitter:title" content="BMI Calculator | ToolsMatic">
-  <meta name="twitter:description" content="Advanced BMI calculator with metric/imperial presets, healthy weight range, body fat approximation, and TDEE estimateâ€”runs fully in your browser.">
+  <meta name="twitter:description" content="Advanced BMI calculator with metric/imperial presets, healthy weight range, body fat approximation, and TDEE estimateruns fully in your browser.">
   <meta name="twitter:image" content="https://toolsmatic.me/assets/og-image.png">
   
   <!-- Schema.org Structured Data -->
@@ -38,7 +38,7 @@
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "BMI Calculator",
-    "description": "Advanced BMI calculator with metric/imperial presets, healthy weight range, body fat approximation, and TDEE estimateâ€”runs fully in your browser.",
+    "description": "Advanced BMI calculator with metric/imperial presets, healthy weight range, body fat approximation, and TDEE estimateruns fully in your browser.",
     "url": "https://toolsmatic.me/tools/bmi-calculator.html",
     "applicationCategory": "HealthApplication",
     "operatingSystem": "Any",
@@ -96,7 +96,7 @@
       <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
         <a href="/" class="nav-btn">All tools</a>
-        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">™</button>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode"></button>
       </div>
     </div>
   </header>
@@ -160,12 +160,12 @@
       <p>Useful for quick fitness check-ins, onboarding flows, or coaching notes without sharing data.</p>
       <h2>How to use it</h2>
       <p>Select metric or imperial units, enter height and weight, and click Calculate. The page converts as needed, reports BMI with category, and fills the meter so you see your position visually. Provide age for body fat estimation and waist (optional) for added context in coaching notes. Switch units at any time to view the same numbers in kg/cm or lb/in without retyping.</p>
-      <p>The healthy range panel shows the target weight span for a BMI of 18.5â€“24.9 in both kg and lb, giving you clear goals. The details panel summarizes estimated body fat and maintenance calories using light-activity TDEE so you can plan next steps or discuss with a professional.</p>
+      <p>The healthy range panel shows the target weight span for a BMI of 18.5?24.9 in both kg and lb, giving you clear goals. The details panel summarizes estimated body fat and maintenance calories using light-activity TDEE so you can plan next steps or discuss with a professional.</p>
       <h2>Who benefits</h2>
       <p>Fitness coaches preparing quick assessments, product teams building onboarding flows for health apps, clinicians offering general guidance (not medical advice), and individuals checking progress all gain a fast reference. Researchers and students can demonstrate BMI limitations while still presenting consistent calculations.</p>
       <p>Support teams for wellness products can troubleshoot user reports by replicating entries exactly, thanks to explicit unit toggles and deterministic formulas. Because everything is client-side, it is safe to use in privacy-sensitive environments.</p>
       <h2>Implementation details</h2>
-      <p>BMI is computed from metric values; imperial inputs are converted on the fly. Body fat uses the Deurenberg approximation (1.2Ã—BMI + 0.23Ã—age âˆ’ 10.8Ã—sex âˆ’ 5.4), and TDEE uses the Mifflin-St Jeor equation with a light-activity multiplier. These are estimates, not medical diagnostics.</p>
+      <p>BMI is computed from metric values; imperial inputs are converted on the fly. Body fat uses the Deurenberg approximation (1.2BMI + 0.23age  10.8sex  5.4), and TDEE uses the Mifflin-St Jeor equation with a light-activity multiplier. These are estimates, not medical diagnostics.</p>
       <p>No data is sent or stored. All calculations run instantly in the browser with no third-party libraries, keeping performance high on mobile and low-power devices. Reset returns defaults for quick repeated checks during coaching sessions or user support.</p>
     </section>
       <div style="text-align: center; margin: 24px 0;">
@@ -176,7 +176,7 @@
 </div>
 </main>
 
-  <footer>ToolsMatic Â· Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic  Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const unitsEl = document.getElementById('units');
@@ -273,7 +273,7 @@
       const bmi = wKg / (hMeters * hMeters);
       const rounded = Math.round(bmi * 10) / 10;
       const cat = bmiCategory(rounded);
-      bmiLine.textContent = `BMI: ${rounded} Â· ${cat}`;
+      bmiLine.textContent = `BMI: ${rounded}  ${cat}`;
       meterFill(rounded);
 
       const range = calcRange(hMeters);
@@ -284,7 +284,7 @@
       const bf = estimateBodyFat(rounded, age, sex);
       const tdee = estimateTDEE(wKg, hMeters * 100, age, sex);
       const waistNote = waist && !Number.isNaN(waist) ? `Waist: ${waist} ${(unitsEl.value === 'imperial') ? 'in' : 'cm'}` : 'Waist not provided';
-      details.textContent = `Body fat est: ${bf}% Â· Est. maintenance (TDEE, light activity): ${tdee} kcal/day Â· ${waistNote}`;
+      details.textContent = `Body fat est: ${bf}%  Est. maintenance (TDEE, light activity): ${tdee} kcal/day  ${waistNote}`;
     };
 
     const reset = () => {
@@ -339,6 +339,9 @@
 </div>
 </body>
 </html>
+
+
+
 
 
 

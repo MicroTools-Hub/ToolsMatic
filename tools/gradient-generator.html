@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
@@ -383,7 +383,7 @@
       <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
         <a href="/" class="nav-btn">All tools</a>
-        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">ï¿½</button>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode"></button>
       </div>
     </div>
   </header>
@@ -396,7 +396,7 @@
     <section class="tool-shell">
       <div class="mobile-notice" style="background: var(--primary); color: white; padding: 15px; border-radius: 10px; margin-bottom: 20px; display: none; text-align: center;">
         <p style="margin: 0; font-size: 14px; line-height: 1.6;">
-          ðŸ“± <strong>Mobile Tip:</strong> For the best experience with all features, consider switching to Desktop Site in your browser menu. This gives you easier access to all color controls and advanced options!
+           <strong>Mobile Tip:</strong> For the best experience with all features, consider switching to Desktop Site in your browser menu. This gives you easier access to all color controls and advanced options!
         </p>
       </div>
       <script>
@@ -423,17 +423,17 @@
             <label class="label">Angle</label>
             <div class="angle-control">
               <input type="range" id="gradAngle" min="0" max="360" value="90">
-              <span class="angle-display" id="angleDisplay">90Â°</span>
+              <span class="angle-display" id="angleDisplay">90</span>
             </div>
             <div class="quick-angles">
               <button class="ghost quick-angle-btn" onclick="setAngle(0)">Top</button>
               <button class="ghost quick-angle-btn" onclick="setAngle(90)">Right</button>
               <button class="ghost quick-angle-btn" onclick="setAngle(180)">Bottom</button>
               <button class="ghost quick-angle-btn" onclick="setAngle(270)">Left</button>
-              <button class="ghost quick-angle-btn" onclick="setAngle(45)">â†—</button>
-              <button class="ghost quick-angle-btn" onclick="setAngle(135)">â†˜</button>
-              <button class="ghost quick-angle-btn" onclick="setAngle(225)">â†™</button>
-              <button class="ghost quick-angle-btn" onclick="setAngle(315)">â†–</button>
+              <button class="ghost quick-angle-btn" onclick="setAngle(45)"></button>
+              <button class="ghost quick-angle-btn" onclick="setAngle(135)"></button>
+              <button class="ghost quick-angle-btn" onclick="setAngle(225)"></button>
+              <button class="ghost quick-angle-btn" onclick="setAngle(315)"></button>
             </div>
           </div>
 
@@ -446,15 +446,15 @@
             </div>
             <label class="label">Position</label>
             <div class="radial-pos-grid">
-              <button class="ghost quick-angle-btn" onclick="setRadialPos('top left')">â†–</button>
-              <button class="ghost quick-angle-btn" onclick="setRadialPos('top center')">â†‘</button>
-              <button class="ghost quick-angle-btn" onclick="setRadialPos('top right')">â†—</button>
-              <button class="ghost quick-angle-btn" onclick="setRadialPos('center left')">â†</button>
-              <button class="ghost quick-angle-btn" onclick="setRadialPos('center')">â—‰</button>
-              <button class="ghost quick-angle-btn" onclick="setRadialPos('center right')">â†’</button>
-              <button class="ghost quick-angle-btn" onclick="setRadialPos('bottom left')">â†™</button>
-              <button class="ghost quick-angle-btn" onclick="setRadialPos('bottom center')">â†“</button>
-              <button class="ghost quick-angle-btn" onclick="setRadialPos('bottom right')">â†˜</button>
+              <button class="ghost quick-angle-btn" onclick="setRadialPos('top left')"></button>
+              <button class="ghost quick-angle-btn" onclick="setRadialPos('top center')"></button>
+              <button class="ghost quick-angle-btn" onclick="setRadialPos('top right')"></button>
+              <button class="ghost quick-angle-btn" onclick="setRadialPos('center left')"></button>
+              <button class="ghost quick-angle-btn" onclick="setRadialPos('center')"></button>
+              <button class="ghost quick-angle-btn" onclick="setRadialPos('center right')"></button>
+              <button class="ghost quick-angle-btn" onclick="setRadialPos('bottom left')"></button>
+              <button class="ghost quick-angle-btn" onclick="setRadialPos('bottom center')"></button>
+              <button class="ghost quick-angle-btn" onclick="setRadialPos('bottom right')"></button>
             </div>
           </div>
 
@@ -463,7 +463,7 @@
             <label class="label">Starting Angle</label>
             <div class="angle-control">
               <input type="range" id="conicAngle" min="0" max="360" value="0">
-              <span class="angle-display" id="conicAngleDisplay">0Â°</span>
+              <span class="angle-display" id="conicAngleDisplay">0</span>
             </div>
           </div>
 
@@ -491,7 +491,7 @@
           <div style="margin-top: 25px;">
             <label class="label">Custom Color</label>
             <button class="custom-color-btn" onclick="document.getElementById('customColorInput').click()">
-              <span style="font-size: 24px;">ðŸŽ¨</span>
+              <span style="font-size: 24px;"></span>
               <span>Pick Your Own Color</span>
             </button>
             <input type="color" id="customColorInput" class="custom-color-input" onchange="applyCustomColor(this.value)">
@@ -501,9 +501,9 @@
           <div style="margin-top: 25px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
               <label class="label" style="margin: 0;">Gradient Presets</label>
-              <button class="ghost" id="togglePresetsBtn" onclick="togglePresetsPanel()" style="padding: 6px 12px; font-size: 14px;">â–¶ Show</button>
+              <button class="ghost" id="togglePresetsBtn" onclick="togglePresetsPanel()" style="padding: 6px 12px; font-size: 14px;"> Show</button>
             </div>
-            <div style="font-size: 15px; color: var(--text-secondary); margin-bottom: 15px; opacity: 0.9;">ðŸ’¡ Click "Show" to browse 50+ ready-made gradient presets</div>
+            <div style="font-size: 15px; color: var(--text-secondary); margin-bottom: 15px; opacity: 0.9;"> Click "Show" to browse 50+ ready-made gradient presets</div>
             <div id="presetsPanel" class="preset-grid collapsed">
               <button class="ghost preset-btn" onclick="applyPreset('instagram')">Instagram</button>
               <button class="ghost preset-btn" onclick="applyPreset('neon')">Neon</button>
@@ -563,8 +563,8 @@
           <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border);">
             <label class="label">Advanced Options</label>
             <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
-              <button class="ghost" onclick="randomizeGradient()">ðŸŽ² Randomize</button>
-              <button class="ghost" onclick="reverseGradient()">â†”ï¸ Reverse</button>
+              <button class="ghost" onclick="randomizeGradient()"> Randomize</button>
+              <button class="ghost" onclick="reverseGradient()"> Reverse</button>
             </div>
           </div>
         </div>
@@ -575,7 +575,7 @@
           <div style="flex: 1;">
             <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
               <label class="label" style="margin: 0;">CSS Code</label>
-              <button class="ghost" onclick="copyGradientCSS()">ðŸ“‹ Copy</button>
+              <button class="ghost" onclick="copyGradientCSS()"> Copy</button>
             </div>
             <div class="result-box" id="cssCode" style="max-height: 150px; overflow-y: auto;"></div>
           </div>
@@ -594,8 +594,8 @@
               </div>
             </div>
             <div style="display: flex; gap: 10px; margin-top: 12px;">
-              <button class="ghost" onclick="exportGradient('png')" style="flex: 1;">ðŸ–¼ï¸ Export PNG</button>
-              <button class="ghost" onclick="exportGradient('jpg')" style="flex: 1;">ðŸ–¼ï¸ Export JPG</button>
+              <button class="ghost" onclick="exportGradient('png')" style="flex: 1;"> Export PNG</button>
+              <button class="ghost" onclick="exportGradient('jpg')" style="flex: 1;"> Export JPG</button>
             </div>
           </div>
             </div>
@@ -612,7 +612,7 @@
       
       <h2>Who Should Use It?</h2>
       <p><strong>Web Designers:</strong> Create stunning website backgrounds, hero sections, buttons, cards, and UI elements. Generate professional gradients without Photoshop or Figma.</p>
-      <p><strong>Developers:</strong> Instantly get production-ready CSS code to paste into stylesheets. No image assets neededâ€”pure CSS for better performance and scalability.</p>
+      <p><strong>Developers:</strong> Instantly get production-ready CSS code to paste into stylesheets. No image assets neededpure CSS for better performance and scalability.</p>
       <p><strong>Digital Artists:</strong> Create gradient backgrounds for digital art, illustrations, and creative projects. Export high-resolution images for print or screen use.</p>
       <p><strong>Content Creators:</strong> Make eye-catching social media graphics, YouTube thumbnails, and promotional materials with beautiful gradients.</p>
       
@@ -623,7 +623,7 @@
       <p><strong>Export Options:</strong> Copy CSS code directly, download PNG/JPG images up to 4000x4000 pixels, or use as-is in your designs.</p>
       
       <h2>Privacy & Performance</h2>
-      <p>All gradient generation happens in your browserâ€”no server uploads, no tracking, no data collection. Your creative work stays on your device. Image export uses client-side canvas rendering for instant downloads without server processing. Completely private, completely free, zero setup required.</p>
+      <p>All gradient generation happens in your browserno server uploads, no tracking, no data collection. Your creative work stays on your device. Image export uses client-side canvas rendering for instant downloads without server processing. Completely private, completely free, zero setup required.</p>
     </section>
       <div style="text-align: center; margin: 24px 0;">
         </div>
@@ -635,12 +635,12 @@
 
   <footer style="position: relative; z-index: 1; display: flex; flex-direction: column; gap: 12px;">
     <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
-      <a href="/terms.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;">ðŸ“œ Terms</a>
-      <a href="/privacy.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;">ðŸ”’ Privacy Policy</a>
-      <a href="/contact.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;">ðŸ’¬ Contact</a>
+      <a href="/terms.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;"> Terms</a>
+      <a href="/privacy.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;"> Privacy Policy</a>
+      <a href="/contact.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;"> Contact</a>
     </div>
     <div style="text-align: center; font-size: 14px;">
-      ToolsMatic Â· Fast, privacy-first utilities for the web.
+      ToolsMatic  Fast, privacy-first utilities for the web.
     </div>
   </footer>
 
@@ -1145,9 +1145,9 @@
       panel.classList.toggle('collapsed');
       
       if (panel.classList.contains('collapsed')) {
-        btn.textContent = 'â–¶ Show';
+        btn.textContent = ' Show';
       } else {
-        btn.textContent = 'â–¼ Hide';
+        btn.textContent = ' Hide';
       }
     }
 
@@ -1160,14 +1160,14 @@
       // Angle slider
       document.getElementById('gradAngle').addEventListener('input', (e) => {
         gradientState.angle = parseInt(e.target.value);
-        document.getElementById('angleDisplay').textContent = e.target.value + 'Â°';
+        document.getElementById('angleDisplay').textContent = e.target.value + '';
         updatePreview();
       });
       
       // Conic angle slider
       document.getElementById('conicAngle').addEventListener('input', (e) => {
         gradientState.conicAngle = parseInt(e.target.value);
-        document.getElementById('conicAngleDisplay').textContent = e.target.value + 'Â°';
+        document.getElementById('conicAngleDisplay').textContent = e.target.value + '';
         updatePreview();
       });
       
@@ -1199,7 +1199,7 @@
     function setAngle(angle) {
       gradientState.angle = angle;
       document.getElementById('gradAngle').value = angle;
-      document.getElementById('angleDisplay').textContent = angle + 'Â°';
+      document.getElementById('angleDisplay').textContent = angle + '';
       updatePreview();
     }
 
@@ -1248,7 +1248,7 @@
           
           const deleteBtn = document.createElement('button');
           deleteBtn.className = 'ghost';
-          deleteBtn.textContent = 'ðŸ—‘ï¸';
+          deleteBtn.textContent = '';
           deleteBtn.style.cssText = 'padding: 6px 8px; font-size: 12px;';
           deleteBtn.disabled = gradientState.colors.length === 2;
           deleteBtn.addEventListener('click', () => removeColor(idx));
@@ -1391,7 +1391,7 @@
       renderColorStops();
       if (document.getElementById('gradAngle')) {
         document.getElementById('gradAngle').value = gradientState.angle;
-        document.getElementById('angleDisplay').textContent = gradientState.angle + 'Â°';
+        document.getElementById('angleDisplay').textContent = gradientState.angle + '';
       }
       updatePreview();
       if (window.ToolsMatic) window.ToolsMatic.showToast(`${presetName.charAt(0).toUpperCase() + presetName.slice(1)} preset applied!`, 'success');
@@ -1417,7 +1417,7 @@
       renderColorStops();
       if (document.getElementById('gradAngle')) {
         document.getElementById('gradAngle').value = gradientState.angle;
-        document.getElementById('angleDisplay').textContent = gradientState.angle + 'Â°';
+        document.getElementById('angleDisplay').textContent = gradientState.angle + '';
       }
       updatePreview();
       if (window.ToolsMatic) window.ToolsMatic.showToast('Random gradient generated!', 'success');
@@ -1529,6 +1529,9 @@
 </div>
 </body>
 </html>
+
+
+
 
 
 

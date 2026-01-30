@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
@@ -96,7 +96,7 @@
       <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
         <a href="/" class="nav-btn">All tools</a>
-        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">™</button>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode"></button>
       </div>
     </div>
   </header>
@@ -156,7 +156,7 @@
       <p>Paste a CSV sample, pick delimiter and quote style, and click Inspect. The summary flags inconsistent row lengths, duplicate headers, and the detected column count. A preview table shows the first 20 rows so you can confirm alignment before bulk processing.</p>
       <p>If the file uses tabs or semicolons, switch delimiters to match. Toggle Header row to treat the first row as field names and catch duplicates. When the shape looks correct, click Export JSON to download structured data for quick scripting or API mocks.</p>
       <h2>Who benefits</h2>
-      <p>Data analysts cleaning vendor exports, engineers building ingestion pipelines, QA testers validating fixtures, and customer success teams triaging bad uploads all save time here. Support agents can paste a userâ€™s CSV to spot the exact row that breaks an import, while product teams can prototype transformations without opening a spreadsheet app.</p>
+      <p>Data analysts cleaning vendor exports, engineers building ingestion pipelines, QA testers validating fixtures, and customer success teams triaging bad uploads all save time here. Support agents can paste a users CSV to spot the exact row that breaks an import, while product teams can prototype transformations without opening a spreadsheet app.</p>
       <p>Security-conscious teams appreciate that no data leaves the browser, making it safe to inspect PII or internal metrics on locked-down machines.</p>
       <h2>Implementation notes</h2>
       <p>The parser handles escaped quotes and configurable delimiters without external libraries, keeping performance snappy. It ignores carriage returns, trims empty trailing lines, and reports length mismatches so you can fix malformed rows before reaching your database.</p>
@@ -170,7 +170,7 @@
 </div>
 </main>
 
-  <footer>ToolsMatic Â· Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic  Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const input = document.getElementById('csv-input');
@@ -250,7 +250,7 @@
         if (uniqueHeaders.size !== headers.filter(Boolean).length) summary.push('Duplicate header names detected');
       }
       statusBox.textContent = inconsistent ? 'Warnings detected' : 'Looks consistent';
-      summaryBox.textContent = summary.join(' Â· ');
+      summaryBox.textContent = summary.join('  ');
       return { rows, headers, inconsistent };
     };
 
@@ -315,6 +315,9 @@
 </div>
 </body>
 </html>
+
+
+
 
 
 

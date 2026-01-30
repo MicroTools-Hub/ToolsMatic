@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
@@ -239,7 +239,7 @@
       <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
         <a href="/" class="nav-btn">All tools</a>
-        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">??</button>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode"></button>
       </div>
     </div>
   </header>
@@ -296,7 +296,7 @@
           </div>
           <div class="stat-row">
             <span class="stat-row-label">Longest Word</span>
-            <span class="stat-row-value" id="longestWord">â€”</span>
+            <span class="stat-row-value" id="longestWord"></span>
           </div>
           <div class="stat-row">
             <span class="stat-row-label">Spaces</span>
@@ -316,7 +316,7 @@
           </div>
           <div class="stat-row">
             <span class="stat-row-label">Reading Level</span>
-            <span class="stat-row-value" id="readingLevel">â€”</span>
+            <span class="stat-row-value" id="readingLevel"></span>
           </div>
           <div class="stat-row">
             <span class="stat-row-label">Flesch-Kincaid Grade</span>
@@ -329,7 +329,7 @@
           <div class="readability-meter">
             <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 5px;">
               <span>Difficult</span>
-              <span id="readabilityLabel">â€”</span>
+              <span id="readabilityLabel"></span>
               <span>Easy</span>
             </div>
             <div class="readability-bar">
@@ -377,11 +377,11 @@
       <p><strong>Editors & Publishers:</strong> Evaluate document complexity and reading level. Assess whether content matches target audience capabilities. Identify overly complex sentences.</p>
       
       <h2>Why Use ToolsMatic for This?</h2>
-      <p><strong>Comprehensive Statistics:</strong> Get 20+ different metrics in one toolâ€”from basic counts to advanced readability analysis. No need for multiple tools.</p>
-      <p><strong>Real-Time Analysis:</strong> All statistics update instantly as you type. No "analyze" button neededâ€”just paste and see results immediately.</p>
+      <p><strong>Comprehensive Statistics:</strong> Get 20+ different metrics in one toolfrom basic counts to advanced readability analysis. No need for multiple tools.</p>
+      <p><strong>Real-Time Analysis:</strong> All statistics update instantly as you type. No "analyze" button neededjust paste and see results immediately.</p>
       <p><strong>Professional Readability Scores:</strong> Flesch Reading Ease and Flesch-Kincaid Grade Level are industry-standard metrics used by publishers, educators, and content platforms.</p>
       <p><strong>Keyword Detection:</strong> Automatically identifies frequently used words, helping you spot overused terms, identify main themes, and improve writing variety.</p>
-      <p><strong>Time Estimates:</strong> Separate calculations for reading (200 WPM) and speaking (150 WPM) help you plan content for different formatsâ€”articles vs. presentations.</p>
+      <p><strong>Time Estimates:</strong> Separate calculations for reading (200 WPM) and speaking (150 WPM) help you plan content for different formatsarticles vs. presentations.</p>
       <p><strong>Export Statistics:</strong> Copy all statistics to clipboard with one click for reports, documentation, or sharing with clients and editors.</p>
       
       <h2>Understanding Readability Scores</h2>
@@ -390,7 +390,7 @@
       <p><strong>Improving Readability:</strong> Use shorter sentences, choose simpler words, break long paragraphs, reduce syllables per word, and vary sentence structure. The tool updates in real-time so you can see immediate impact of edits.</p>
       
       <h2>Privacy & Performance</h2>
-      <p>All text analysis happens entirely in your browserâ€”no servers, no uploads, no tracking. Your documents, drafts, manuscripts, and confidential content never leave your device. The tool uses optimized algorithms to calculate all statistics instantly, even for documents with 10,000+ words. Completely private, completely free, works offline, and no registration required.</p>
+      <p>All text analysis happens entirely in your browserno servers, no uploads, no tracking. Your documents, drafts, manuscripts, and confidential content never leave your device. The tool uses optimized algorithms to calculate all statistics instantly, even for documents with 10,000+ words. Completely private, completely free, works offline, and no registration required.</p>
     </section>
       <div style="text-align: center; margin: 24px 0;">
         </div>
@@ -407,7 +407,7 @@
       <a href="/contact.html" class="ghost" style="padding: 8px 12px; border-radius: 8px; font-size: 14px;">?? Contact</a>
     </div>
     <div style="text-align: center; font-size: 14px;">
-      ToolsMatic · Fast, privacy-first utilities for the web.
+      ToolsMatic  Fast, privacy-first utilities for the web.
     </div>
   </footer>
 
@@ -509,7 +509,7 @@
       }, '');
       
       // Punctuation
-      const punctuationCount = (text.match(/[.,!?;:'"(){}[\]\-â€”]/g) || []).length;
+      const punctuationCount = (text.match(/[.,!?;:'"(){}[\]\-]/g) || []).length;
       
       // Reading and speaking time
       const readingMinutes = wordCount > 0 ? Math.ceil(wordCount / 200) : 0;
@@ -546,7 +546,7 @@
       document.getElementById('readingTime').textContent = `${readingMinutes} min`;
       document.getElementById('speakingTime').textContent = `${speakingMinutes} min`;
       document.getElementById('avgWordLength').textContent = `${avgWordLength} chars`;
-      document.getElementById('longestWord').textContent = longestWord || 'â€”';
+      document.getElementById('longestWord').textContent = longestWord || '';
       document.getElementById('spaceCount').textContent = spaceCount.toLocaleString();
       document.getElementById('punctuationCount').textContent = punctuationCount.toLocaleString();
       
@@ -555,7 +555,7 @@
       document.getElementById('readingLevel').textContent = readabilityLevel;
       document.getElementById('gradeLevel').textContent = `Grade ${gradeLevel}`;
       document.getElementById('avgSyllables').textContent = avgSyllablesPerWord;
-      document.getElementById('readabilityLabel').textContent = fleschScore > 0 ? `${fleschScore}/100` : 'â€”';
+      document.getElementById('readabilityLabel').textContent = fleschScore > 0 ? `${fleschScore}/100` : '';
       document.getElementById('readabilityBar').style.width = `${fleschScore}%`;
       
       // Update keywords
@@ -679,6 +679,9 @@ Average Syllables/Word: ${document.getElementById('avgSyllables').textContent}
 </div>
 </body>
 </html>
+
+
+
 
 
 
