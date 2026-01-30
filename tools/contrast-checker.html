@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
@@ -69,6 +69,26 @@
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
+    <style>
+      .ad-container {
+        text-align: center;
+        margin: 20px 0;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      @media (max-width: 768px) {
+        .ad-container {
+          margin: 15px 0;
+        }
+        .ad-container iframe {
+          max-width: 100% !important;
+          width: auto !important;
+          height: auto !important;
+        }
+      }
+    </style>
 </head>
 <body>
   <header>
@@ -76,12 +96,16 @@
       <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
         <a href="/" class="nav-btn">All tools</a>
-        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">�</button>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">™</button>
       </div>
     </div>
   </header>
 
   <main>
+    <div class="ad-container">
+      <script async="async" data-cfasync="false" src="https://pl28604956.effectivegatecpm.com/ec3790ad17aa114a9ec21293450604cc/invoke.js"></script>
+      <div id="container-ec3790ad17aa114a9ec21293450604cc"></div>
+    </div>
     <section class="tool-shell">
       <h1>Contrast Checker</h1>
       <div class="two-col" style="gap:12px;">
@@ -97,7 +121,7 @@
         <button id="randomize">Random accessible pair</button>
         <button id="copy-css">Copy CSS vars</button>
       </div>
-      <div class="result-box" id="ratio-box">Ratio: -- · AA: -- · AAA: --</div>
+      <div class="result-box" id="ratio-box">Ratio: -- Â· AA: -- Â· AAA: --</div>
       <div class="gradient-preview" id="preview" style="display:flex;align-items:center;justify-content:center;font-weight:800;">Sample Text</div>
       <div class="muted-bg" style="margin-top:12px;">
         <div class="pill" style="margin-bottom:6px;">Suggestions</div>
@@ -110,7 +134,7 @@
       <p>Compute WCAG contrast ratios, surface AA/AAA pass status for normal and large text, and generate nearby accessible pairs. Helpful for UI polish, brand reviews, and handoff specs.</p>
       <p>All math is local; no color data leaves the page. Copy-ready CSS variables let you drop chosen pairs into design systems quickly.</p>
       <h2>How to use it</h2>
-      <p>Enter foreground and background hex values or paste from a design token file. The ratio readout shows whether your pair passes AA or AAA for both normal and large text. The preview block updates instantly so you can judge legibility in-context. Click “Random accessible pair” to generate a compliant starting point when you are exploring palettes.</p>
+      <p>Enter foreground and background hex values or paste from a design token file. The ratio readout shows whether your pair passes AA or AAA for both normal and large text. The preview block updates instantly so you can judge legibility in-context. Click â€œRandom accessible pairâ€ to generate a compliant starting point when you are exploring palettes.</p>
       <p>Scroll to Suggestions to try small lightening or darkening adjustments. Each suggestion lists its ratio and an Apply button to adopt the pair. When you land on a keeper, copy the CSS variables to drop directly into a stylesheet or design system file.</p>
       <h2>Who benefits</h2>
       <p>Designers and UX writers validating brand palettes, engineers adding design-token checks to PRs, QA teams running accessibility sweeps, and product managers writing acceptance criteria can all use this page to reduce churn. Support teams can check that quick fixes in a status page remain legible for all users, while marketing teams can validate campaign colors before launch.</p>
@@ -119,9 +143,15 @@
       <p>The checker uses WCAG 2.1 relative luminance and contrast formulas. Normal text thresholds are 4.5:1 for AA and 7:1 for AAA; large text thresholds are 3:1 for AA and 4.5:1 for AAA. Calculations run locally with no network calls or third-party libraries, keeping the page fast and private.</p>
       <p>Suggestions nudge colors by small deltas to help you reach passing ratios without redesigning your palette. Because the tool is deterministic, you can repeat adjustments to converge on the exact ratio you need for token reviews or PR comments.</p>
     </section>
-  </main>
+      <div style="text-align: center; margin: 24px 0;">
+        </div>
+<div style="text-align: center; margin: 24px 0;">
+  <script async="async" data-cfasync="false" src="https://pl28604956.effectivegatecpm.com/ec3790ad17aa114a9ec21293450604cc/invoke.js"></script>
+  <div id="container-ec3790ad17aa114a9ec21293450604cc"></div>
+</div>
+</main>
 
-  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic Â· Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const fg = document.getElementById('fg');
@@ -186,7 +216,7 @@
       }
       const ratio = Number(contrast(fgRgb, bgRgb).toFixed(2));
       const status = statusLabel(ratio);
-      ratioBox.textContent = `Ratio: ${ratio}:1 · Normal text AA ${status.normalAA ? 'passes' : 'fails'}, AAA ${status.normalAAA ? 'passes' : 'fails'} · Large text AA ${status.largeAA ? 'passes' : 'fails'}, AAA ${status.largeAAA ? 'passes' : 'fails'}`;
+      ratioBox.textContent = `Ratio: ${ratio}:1 Â· Normal text AA ${status.normalAA ? 'passes' : 'fails'}, AAA ${status.normalAAA ? 'passes' : 'fails'} Â· Large text AA ${status.largeAA ? 'passes' : 'fails'}, AAA ${status.largeAAA ? 'passes' : 'fails'}`;
       preview.style.color = fg.value;
       preview.style.background = bg.value;
 
@@ -213,7 +243,7 @@
         swatch.style.background = `linear-gradient(135deg, ${s.fg}, ${s.bg})`;
         const text = document.createElement('div');
         text.className = 'history-value';
-        text.textContent = `${s.label} · ${s.ratio}:1`;
+        text.textContent = `${s.label} Â· ${s.ratio}:1`;
         const btn = document.createElement('button');
         btn.className = 'ghost';
         btn.textContent = 'Apply';
@@ -253,8 +283,41 @@
 
     render();
   </script>
+  <div style="text-align: center; margin: 24px 0;">
+      </div>
+  <div style="text-align: center; margin: 24px 0;">
+      </div>
+<div style="text-align: center; margin: 24px 0;">
+  <script>
+    atOptions = {
+      'key' : 'e61a3745429623f25315f86052a3ab7b',
+      'format' : 'iframe',
+      'height' : 90,
+      'width' : 728,
+      'params' : {}
+    };
+  </script>
+  <script src="https://www.highperformanceformat.com/e61a3745429623f25315f86052a3ab7b/invoke.js"></script>
+</div>
+<div style="text-align: center; margin: 24px 0;">
+  <script>
+    atOptions = {
+      'key' : 'e61a3745429623f25315f86052a3ab7b',
+      'format' : 'iframe',
+      'height' : 90,
+      'width' : 728,
+      'params' : {}
+    };
+  </script>
+  <script src="https://www.highperformanceformat.com/e61a3745429623f25315f86052a3ab7b/invoke.js"></script>
+</div>
 </body>
 </html>
+
+
+
+
+
 
 
 
