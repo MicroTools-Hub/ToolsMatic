@@ -62,6 +62,9 @@
   const initVignetteAds = () => {
     if (typeof window === 'undefined') return;
 
+    // Show immediately on page load
+    showVignette('pageload');
+
     const fireOnce = () => {
       if (vignetteTriggered) return;
       vignetteTriggered = true;
