@@ -51,9 +51,24 @@
     </div>
   </header>
   <main>
+    <div class="page-intro">
+      <div class="page-intro-title">üîê Base64 Encoder üîê</div>
+      <div class="page-intro-description">Encode and decode Base64 instantly in your browser
+Useful for URLs, tokens, and data transmission
+No uploads, no logging‚Äîyour data stays private</div>
+    </div>
+
     <div style="text-align: center; margin: 20px 0;">
-      <script async="async" data-cfasync="false" src="https://pl28604956.effectivegatecpm.com/ec3790ad17aa114a9ec21293450604cc/invoke.js"></script>
-      <div id="container-ec3790ad17aa114a9ec21293450604cc"></div>
+      <script>
+        atOptions = {
+          'key' : 'e61a3745429623f25315f86052a3ab7b',
+          'format' : 'iframe',
+          'height' : 90,
+          'width' : 728,
+          'params' : {}
+        };
+      </script>
+      <script src="https://www.highperformanceformat.com/e61a3745429623f25315f86052a3ab7b/invoke.js"></script>
     </div>
     <div style="text-align: center; margin: 20px 0;">
       <script>
@@ -98,14 +113,14 @@
       <p>Developers preparing test payloads, support engineers reading encoded screenshots or tokens, and learners exploring how Base64 works can all benefit. It is also handy when you need a quick encode on a locked-down machine where installing tools is not allowed.</p>
       <p>Security and DevOps teams can confirm that secrets are not accidentally exposed in encoded form, while marketers embedding small assets can ensure their strings are well-formed before sending campaigns.</p>
       <h2>Why use ToolsMatic for this?</h2>
-      <p>There are no pop-ups, no accounts, and no extra dependencies. The tool loads instantly and keeps focus on the conversion. Because it is web-based, it works anywhere you have a browseródesktop or mobile.</p>
+      <p>There are no pop-ups, no accounts, and no extra dependencies. The tool loads instantly and keeps focus on the conversion. Because it is web-based, it works anywhere you have a browserÔøΩdesktop or mobile.</p>
       <p>The consistent ToolsMatic layout means you can switch to the URL encoder, JSON formatter, or Regex tester without relearning controls. That makes it easy to chain small tasks together during debugging.</p>
       <h2>Privacy & performance</h2>
       <p>Encoding and decoding run fully in your browser using built-in JavaScript functions. Nothing is uploaded, logged, or stored. The page ships minimal code, maintaining strong performance and keeping battery impact low.</p>
       <p>Because there are zero external calls, you can use the encoder offline-friendly or on restricted networks. Your inputs remain on your device, which is critical when handling tokens or snippets that must stay confidential.</p>
     </section>
   </main>
-  <footer>ToolsMatic ∑ Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic ÔøΩ Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const input = document.getElementById('b64-input');
@@ -127,7 +142,7 @@
     const decode = () => {
       try {
         const clean = guard(input.value.trim());
-        if (/[^A-Za-z0-9+/=\s]/.test(clean)) throw new Error('Invalid characters found. Base64 uses AñZ, añz, 0ñ9, +, /, =');
+        if (/[^A-Za-z0-9+/=\s]/.test(clean)) throw new Error('Invalid characters found. Base64 uses AÔøΩZ, aÔøΩz, 0ÔøΩ9, +, /, =');
         output.value = decodeURIComponent(escape(atob(clean)));
         status.textContent = 'Decoded successfully';
       } catch (err) {

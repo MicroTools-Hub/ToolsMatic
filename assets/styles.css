@@ -2,6 +2,8 @@
   box-sizing: border-box;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Righteous&display=swap');
+
 :root {
   --bg: #0f172a;
   --card: #111827;
@@ -660,6 +662,39 @@ select:focus-visible {
   .suggestion-item {
     padding: 15px;
   }
+}
+
+/* Funky header styles */
+.page-intro {
+  text-align: center;
+  margin: 30px 0 40px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.page-intro-title {
+  font-family: 'Fredoka One', 'Righteous', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #22d3ee 0%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 15px 0;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+}
+
+.page-intro-description {
+  font-size: 1.1rem;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+  white-space: pre-line;
 }
 
 /* Reduced motion preference */
