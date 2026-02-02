@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
   <!-- Vignette Ads - Load Immediately -->
-  <script src="https://3nbf4.com/act/files/tag.min.js?z=10555391" data-cfasync="false" async></script>
+  <script>(function(s){s.dataset.zone='10555340',s.src='https://gizokraijaw.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+  
+  <!-- Monetag Multitag Ads -->
+  <script src="https://quge5.com/88/tag.min.js" data-zone="207841" async data-cfasync="false"></script>
   
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9VEPDS13HT"></script>
@@ -63,13 +66,13 @@
       <a class="brand" href="/">ToolsMatic</a>
       <div class="nav-links">
         <a href="/" class="nav-btn">All tools</a>
-        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">ðŸŒ™</button>
       </div>
     </div>
   </header>
   <main>
     <div class="page-intro">
-      <div class="page-intro-title">💻 JSON Formatter 💻</div>
+      <div class="page-intro-title">ðŸ’» JSON Formatter ðŸ’»</div>
       <div class="page-intro-description">Format, validate, and beautify JSON in seconds
 Spot errors instantly with syntax highlighting
 Copy minified or prettified JSON with one click</div>
@@ -126,7 +129,7 @@ Copy minified or prettified JSON with one click</div>
       <p>Because it runs in the browser, it is always available while you are in tickets, dashboards, or docs. You can sanity-check webhook bodies, decode feature flag files, or prep payloads for documentation without switching tools.</p>
       <h2>How to use this tool</h2>
       <p>Paste any JSON into the input field. Click Format to pretty-print with consistent spacing, or Minify to remove whitespace for production. Errors surface in the status bar so you immediately know if a stray comma or missing brace is causing trouble. Use Clear to reset and start over.</p>
-      <p>For quick diffs, format a payload, copy it, adjust values, and format again; pairing this with the Text Diff Checker lets you spot changes in seconds. When you need to embed JSON in docs, minify to save space or format to keep it instructional—both options are one click away.</p>
+      <p>For quick diffs, format a payload, copy it, adjust values, and format again; pairing this with the Text Diff Checker lets you spot changes in seconds. When you need to embed JSON in docs, minify to save space or format to keep it instructionalâ€”both options are one click away.</p>
       <h2>Who should use it?</h2>
       <p>Engineers debugging API payloads, product managers reviewing feature flags, analysts inspecting exported data, and QA teams confirming response shapes all benefit. If you ever copy JSON into tickets, docs, or dashboards, a one-click formatter keeps it legible.</p>
       <p>Support teams can sanitize customer-provided payloads before sharing internally, and students learning APIs can use it to see how well-structured JSON should look. Anyone working with log exports or configuration files gains readability fast.</p>
@@ -138,7 +141,7 @@ Copy minified or prettified JSON with one click</div>
       <p>Because there are zero external dependencies, performance stays strong on low-bandwidth networks and older hardware. You can safely format sensitive data in an offline-friendly session knowing nothing is transmitted or stored.</p>
     </section>
   </main>
-  <footer>ToolsMatic · Fast, privacy-first utilities for the web.</footer>
+  <footer>ToolsMatic Â· Fast, privacy-first utilities for the web.</footer>
 
   <script>
     const input = document.getElementById('json-input');
@@ -159,7 +162,7 @@ Copy minified or prettified JSON with one click</div>
         const pretty = mode === 'minify' ? JSON.stringify(parsed) : JSON.stringify(parsed, null, 2);
         output.value = pretty;
         const bytes = new Blob([pretty]).size;
-        status.textContent = `Valid JSON · ${bytes} bytes · Keys: ${Object.keys(parsed).length || 0}`;
+        status.textContent = `Valid JSON Â· ${bytes} bytes Â· Keys: ${Object.keys(parsed).length || 0}`;
       } catch (err) {
         status.textContent = `Invalid JSON: ${err.message}`;
         output.value = '';

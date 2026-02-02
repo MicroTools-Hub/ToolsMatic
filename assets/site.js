@@ -17,75 +17,6 @@
     }
   };
 
-  const VIGNETTE_ZONE_ID = '10555340';
-  const VIGNETTE_SRC = 'https://gizokraijaw.net/vignette.min.js';
-  const VIGNETTE_STORAGE_KEY = 'toolsmatic-vignette-last';
-  const VIGNETTE_MIN_INTERVAL = 10 * 60 * 1000;
-  let vignetteTimer = null;
-  let vignetteTriggered = false;
-
-  const injectVignette = () => {
-    if (typeof document === 'undefined') return;
-    const script = document.createElement('script');
-    script.dataset.zone = VIGNETTE_ZONE_ID;
-    script.src = `${VIGNETTE_SRC}?t=${Date.now()}`;
-    (document.documentElement || document.body).appendChild(script);
-  };
-
-  const scheduleNextVignette = () => {
-    if (vignetteTimer) clearTimeout(vignetteTimer);
-    const last = Number(localStorage.getItem(VIGNETTE_STORAGE_KEY) || 0);
-    if (!last) return;
-    const remaining = Math.max(VIGNETTE_MIN_INTERVAL - (Date.now() - last), 0);
-    vignetteTimer = setTimeout(() => {
-      showVignette('timer');
-    }, remaining);
-  };
-
-  const showVignette = (reason = 'interaction') => {
-    if (typeof window === 'undefined') return;
-    if (document.hidden) {
-      scheduleNextVignette();
-      return;
-    }
-    const now = Date.now();
-    const last = Number(localStorage.getItem(VIGNETTE_STORAGE_KEY) || 0);
-    if (last && now - last < VIGNETTE_MIN_INTERVAL) {
-      scheduleNextVignette();
-      return;
-    }
-    localStorage.setItem(VIGNETTE_STORAGE_KEY, String(now));
-    injectVignette();
-    scheduleNextVignette();
-  };
-
-  const initVignetteAds = () => {
-    if (typeof window === 'undefined') return;
-
-    // Show immediately on page load
-    showVignette('pageload');
-
-    const fireOnce = () => {
-      if (vignetteTriggered) return;
-      vignetteTriggered = true;
-      showVignette('interaction');
-    };
-
-    const onScroll = () => {
-      if (window.scrollY > 20) fireOnce();
-    };
-
-    window.addEventListener('pointerdown', fireOnce, { once: true, passive: true });
-    window.addEventListener('touchstart', fireOnce, { once: true, passive: true });
-    window.addEventListener('keydown', fireOnce, { once: true });
-    window.addEventListener('scroll', onScroll, { passive: true });
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') fireOnce();
-    });
-
-    scheduleNextVignette();
-  };
-
   const ensureToastHost = () => {
     let host = document.querySelector('.toast-host');
     if (!host) {
@@ -330,7 +261,6 @@
   window.ToolsMatic = window.toolsMatic;
   ensureAds();
   bindKeyboard();
-  initVignetteAds();
 
   // Initialize theme toggle and suggestions when DOM is ready
   if (document.readyState === 'loading') {
