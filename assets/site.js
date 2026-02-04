@@ -10,6 +10,15 @@
     document.head.appendChild(script);
   };
 
+  const ensureLegacyAdScript = () => {
+    if (typeof document === 'undefined') return;
+    if (document.querySelector('script[data-effectivegatecpm]')) return;
+    const script = document.createElement('script');
+    script.src = 'https://pl28613409.effectivegatecpm.com/51/33/02/5133020b94dad7bafd96065840c47d76.js';
+    script.setAttribute('data-effectivegatecpm', 'true');
+    document.head.appendChild(script);
+  };
+
   const reduceAndReplaceBanners = () => {
     if (typeof document === 'undefined') return;
 
@@ -49,7 +58,7 @@
       banner.className = 'banner-slot';
       banner.setAttribute('data-banner-id', '2015926');
       banner.style.display = 'block';
-      banner.style.margin = '20px auto';
+      banner.style.margin = '12px auto';
       banner.style.textAlign = 'center';
       return banner;
     };
@@ -57,25 +66,11 @@
     const main = document.querySelector('main');
     if (!main) return;
 
-    const bannerTop = createBanner();
-    const bannerMid = createBanner();
-    const bannerBottom = createBanner();
+    const bannerTop1 = createBanner();
+    const bannerTop2 = createBanner();
 
-    main.insertBefore(bannerTop, main.firstChild);
-
-    const midAnchor = main.querySelector('.grid') || main.querySelector('section') || main.firstElementChild;
-    if (midAnchor && midAnchor.parentNode === main) {
-      midAnchor.insertAdjacentElement('afterend', bannerMid);
-    } else {
-      main.appendChild(bannerMid);
-    }
-
-    const footer = document.querySelector('footer');
-    if (footer && footer.parentNode) {
-      footer.insertAdjacentElement('beforebegin', bannerBottom);
-    } else {
-      main.appendChild(bannerBottom);
-    }
+    main.insertBefore(bannerTop2, main.firstChild);
+    main.insertBefore(bannerTop1, main.firstChild);
   };
 
   const ensureAds = () => {
@@ -340,6 +335,7 @@
   window.ToolsMatic = window.toolsMatic;
   const boot = () => {
     ensureAdManagerInlineScript();
+    ensureLegacyAdScript();
     reduceAndReplaceBanners();
     ensureAds();
     bindKeyboard();
