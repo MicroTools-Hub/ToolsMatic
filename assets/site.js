@@ -1,4 +1,52 @@
 (() => {
+  const reduceAndReplaceBanners = () => {
+    if (typeof document === 'undefined') return;
+
+    const removeWithContainer = (node) => {
+      if (!node) return;
+      const container = node.closest('div');
+      if (container && container.children.length <= 3) {
+        container.remove();
+      } else {
+        node.remove();
+      }
+    };
+
+    const adScriptSelectors = [
+      'script[src*="highperformanceformat.com"]',
+      'script[src*="effectivegatecpm.com"]',
+      'script[src*="pl28613409.effectivegatecpm.com"]',
+      'script[src*="3nbf4.com/act/files/tag.min.js"]'
+    ];
+
+    adScriptSelectors.forEach((selector) => {
+      document.querySelectorAll(selector).forEach(removeWithContainer);
+    });
+
+    document.querySelectorAll('div[id^="container-ec"]').forEach(removeWithContainer);
+
+    document.querySelectorAll('script').forEach((script) => {
+      if (script.textContent && script.textContent.includes('atOptions')) {
+        removeWithContainer(script);
+      }
+    });
+
+    const existingBanners = Array.from(document.querySelectorAll('.banner-slot[data-banner-id="2015926"]'));
+    if (existingBanners.length > 1) {
+      existingBanners.slice(1).forEach((node) => node.remove());
+    }
+
+    if (existingBanners.length === 0) {
+      const main = document.querySelector('main');
+      if (main) {
+        const banner = document.createElement('div');
+        banner.className = 'banner-slot';
+        banner.setAttribute('data-banner-id', '2015926');
+        main.insertBefore(banner, main.firstChild);
+      }
+    }
+  };
+
   const ensureAds = () => {
     if (typeof document === 'undefined') return;
     if (!document.querySelector('meta[name="google-adsense-account"]')) {
@@ -259,17 +307,17 @@
   };
   // Back-compat alias for pages using `ToolsMatic` casing
   window.ToolsMatic = window.toolsMatic;
-  ensureAds();
-  bindKeyboard();
-
-  // Initialize theme toggle and suggestions when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      initThemeToggle();
-      initSuggestions();
-    });
-  } else {
+  const boot = () => {
+    reduceAndReplaceBanners();
+    ensureAds();
+    bindKeyboard();
     initThemeToggle();
     initSuggestions();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot, { once: true });
+  } else {
+    boot();
   }
 })();
