@@ -42,24 +42,39 @@
       }
     });
 
-    const existingBanners = Array.from(document.querySelectorAll('.banner-slot[data-banner-id="2015926"]'));
-    const desiredCount = 3;
+    document.querySelectorAll('[data-banner-id="2015926"]').forEach((node) => node.remove());
 
-    if (existingBanners.length > desiredCount) {
-      existingBanners.slice(desiredCount).forEach((node) => node.remove());
+    const createBanner = () => {
+      const banner = document.createElement('div');
+      banner.className = 'banner-slot';
+      banner.setAttribute('data-banner-id', '2015926');
+      banner.style.display = 'block';
+      banner.style.margin = '20px auto';
+      banner.style.textAlign = 'center';
+      return banner;
+    };
+
+    const main = document.querySelector('main');
+    if (!main) return;
+
+    const bannerTop = createBanner();
+    const bannerMid = createBanner();
+    const bannerBottom = createBanner();
+
+    main.insertBefore(bannerTop, main.firstChild);
+
+    const midAnchor = main.querySelector('.grid') || main.querySelector('section') || main.firstElementChild;
+    if (midAnchor && midAnchor.parentNode === main) {
+      midAnchor.insertAdjacentElement('afterend', bannerMid);
+    } else {
+      main.appendChild(bannerMid);
     }
 
-    if (existingBanners.length < desiredCount) {
-      const main = document.querySelector('main');
-      if (main) {
-        const toAdd = desiredCount - existingBanners.length;
-        for (let i = 0; i < toAdd; i += 1) {
-          const banner = document.createElement('div');
-          banner.className = 'banner-slot';
-          banner.setAttribute('data-banner-id', '2015926');
-          main.insertBefore(banner, main.firstChild);
-        }
-      }
+    const footer = document.querySelector('footer');
+    if (footer && footer.parentNode) {
+      footer.insertAdjacentElement('beforebegin', bannerBottom);
+    } else {
+      main.appendChild(bannerBottom);
     }
   };
 
