@@ -80,6 +80,8 @@
 
     bannerLeft.style.flex = '1 1 300px';
     bannerRight.style.flex = '1 1 300px';
+    bannerLeft.style.minHeight = '90px';
+    bannerRight.style.minHeight = '90px';
 
     topRow.appendChild(bannerLeft);
     topRow.appendChild(bannerRight);
@@ -348,9 +350,9 @@
   // Back-compat alias for pages using `ToolsMatic` casing
   window.ToolsMatic = window.toolsMatic;
   const boot = () => {
+    reduceAndReplaceBanners();
     ensureAdManagerInlineScript();
     ensureLegacyAdScript();
-    reduceAndReplaceBanners();
     ensureAds();
     bindKeyboard();
     initThemeToggle();
