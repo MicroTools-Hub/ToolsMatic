@@ -87,6 +87,15 @@
     topRow.appendChild(bannerRight);
 
     main.insertBefore(topRow, main.firstChild);
+
+    setTimeout(() => {
+      const rightBanner = document.querySelector('.banner-slot[data-banner-id="2015935"]');
+      if (rightBanner && rightBanner.childElementCount === 0) {
+        if (window.a3klsam && typeof window.a3klsam.init === 'function') {
+          window.a3klsam.init(422633);
+        }
+      }
+    }, 1500);
   };
 
   const ensureAds = () => {
