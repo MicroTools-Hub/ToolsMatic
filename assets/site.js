@@ -51,14 +51,14 @@
       }
     });
 
-    document.querySelectorAll('[data-banner-id="2015926"]').forEach((node) => node.remove());
+    document.querySelectorAll('[data-banner-id="2015926"], [data-banner-id="2015935"]').forEach((node) => node.remove());
 
-    const createBanner = () => {
+    const createBanner = (id) => {
       const banner = document.createElement('div');
       banner.className = 'banner-slot';
-      banner.setAttribute('data-banner-id', '2015926');
+      banner.setAttribute('data-banner-id', id);
       banner.style.display = 'block';
-      banner.style.margin = '12px auto';
+      banner.style.margin = '0 auto';
       banner.style.textAlign = 'center';
       return banner;
     };
@@ -66,11 +66,25 @@
     const main = document.querySelector('main');
     if (!main) return;
 
-    const bannerTop1 = createBanner();
-    const bannerTop2 = createBanner();
+    const topRow = document.createElement('div');
+    topRow.className = 'banner-row';
+    topRow.style.display = 'flex';
+    topRow.style.flexWrap = 'wrap';
+    topRow.style.justifyContent = 'space-between';
+    topRow.style.alignItems = 'flex-start';
+    topRow.style.gap = '12px';
+    topRow.style.margin = '12px 0';
 
-    main.insertBefore(bannerTop2, main.firstChild);
-    main.insertBefore(bannerTop1, main.firstChild);
+    const bannerLeft = createBanner('2015926');
+    const bannerRight = createBanner('2015935');
+
+    bannerLeft.style.flex = '1 1 300px';
+    bannerRight.style.flex = '1 1 300px';
+
+    topRow.appendChild(bannerLeft);
+    topRow.appendChild(bannerRight);
+
+    main.insertBefore(topRow, main.firstChild);
   };
 
   const ensureAds = () => {
