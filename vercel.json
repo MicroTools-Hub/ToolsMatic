@@ -1,9 +1,0 @@
-# ToolsMatic - Vercel Deployment Configuration
-# Last updated: 2026-02-03
-
-# Disable Vercel's automatic builds on source changes
-# Manual deployments recommended for static files
-
-functions:
-  api:
-    runtime: "nodejs18.x"
