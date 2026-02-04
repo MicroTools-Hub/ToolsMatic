@@ -19,6 +19,16 @@
     document.head.appendChild(script);
   };
 
+  const ensureMbiAdScript = () => {
+    if (typeof document === 'undefined') return;
+    if (document.querySelector('script[data-admpid="422709"]')) return;
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://js.mbidadm.com/static/scripts.js';
+    script.setAttribute('data-admpid', '422709');
+    document.head.appendChild(script);
+  };
+
   const reduceAndReplaceBanners = () => {
     if (typeof document === 'undefined') return;
 
@@ -361,6 +371,7 @@
   const boot = () => {
     reduceAndReplaceBanners();
     ensureAdManagerInlineScript();
+    ensureMbiAdScript();
     ensureLegacyAdScript();
     ensureAds();
     bindKeyboard();
