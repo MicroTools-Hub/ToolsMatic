@@ -16,6 +16,13 @@
   --input-bg: #0c1425;
   --elevated: rgba(255, 255, 255, 0.04);
   --font-body: "Manrope", "Segoe UI", "Helvetica Neue", sans-serif;
+  
+  /* Additional variables used by tools */
+  --text-secondary: #94a3b8;
+  --accent-color: #22d3ee;
+  --border-color: #1f2937;
+  --bg-secondary: #111827;
+  --bg-tertiary: #0b1222;
 }
 
 body {
@@ -121,6 +128,13 @@ html.dark-mode {
   --surface: #f8fafc;
   --input-bg: #ffffff;
   --elevated: rgba(0, 0, 0, 0.04);
+  
+  /* Additional variables used by tools */
+  --text-secondary: #64748b;
+  --accent-color: #0891b2;
+  --border-color: #cbd5e1;
+  --bg-secondary: #f1f5f9;
+  --bg-tertiary: #f8fafc;
 }
 
 html.dark-mode body {
