@@ -15,7 +15,7 @@
   --surface: #0b1222;
   --input-bg: #0c1425;
   --elevated: rgba(255, 255, 255, 0.04);
-  --font-body: "Manrope", "Segoe UI", "Helvetica Neue", sans-serif;
+  --font-body: "Manrope", "Segoe UI", "Helvetica Neue", "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
   
   /* Additional variables used by tools */
   --text-secondary: #94a3b8;

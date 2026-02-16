@@ -42,17 +42,19 @@
   const initThemeToggle = () => {
     const toggleBtn = document.getElementById('theme-toggle');
     if (!toggleBtn) return;
+    const sunIcon = '\u2600\uFE0F';
+    const moonIcon = '\u{1F319}';
     const isDark = localStorage.getItem('mt-theme') === 'dark';
     if (isDark) {
       document.documentElement.classList.add('dark-mode');
-      toggleBtn.textContent = '☀️';
+      toggleBtn.textContent = sunIcon;
     } else {
-      toggleBtn.textContent = '🌙';
+      toggleBtn.textContent = moonIcon;
     }
     toggleBtn.addEventListener('click', () => {
       const isDarkMode = document.documentElement.classList.toggle('dark-mode');
       localStorage.setItem('mt-theme', isDarkMode ? 'dark' : 'light');
-      toggleBtn.textContent = isDarkMode ? '☀️' : '🌙';
+      toggleBtn.textContent = isDarkMode ? sunIcon : moonIcon;
       if (window.toolsMatic) window.toolsMatic.showToast(isDarkMode ? 'Dark mode on' : 'Light mode on', 'info');
     });
   };
@@ -246,11 +248,11 @@
   // Back-compat alias for pages using `ToolsMatic` casing
   window.ToolsMatic = window.toolsMatic;
   const boot = () => {
-    reduceAndReplaceBanners();
-    ensureAdManagerInlineScript();
-    ensureMbiAdScript();
-    ensureLegacyAdScript();
-    ensureAds();
+    if (typeof reduceAndReplaceBanners === 'function') reduceAndReplaceBanners();
+    if (typeof ensureAdManagerInlineScript === 'function') ensureAdManagerInlineScript();
+    if (typeof ensureMbiAdScript === 'function') ensureMbiAdScript();
+    if (typeof ensureLegacyAdScript === 'function') ensureLegacyAdScript();
+    if (typeof ensureAds === 'function') ensureAds();
     bindKeyboard();
     initThemeToggle();
     initSuggestions();
