@@ -401,8 +401,38 @@
       height: 100%;
     }
 
-    .faq h3 { margin-bottom: 0.25rem; }
-    .faq p { margin-top: 0; }
+    .faq {
+      max-width: 100%;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .faq h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+      color: var(--accent-color);
+      word-break: break-word;
+    }
+
+    .faq h4 {
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      word-break: break-word;
+    }
+
+    .faq p {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
 
     .toast {
       position: fixed;
@@ -795,122 +825,122 @@ Perfect for coding comments, terminal creativity, and text art fun</div>
     <!-- Comparison Table -->
     <section class="section" aria-labelledby="comparison">
       <h2 id="comparison" style="text-align: center; margin: 40px 0 30px 0;">ToolsMatic ASCII Generator vs Top Competitors</h2>
-      <div style="overflow-x: auto;">
-        <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem;">
+      <div style="overflow-x: auto; width: 100%; margin: 20px auto;">
+        <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.75rem; min-width: 600px; table-layout: fixed;">
           <thead>
             <tr style="background: rgba(6, 182, 212, 0.1); border-bottom: 2px solid rgba(6, 182, 212, 0.3);">
-              <th style="padding: 14px; text-align: left; font-weight: 600;">Feature</th>
-              <th style="padding: 14px; text-align: center; font-weight: 600; color: #06b6d4;">ToolsMatic</th>
-              <th style="padding: 14px; text-align: center; font-weight: 600;">ASCII Art.io</th>
-              <th style="padding: 14px; text-align: center; font-weight: 600;">Figlet Online</th>
-              <th style="padding: 14px; text-align: center; font-weight: 600;">Txt2Ascii</th>
-              <th style="padding: 14px; text-align: center; font-weight: 600;">Premium Tools</th>
+              <th style="padding: 8px; text-align: left; font-weight: 600; word-break: break-word; width: 25%;">Feature</th>
+              <th style="padding: 8px; text-align: center; font-weight: 600; color: #06b6d4; word-break: break-word; width: 15%;">ToolsMatic</th>
+              <th style="padding: 8px; text-align: center; font-weight: 600; word-break: break-word; width: 15%;">ASCII Art.io</th>
+              <th style="padding: 8px; text-align: center; font-weight: 600; word-break: break-word; width: 15%;">Figlet</th>
+              <th style="padding: 8px; text-align: center; font-weight: 600; word-break: break-word; width: 15%;">Txt2Ascii</th>
+              <th style="padding: 8px; text-align: center; font-weight: 600; word-break: break-word; width: 15%;">Premium</th>
             </tr>
           </thead>
           <tbody>
             <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
-              <td style="padding: 12px; font-weight: 500;">30+ Professional Fonts</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ 30+</td>
-              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ Limited</td>
-              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ 12</td>
-              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ 8</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ 40+</td>
+              <td style="padding: 8px; font-weight: 500; word-break: break-word;">30+ Fonts</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ 30+</td>
+              <td style="padding: 8px; text-align: center; color: #ef4444; word-break: break-word;">❌ Lim</td>
+              <td style="padding: 8px; text-align: center; color: #fbbf24; word-break: break-word;">⚠️ 12</td>
+              <td style="padding: 8px; text-align: center; color: #fbbf24; word-break: break-word;">⚠️ 8</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ 40+</td>
             </tr>
             <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
-              <td style="padding: 12px; font-weight: 500;">Image-to-ASCII Conversion</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Full</td>
-              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Basic</td>
-              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ No</td>
-              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ No</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 8px; font-weight: 500; word-break: break-word;">IMG to ASCII</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ Full</td>
+              <td style="padding: 8px; text-align: center; color: #fbbf24; word-break: break-word;">⚠️ Basic</td>
+              <td style="padding: 8px; text-align: center; color: #ef4444; word-break: break-word;">❌ No</td>
+              <td style="padding: 8px; text-align: center; color: #ef4444; word-break: break-word;">❌ No</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ Yes</td>
             </tr>
             <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
-              <td style="padding: 12px; font-weight: 500;">Real-Time Preview</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Instant</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
-              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Slow</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 8px; font-weight: 500; word-break: break-word;">Preview</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ Fast</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ OK</td>
+              <td style="padding: 8px; text-align: center; color: #fbbf24; word-break: break-word;">⚠️ Slow</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ OK</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ Fast</td>
             </tr>
             <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
-              <td style="padding: 12px; font-weight: 500;">Keyboard Shortcuts</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ 5+ Shortcuts</td>
-              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ No</td>
-              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ No</td>
-              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ 2 Only</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 8px; font-weight: 500; word-break: break-word;">Shortcuts</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ 5+</td>
+              <td style="padding: 8px; text-align: center; color: #ef4444; word-break: break-word;">❌ No</td>
+              <td style="padding: 8px; text-align: center; color: #ef4444; word-break: break-word;">❌ No</td>
+              <td style="padding: 8px; text-align: center; color: #fbbf24; word-break: break-word;">⚠️ 2</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ Yes</td>
             </tr>
             <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
-              <td style="padding: 12px; font-weight: 500;">Favorites &amp; History</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Unlimited</td>
-              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ No</td>
-              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ No</td>
-              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Limited</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 8px; font-weight: 500; word-break: break-word;">Favorites</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ ∞</td>
+              <td style="padding: 8px; text-align: center; color: #ef4444; word-break: break-word;">❌ No</td>
+              <td style="padding: 8px; text-align: center; color: #ef4444; word-break: break-word;">❌ No</td>
+              <td style="padding: 8px; text-align: center; color: #fbbf24; word-break: break-word;">⚠️ Lim</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ Yes</td>
             </tr>
             <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
-              <td style="padding: 12px; font-weight: 500;">Multi-Format Export</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ 5 Formats</td>
-              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ TXT Only</td>
-              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ 2 Formats</td>
-              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ 3 Formats</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ All</td>
+              <td style="padding: 8px; font-weight: 500; word-break: break-word;">Formats</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ 5</td>
+              <td style="padding: 8px; text-align: center; color: #fbbf24; word-break: break-word;">⚠️ 1</td>
+              <td style="padding: 8px; text-align: center; color: #fbbf24; word-break: break-word;">⚠️ 2</td>
+              <td style="padding: 8px; text-align: center; color: #fbbf24; word-break: break-word;">⚠️ 3</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ All</td>
             </tr>
             <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
-              <td style="padding: 12px; font-weight: 500;">Theme &amp; Styling Options</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Full Suite</td>
-              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Basic</td>
-              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ None</td>
-              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ None</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 8px; font-weight: 500; word-break: break-word;">Themes</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ Full</td>
+              <td style="padding: 8px; text-align: center; color: #fbbf24; word-break: break-word;">⚠️ Basic</td>
+              <td style="padding: 8px; text-align: center; color: #ef4444; word-break: break-word;">❌ No</td>
+              <td style="padding: 8px; text-align: center; color: #ef4444; word-break: break-word;">❌ No</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ Yes</td>
             </tr>
             <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
-              <td style="padding: 12px; font-weight: 500;">100% Privacy (Local)</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
-              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ Cloud</td>
-              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ Cloud</td>
-              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ Cloud</td>
-              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ Cloud</td>
+              <td style="padding: 8px; font-weight: 500; word-break: break-word;">Privacy</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ Local</td>
+              <td style="padding: 8px; text-align: center; color: #ef4444; word-break: break-word;">❌ Cloud</td>
+              <td style="padding: 8px; text-align: center; color: #ef4444; word-break: break-word;">❌ Cloud</td>
+              <td style="padding: 8px; text-align: center; color: #ef4444; word-break: break-word;">❌ Cloud</td>
+              <td style="padding: 8px; text-align: center; color: #ef4444; word-break: break-word;">❌ Cloud</td>
             </tr>
             <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
-              <td style="padding: 12px; font-weight: 500;">Mobile Optimized</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Perfect</td>
-              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Okay</td>
-              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Basic</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 8px; font-weight: 500; word-break: break-word;">Mobile</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ Great</td>
+              <td style="padding: 8px; text-align: center; color: #fbbf24; word-break: break-word;">⚠️ OK</td>
+              <td style="padding: 8px; text-align: center; color: #fbbf24; word-break: break-word;">⚠️ OK</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ Yes</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ Yes</td>
             </tr>
             <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
-              <td style="padding: 12px; font-weight: 500;">Offline/PWA Support</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Full</td>
-              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ No</td>
-              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ No</td>
-              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ No</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 8px; font-weight: 500; word-break: break-word;">Offline</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ Full</td>
+              <td style="padding: 8px; text-align: center; color: #ef4444; word-break: break-word;">❌ No</td>
+              <td style="padding: 8px; text-align: center; color: #ef4444; word-break: break-word;">❌ No</td>
+              <td style="padding: 8px; text-align: center; color: #ef4444; word-break: break-word;">❌ No</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ Yes</td>
             </tr>
             <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
-              <td style="padding: 12px; font-weight: 500;">Ad-Free Experience</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
-              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ Ad-Heavy</td>
-              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ Ad-Heavy</td>
-              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Some Ads</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 8px; font-weight: 500; word-break: break-word;">Ad-Free</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ Yes</td>
+              <td style="padding: 8px; text-align: center; color: #ef4444; word-break: break-word;">❌ Yes</td>
+              <td style="padding: 8px; text-align: center; color: #ef4444; word-break: break-word;">❌ Yes</td>
+              <td style="padding: 8px; text-align: center; color: #fbbf24; word-break: break-word;">⚠️ Some</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word;">✅ Yes</td>
             </tr>
-            <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
-              <td style="padding: 12px; font-weight: 500;">No Sign-Up Required</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Instant</td>
-              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Email Optional</td>
-              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
-              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Account Needed</td>
-              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Premium Only</td>
+            <tr style="background: rgba(6, 182, 212, 0.05); border-bottom: 2px solid rgba(6, 182, 212, 0.2);">
+              <td style="padding: 8px; font-weight: 500; word-break: break-word; width: 25%;">No Sign-Up</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word; width: 15%;">✅ Instant</td>
+              <td style="padding: 8px; text-align: center; color: #fbbf24; word-break: break-word; width: 15%;">⚠️ Optional</td>
+              <td style="padding: 8px; text-align: center; color: #22d3ee; word-break: break-word; width: 15%;">✅ Yes</td>
+              <td style="padding: 8px; text-align: center; color: #fbbf24; word-break: break-word; width: 15%;">⚠️ Needed</td>
+              <td style="padding: 8px; text-align: center; color: #fbbf24; word-break: break-word; width: 15%;">⚠️ Premium</td>
             </tr>
             <tr style="background: rgba(6, 182, 212, 0.1); border-bottom: 2px solid rgba(6, 182, 212, 0.3);">
-              <td style="padding: 12px; font-weight: 600;">Cost</td>
-              <td style="padding: 12px; text-align: center; font-weight: 600; color: #22d3ee;">💚 Free Forever</td>
-              <td style="padding: 12px; text-align: center;">$4.99/mo</td>
-              <td style="padding: 12px; text-align: center;">Free + Ads</td>
-              <td style="padding: 12px; text-align: center;">Free Limited</td>
-              <td style="padding: 12px; text-align: center;">$19-99/mo</td>
+              <td style="padding: 8px; font-weight: 600; word-break: break-word; width: 25%;">Cost</td>
+              <td style="padding: 8px; text-align: center; font-weight: 600; color: #22d3ee; word-break: break-word; width: 15%;">💚 Free</td>
+              <td style="padding: 8px; text-align: center; word-break: break-word; width: 15%;">$4.99/mo</td>
+              <td style="padding: 8px; text-align: center; word-break: break-word; width: 15%;">Free+Ads</td>
+              <td style="padding: 8px; text-align: center; word-break: break-word; width: 15%;">Free Limit</td>
+              <td style="padding: 8px; text-align: center; word-break: break-word; width: 15%;">$19-99/mo</td>
             </tr>
           </tbody>
         </table>
