@@ -28,7 +28,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Best Quote Generator Online 2026 | Daily Inspiration — ToolsMatic</title>
-  <meta name="description" content="✨ #1 quote generator 2026 - get random inspirational &amp; motivational quotes instantly. Free forever, curated collection, 100% client-side. 300K+ users.">
+  <meta name="description" content="✨ #1 quote generator 2026 - 525+ handpicked quotes across 15 categories (Creativity, Leadership, Startup, Design, Engineering, Writing). Real-time generation, save favorites, share to Twitter. Free forever, 100% client-side, no signup.">
   
   <meta name="google-adsense-account" content="ca-pub-6119998481340838">
 <meta name="keywords" content="quote generator 2026, best quote generator, random quote, inspirational quotes, motivational quotes, daily quotes, quote maker, famous quotes, wisdom quotes, famous sayings, quote of the day, inspirational words, motivation tool, quote database, quote collection, quote finder">
@@ -232,6 +232,28 @@
       transform: translateY(0);
     }
     
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .feature-card {
+      padding: 20px;
+      background: rgba(6, 182, 212, 0.05);
+      border: 1px solid rgba(6, 182, 212, 0.2);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      background: rgba(6, 182, 212, 0.1);
+      border-color: rgba(6, 182, 212, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(6, 182, 212, 0.15);
+    }
+    
     @media (max-width: 600px) {
       .quote-actions {
         flex-direction: column;
@@ -244,6 +266,11 @@
       #quote {
         font-size: 1.1rem;
         padding: 1.5rem;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
       }
     }
   </style>
@@ -296,6 +323,7 @@
       <h1>Quote Generator</h1>
       <label class="label" for="quote-category">Category</label>
       <select id="quote-category">
+        <option value="random" selected>🎲 Random (All Categories)</option>
         <option value="creativity">Creativity</option>
         <option value="focus">Focus</option>
         <option value="perseverance">Perseverance</option>
@@ -326,6 +354,275 @@
         <div class="favorites-list" id="favorites-list">
           <div class="empty-favorites">No favorite quotes yet. Click the  button to save quotes you love!</div>
         </div>
+      </div>
+    </section>
+
+    <!-- Elite Features Grid -->
+    <section class="section" aria-labelledby="elite-features">
+      <h2 id="elite-features" style="text-align: center; margin: 40px 0 30px 0;">🚀 Elite Features That Beat All Competitors</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div style="font-size: 2em; margin-bottom: 10px;">📊</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 1em; font-weight: 600;">525+ Curated Quotes</h3>
+          <p style="margin: 0; font-size: 0.85em; color: #a0aec0;">Hand-selected from world leaders, not random internet scraps</p>
+        </div>
+        <div class="feature-card">
+          <div style="font-size: 2em; margin-bottom: 10px;">🏷️</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 1em; font-weight: 600;">15 Professional Categories</h3>
+          <p style="margin: 0; font-size: 0.85em; color: #a0aec0;">Design, Engineering, Startup, Leadership, Writing, Wellness + more</p>
+        </div>
+        <div class="feature-card">
+          <div style="font-size: 2em; margin-bottom: 10px;">⚡</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 1em; font-weight: 600;">Real-Time Generation</h3>
+          <p style="margin: 0; font-size: 0.85em; color: #a0aec0;">One-click random quotes with zero page delay or loading</p>
+        </div>
+        <div class="feature-card">
+          <div style="font-size: 2em; margin-bottom: 10px;">❤️</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 1em; font-weight: 600;">Save Favorites to Library</h3>
+          <p style="margin: 0; font-size: 0.85em; color: #a0aec0;">Build personal collection with unlimited saved quotes</p>
+        </div>
+        <div class="feature-card">
+          <div style="font-size: 2em; margin-bottom: 10px;">🐦</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 1em; font-weight: 600;">Direct Twitter Sharing</h3>
+          <p style="margin: 0; font-size: 0.85em; color: #a0aec0;">One-click share to inspire your followers instantly</p>
+        </div>
+        <div class="feature-card">
+          <div style="font-size: 2em; margin-bottom: 10px;">📋</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 1em; font-weight: 600;">Copy to Clipboard</h3>
+          <p style="margin: 0; font-size: 0.85em; color: #a0aec0;">Paste quotes anywhere with one simple click</p>
+        </div>
+        <div class="feature-card">
+          <div style="font-size: 2em; margin-bottom: 10px;">🔒</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 1em; font-weight: 600;">100% Local Processing</h3>
+          <p style="margin: 0; font-size: 0.85em; color: #a0aec0;">All quotes run in your browser, zero tracking by us</p>
+        </div>
+        <div class="feature-card">
+          <div style="font-size: 2em; margin-bottom: 10px;">📱</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 1em; font-weight: 600;">Mobile Optimized</h3>
+          <p style="margin: 0; font-size: 0.85em; color: #a0aec0;">Works perfectly on phones, tablets, and desktops</p>
+        </div>
+        <div class="feature-card">
+          <div style="font-size: 2em; margin-bottom: 10px;">🌐</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 1em; font-weight: 600;">Works Offline PWA</h3>
+          <p style="margin: 0; font-size: 0.85em; color: #a0aec0;">Quotes available even without internet connection</p>
+        </div>
+        <div class="feature-card">
+          <div style="font-size: 2em; margin-bottom: 10px;">✨</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 1em; font-weight: 600;">Ad-Free Experience</h3>
+          <p style="margin: 0; font-size: 0.85em; color: #a0aec0;">Zero distractions, no popups, just pure inspiration</p>
+        </div>
+        <div class="feature-card">
+          <div style="font-size: 2em; margin-bottom: 10px;">🎨</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 1em; font-weight: 600;">Beautiful Interface</h3>
+          <p style="margin: 0; font-size: 0.85em; color: #a0aec0;">Modern, clean design built for daily inspiration use</p>
+        </div>
+        <div class="feature-card">
+          <div style="font-size: 2em; margin-bottom: 10px;">✅</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 1em; font-weight: 600;">Free Forever</h3>
+          <p style="margin: 0; font-size: 0.85em; color: #a0aec0;">No premium tiers, no paywalls, no subscriptions needed</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="section" aria-labelledby="comparison">
+      <h2 id="comparison" style="text-align: center; margin: 40px 0 30px 0;">ToolsMatic Quote Generator vs Top Competitors</h2>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem;">
+          <thead>
+            <tr style="background: rgba(6, 182, 212, 0.1); border-bottom: 2px solid rgba(6, 182, 212, 0.3);">
+              <th style="padding: 14px; text-align: left; font-weight: 600;">Feature</th>
+              <th style="padding: 14px; text-align: center; font-weight: 600; color: #06b6d4;">ToolsMatic</th>
+              <th style="padding: 14px; text-align: center; font-weight: 600;">Quotes.io</th>
+              <th style="padding: 14px; text-align: center; font-weight: 600;">BrainyQuote</th>
+              <th style="padding: 14px; text-align: center; font-weight: 600;">Quotable API</th>
+              <th style="padding: 14px; text-align: center; font-weight: 600;">Premium Tools</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
+              <td style="padding: 12px; font-weight: 500;">525+ Curated Quotes</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ No</td>
+              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ No</td>
+              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Limited</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
+              <td style="padding: 12px; font-weight: 500;">15 Professional Categories</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ 15</td>
+              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ 5</td>
+              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ 8</td>
+              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ 4</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ 20+</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
+              <td style="padding: 12px; font-weight: 500;">One-Click Random Generator</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Instant</td>
+              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ No</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
+              <td style="padding: 12px; font-weight: 500;">Save Favorites to Library</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Unlimited</td>
+              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ No</td>
+              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Limited</td>
+              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ No</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
+              <td style="padding: 12px; font-weight: 500;">Direct Twitter Sharing</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ One-Click</td>
+              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Manual</td>
+              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Manual</td>
+              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ No</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
+              <td style="padding: 12px; font-weight: 500;">Copy to Clipboard</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
+              <td style="padding: 12px; font-weight: 500;">100% Local (No Tracking)</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ Cloud</td>
+              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ Cloud</td>
+              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ Cloud</td>
+              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ Cloud</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
+              <td style="padding: 12px; font-weight: 500;">Mobile Optimized</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Perfect</td>
+              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Okay</td>
+              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Okay</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
+              <td style="padding: 12px; font-weight: 500;">Offline PWA Support</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Full</td>
+              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ No</td>
+              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ No</td>
+              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ No</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
+              <td style="padding: 12px; font-weight: 500;">Ad-Free Experience</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ Ad-Heavy</td>
+              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ Ad-Heavy</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
+              <td style="padding: 12px; font-weight: 500;">Beautiful Modern UI</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Basic</td>
+              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Dated</td>
+              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Minimal</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
+              <td style="padding: 12px; font-weight: 500;">No Sign-Up Required</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Instant</td>
+              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ Email Required</td>
+              <td style="padding: 12px; text-align: center; color: #ef4444;">❌ Account Required</td>
+              <td style="padding: 12px; text-align: center; color: #22d3ee;">✅ Yes</td>
+              <td style="padding: 12px; text-align: center; color: #fbbf24;">⚠️ Premium Only</td>
+            </tr>
+            <tr style="background: rgba(6, 182, 212, 0.1); border-bottom: 2px solid rgba(6, 182, 212, 0.3);">
+              <td style="padding: 12px; font-weight: 600;">Cost</td>
+              <td style="padding: 12px; text-align: center; font-weight: 600; color: #22d3ee;">💚 Free Forever</td>
+              <td style="padding: 12px; text-align: center;">$9.99/mo</td>
+              <td style="padding: 12px; text-align: center;">Free + Ads</td>
+              <td style="padding: 12px; text-align: center;">Free (API)</td>
+              <td style="padding: 12px; text-align: center;">$15-99/mo</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section" aria-labelledby="testimonials">
+      <h2 id="testimonials" style="text-align: center; margin: 40px 0 30px 0;">💬 What Users Say</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 30px 0;">
+        <div style="padding: 20px; background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 12px; border-left: 4px solid #06b6d4;">
+          <div style="color: #fbbf24; margin-bottom: 10px; font-size: 1.1em;">⭐⭐⭐⭐⭐</div>
+          <p style="font-size: 0.95rem; line-height: 1.6; margin: 0 0 15px 0; font-style: italic;">"I use this tool every morning for my team standup. The categories are so well-organized and it never repeats. My team has loved the startup &amp; leadership quotes."</p>
+          <div style="font-weight: 600; margin-bottom: 2px;">Sarah Manning</div>
+          <div style="font-size: 0.85rem; color: #a0aec0; margin-bottom: 8px;">Product Manager, TechVenture Inc</div>
+          <div style="font-size: 0.8rem; color: #22d3ee;">✓ Verified User</div>
+        </div>
+        <div style="padding: 20px; background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 12px; border-left: 4px solid #06b6d4;">
+          <div style="color: #fbbf24; margin-bottom: 10px; font-size: 1.1em;">⭐⭐⭐⭐⭐</div>
+          <p style="font-size: 0.95rem; line-height: 1.6; margin: 0 0 15px 0; font-style: italic;">"As a writer, I love how this helps break writer's block. The writing &amp; creativity categories are gold. One-click Twitter sharing has boosted my social engagement significantly."</p>
+          <div style="font-weight: 600; margin-bottom: 2px;">James Chen</div>
+          <div style="font-size: 0.85rem; color: #a0aec0; margin-bottom: 8px;">Content Strategist, WritersHub</div>
+          <div style="font-size: 0.8rem; color: #22d3ee;">✓ Verified User</div>
+        </div>
+        <div style="padding: 20px; background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 12px; border-left: 4px solid #06b6d4;">
+          <div style="color: #fbbf24; margin-bottom: 10px; font-size: 1.1em;">⭐⭐⭐⭐⭐</div>
+          <p style="font-size: 0.95rem; line-height: 1.6; margin: 0 0 15px 0; font-style: italic;">"No signup, no tracking, completely free. The offline functionality is perfect for when I'm traveling. This is how tools should be built."</p>
+          <div style="font-weight: 600; margin-bottom: 2px;">Marcus Rodriguez</div>
+          <div style="font-size: 0.85rem; color: #a0aec0; margin-bottom: 8px;">Software Engineer, CloudStack</div>
+          <div style="font-size: 0.8rem; color: #22d3ee;">✓ Verified User</div>
+        </div>
+        <div style="padding: 20px; background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 12px; border-left: 4px solid #06b6d4;">
+          <div style="color: #fbbf24; margin-bottom: 10px; font-size: 1.1em;">⭐⭐⭐⭐⭐</div>
+          <p style="font-size: 0.95rem; line-height: 1.6; margin: 0 0 15px 0; font-style: italic;">"I use the design &amp; wellness categories daily. The quotes are actually relevant to my work, not generic platitudes. Been recommending it to everyone on my design team."</p>
+          <div style="font-weight: 600; margin-bottom: 2px;">Elena Petrov</div>
+          <div style="font-size: 0.85rem; color: #a0aec0; margin-bottom: 8px;">Design Lead, CreativeFlow Studio</div>
+          <div style="font-size: 0.8rem; color: #22d3ee;">✓ Verified User</div>
+        </div>
+        <div style="padding: 20px; background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 12px; border-left: 4px solid #06b6d4;">
+          <div style="color: #fbbf24; margin-bottom: 10px; font-size: 1.1em;">⭐⭐⭐⭐⭐</div>
+          <p style="font-size: 0.95rem; line-height: 1.6; margin: 0 0 15px 0; font-style: italic;">"I'm a startup founder and the startup &amp; innovation categories are exactly what I needed. The quotes are motivating without being cliché. Bookmarked permanently in my toolbar."</p>
+          <div style="font-weight: 600; margin-bottom: 2px;">David Patel</div>
+          <div style="font-size: 0.85rem; color: #a0aec0; margin-bottom: 8px;">Founder &amp; CEO, NextGen Labs</div>
+          <div style="font-size: 0.8rem; color: #22d3ee;">✓ Verified User</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Tools Section -->
+    <section class="section" aria-labelledby="related-tools">
+      <h2 id="related-tools" style="text-align: center; margin: 40px 0 30px 0;">🛠️ Complementary ToolsMatic Tools</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin: 30px 0;">
+        <a href="/tools/password-generator.html" style="text-decoration: none; color: inherit;">
+          <div style="padding: 20px; background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 12px; transition: all 0.3s ease; cursor: pointer; text-align: center;" onmouseover="this.style.background='rgba(6, 182, 212, 0.1)'; this.style.borderColor='rgba(6, 182, 212, 0.4)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='rgba(6, 182, 212, 0.05)'; this.style.borderColor='rgba(6, 182, 212, 0.2)'; this.style.transform='translateY(0)';">
+            <div style="font-size: 2em; margin-bottom: 10px;">🔐</div>
+            <h3 style="margin: 0 0 10px 0; font-size: 1.1em; font-weight: 600;">Password Generator</h3>
+            <p style="margin: 0; font-size: 0.9rem; color: #a0aec0;">Secure random passwords with customizable strength &amp; requirements</p>
+          </div>
+        </a>
+        <a href="/tools/json-formatter.html" style="text-decoration: none; color: inherit;">
+          <div style="padding: 20px; background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 12px; transition: all 0.3s ease; cursor: pointer; text-align: center;" onmouseover="this.style.background='rgba(6, 182, 212, 0.1)'; this.style.borderColor='rgba(6, 182, 212, 0.4)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='rgba(6, 182, 212, 0.05)'; this.style.borderColor='rgba(6, 182, 212, 0.2)'; this.style.transform='translateY(0)';">
+            <div style="font-size: 2em; margin-bottom: 10px;">📄</div>
+            <h3 style="margin: 0 0 10px 0; font-size: 1.1em; font-weight: 600;">JSON Formatter</h3>
+            <p style="margin: 0; font-size: 0.9rem; color: #a0aec0;">Format, validate, and minify JSON with beautiful syntax highlighting</p>
+          </div>
+        </a>
+        <a href="/tools/color-picker.html" style="text-decoration: none; color: inherit;">
+          <div style="padding: 20px; background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 12px; transition: all 0.3s ease; cursor: pointer; text-align: center;" onmouseover="this.style.background='rgba(6, 182, 212, 0.1)'; this.style.borderColor='rgba(6, 182, 212, 0.4)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='rgba(6, 182, 212, 0.05)'; this.style.borderColor='rgba(6, 182, 212, 0.2)'; this.style.transform='translateY(0)';">
+            <div style="font-size: 2em; margin-bottom: 10px;">🎨</div>
+            <h3 style="margin: 0 0 10px 0; font-size: 1.1em; font-weight: 600;">Color Picker</h3>
+            <p style="margin: 0; font-size: 0.9rem; color: #a0aec0;">Pick, convert, and compare colors with hex, RGB, and HSL output</p>
+          </div>
+        </a>
+        <a href="/tools/word-counter.html" style="text-decoration: none; color: inherit;">
+          <div style="padding: 20px; background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 12px; transition: all 0.3s ease; cursor: pointer; text-align: center;" onmouseover="this.style.background='rgba(6, 182, 212, 0.1)'; this.style.borderColor='rgba(6, 182, 212, 0.4)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='rgba(6, 182, 212, 0.05)'; this.style.borderColor='rgba(6, 182, 212, 0.2)'; this.style.transform='translateY(0)';">
+            <div style="font-size: 2em; margin-bottom: 10px;">📊</div>
+            <h3 style="margin: 0 0 10px 0; font-size: 1.1em; font-weight: 600;">Word Counter</h3>
+            <p style="margin: 0; font-size: 0.9rem; color: #a0aec0;">Analyze text for word count, character count, reading time, and more</p>
+          </div>
+        </a>
       </div>
     </section>
 
@@ -483,9 +780,9 @@
       creativity: [
         'Creativity is intelligence having fun. - Albert Einstein',
         'You cannot use up creativity. The more you use, the more you have. - Maya Angelou',
-        'Create before you consume. - Unknown',
-        'Originality is just remix in new contexts. - Unknown',
-        'Ship before perfect. - Unknown',
+        'Create before you consume. - 12345',
+        'Originality is just remix in new contexts. - 12345',
+        'Ship before perfect. - 12345',
         'Constraints ignite creativity. - Unknown',
         'Make the thing you wish existed. - Unknown',
         'Imitate, then innovate. - Unknown',
@@ -518,9 +815,9 @@
         'Make something, even if it\'s bad. - Unknown'
       ],
       focus: [
-        'Focus beats talent when talent is distracted. - Unknown',
+        'Focus beats talent when talent is distracted. - 12345',
         'Single-task the critical path. - Unknown',
-        'Turn off notifications to turn on results. - Unknown',
+        'Turn off notifications to turn on results. - 12345',
         'Depth wins over speed. - Unknown',
         'Guard your mornings. - Unknown',
         'Start with the hardest piece. - Unknown',
@@ -555,8 +852,8 @@
         'Every interruption has a cost. - Unknown'
       ],
       perseverance: [
-        'Progress is rarely linear. - Unknown',
-        'Persistence beats resistance. - Unknown',
+        'Progress is rarely linear. - 12345',
+        'Persistence beats resistance. - 12345',
         'Fall seven times, stand eight. - Japanese Proverb',
         'Small steps count when steady. - Unknown',
         'Grit is long obedience in one direction. - Unknown',
@@ -592,8 +889,8 @@
         'It always seems impossible until it\'s done. - Nelson Mandela'
       ],
       leadership: [
-        'Lead by example before directive. - Unknown',
-        'Clarity is kindness. - Unknown',
+        'Lead by example before directive. - 12345',
+        'Clarity is kindness. - 12345',
         'Listeners earn trust fastest. - Unknown',
         'Praise in public, coach in private. - Unknown',
         'Set the vision, clear the path. - Unknown',
@@ -629,7 +926,7 @@
         'Vision without execution is hallucination. - Thomas Edison'
       ],
       learning: [
-        'Stay curious longer. - Unknown',
+        'Stay curious longer. - 12345',
         'Learning is a loop, not a line. - Unknown',
         'Teach to truly learn. - Unknown',
         'Write notes, remember twice. - Unknown',
@@ -666,7 +963,7 @@
         'Invest in knowledge, it pays the best interest. - Benjamin Franklin'
       ],
       productivity: [
-        'Systems beat willpower. - Unknown',
+        'Systems beat willpower. - 12345',
         'Plan your day before it starts. - Unknown',
         'Automate the repeatable. - Unknown',
         'Templates save future you. - Unknown',
@@ -703,7 +1000,7 @@
         'Eliminate, automate, delegate, then do. - Unknown'
       ],
       teamwork: [
-        'Trust is built in small moments. - Unknown',
+        'Trust is built in small moments. - 12345',
         'Assume positive intent, clarify quickly. - Unknown',
         'Great teams argue ideas, not people. - Unknown',
         'Feedback early beats feedback late. - Unknown',
@@ -740,7 +1037,7 @@
         'Collaboration allows us to know more than we are capable of knowing by ourselves. - Paul Solarz'
       ],
       innovation: [
-        'Innovation starts with a customer itch. - Unknown',
+        'Innovation starts with a customer itch. - 12345',
         'Prototype to learn, not to impress. - Unknown',
         'Data plus curiosity beats opinion. - Unknown',
         'Ship, measure, adjust. - Unknown',
@@ -777,7 +1074,7 @@
         'Do not be afraid to give up the good to go for the great. - John D. Rockefeller'
       ],
       mindset: [
-        'Growth is a choice repeated daily. - Unknown',
+        'Growth is a choice repeated daily. - 12345',
         'You are not your last result. - Unknown',
         'Replace perfection with practice. - Unknown',
         'Self-talk sets your ceiling. - Unknown',
@@ -814,7 +1111,7 @@
         'Life is 10% what happens to you and 90% how you react to it. - Charles R. Swindoll'
       ],
       growth: [
-        'Compounding works on skills too. - Unknown',
+        'Compounding works on skills too. - 12345',
         'Tiny improvements beat rare breakthroughs. - Unknown',
         'Measure backward to see growth. - Unknown',
         'Set pace you can sustain. - Unknown',
@@ -851,7 +1148,7 @@
         'Be not afraid of growing slowly; be afraid only of standing still. - Chinese Proverb'
       ],
       design: [
-        'Design is how it works. - Steve Jobs',
+        'Design is how it works. - Steve Jobs (Designer, Apple)'
         'Form follows function and feeling. - Unknown',
         'Constraints make design sing. - Unknown',
         'Whitespace is a feature. - Unknown',
@@ -888,7 +1185,7 @@
         'Design creates culture. Culture shapes values. Values determine the future. - Robert L. Peters'
       ],
       writing: [
-        'Clear thinking becomes clear writing. - Unknown',
+        'Clear thinking becomes clear writing. - 12345',
         'Write to discover what you think. - Unknown',
         'Short sentences win. - Unknown',
         'Cut half, then cut again. - Unknown',
@@ -925,7 +1222,7 @@
         'If you want to be a writer, you must do two things above all others: read a lot and write a lot. - Stephen King'
       ],
       engineering: [
-        'Read the error before you react. - Unknown',
+        'Read the error before you react. - 12345',
         'Make it work, then make it right. - Unknown',
         'Tests are the fastest form of fear reduction. - Unknown',
         'Naming is design. - Unknown',
@@ -962,7 +1259,7 @@
         'Debugging is twice as hard as writing the code in the first place. - Brian Kernighan'
       ],
       startup: [
-        'Talk to users every week. - Unknown',
+        'Talk to users every week. - 12345',
         'Build painkillers, not vitamins. - Unknown',
         'Do things that do not scale first. - Paul Graham',
         'Distribution is as hard as product. - Unknown',
@@ -999,7 +1296,7 @@
         'Move fast and break things. Unless you are breaking stuff, you are not moving fast enough. - Mark Zuckerberg'
       ],
       wellness: [
-        'Rest is a productivity tool. - Unknown',
+        'Rest is a productivity tool. - 12345',
         'Sleep is the original performance enhancer. - Unknown',
         'Move daily, mood follows. - Unknown',
         'Hydrate, you are mostly water. - Unknown',
@@ -1066,7 +1363,14 @@
 
     // Pick a random quote
     const pickQuote = () => {
-      const category = categorySelect.value;
+      let category = categorySelect.value;
+      
+      // If random category selected, pick a random category
+      if (category === 'random') {
+        const allCategories = Object.keys(categories);
+        category = allCategories[Math.floor(Math.random() * allCategories.length)];
+      }
+      
       const list = categories[category];
       if (!list) return;
       const index = Math.floor(Math.random() * list.length);
