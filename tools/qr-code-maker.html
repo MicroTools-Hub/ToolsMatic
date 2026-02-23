@@ -116,6 +116,11 @@
       border-bottom: 1px solid var(--border-color);
       word-break: break-word;
     }
+    #qr-preview {
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+    }
   </style>
   <script src="https://www.highperformanceformat.com/e61a3745429623f25315f86052a3ab7b/invoke.js"></script>
 
@@ -229,6 +234,7 @@
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="../assets/styles.css">
   <script src="/assets/site.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 
     <style>
       .ad-container {
@@ -422,6 +428,14 @@
             <option value="dots">Dots</option>
           </select>
         </label>
+        <label>Error correction
+          <select id="qr-ec" class="small-input">
+            <option value="L">Low (L)</option>
+            <option value="M" selected>Medium (M)</option>
+            <option value="Q">Quartile (Q)</option>
+            <option value="H">High (H)</option>
+          </select>
+        </label>
         <label>Foreground <input type="color" id="qr-fore" value="#0b1222"></label>
         <label>Background <input type="color" id="qr-back" value="#ffffff"></label>
         <label style="display:flex; align-items:center; gap:8px;">
@@ -446,7 +460,10 @@
         <button id="qr-clear">Clear</button>
       </div>
 
-      <div class="gradient-preview" id="qr-preview" style="background:#0c1425;display:flex;align-items:center;justify-content:center;color:var(--muted); min-height: 280px;">QR preview</div>
+      <div class="gradient-preview" id="qr-preview" style="background:#0c1425;display:flex;align-items:center;justify-content:center;color:var(--muted); min-height: 280px;">
+        <div id="qr-preview-placeholder">QR preview</div>
+        <img id="qr-preview-img" alt="QR preview" style="max-width: 100%; max-height: 100%; width: auto; height: auto; display: none;" />
+      </div>
       <div class="result-box" id="qr-status">Short inputs scan best. Keep strong contrast and logo size below 20% for reliable scanning.</div>
     </section>
 
@@ -465,6 +482,48 @@
         <div class="feature-card"><strong>Offline Ready</strong><p>Works locally after first load.</p></div>
         <div class="feature-card"><strong>Privacy First</strong><p>No uploads, no tracking, no data retention.</p></div>
         <div class="feature-card"><strong>Professional Output</strong><p>High-contrast guidance for reliable scans.</p></div>
+      </div>
+    </section>
+
+    <section style="margin: 40px 0; padding: 26px; background: rgba(255, 255, 255, 0.02); border-radius: 12px;">
+      <h2 style="text-align:center; margin-bottom: 18px;">Professional QR Use Cases</h2>
+      <div class="feature-grid">
+        <div class="feature-card"><strong>Retail & Menus</strong><p>QR menus, product pages, and in-store promotions.</p></div>
+        <div class="feature-card"><strong>Events & Tickets</strong><p>Check-in links, agendas, and venue maps.</p></div>
+        <div class="feature-card"><strong>Business Cards</strong><p>vCard export for contactless networking.</p></div>
+        <div class="feature-card"><strong>WiFi Sharing</strong><p>Instant network access for guests.</p></div>
+        <div class="feature-card"><strong>Operations</strong><p>Asset labels and internal documentation.</p></div>
+        <div class="feature-card"><strong>Marketing</strong><p>Campaign landing pages and QR signups.</p></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="qr-strategy">
+      <h2 id="qr-strategy">QR Code Strategy for Reliable Scans</h2>
+      <p>Professional QR codes are about reliability, not just appearance. The generator builds QR payloads with standards-compliant formats for WiFi, vCard, email, SMS, and events so scanning works across iOS and Android without manual fixes. Use higher error correction (Q/H) when adding logos, and increase size for printed materials like signage and packaging.</p>
+      <p>Keep payloads concise for faster scanning. Short URLs, minimal vCard fields, and clear contrast between foreground and background improve scan speed in low-light environments. When designing for print, export SVG for crisp scaling and preserve the quiet zone around the code to avoid edge detection failures.</p>
+    </section>
+
+    <section style="margin: 40px 0;">
+      <h2 style="text-align:center; margin-bottom: 12px;">Technical Specs</h2>
+      <div style="overflow-x:auto;">
+        <table style="width:100%; border-collapse: collapse; min-width: 700px; table-layout: fixed;">
+          <thead>
+            <tr>
+              <th style="text-align:left; padding: 10px;">Parameter</th>
+              <th style="text-align:left; padding: 10px;">Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Templates</td><td>URL, Text, WiFi, vCard, Email, SMS, Phone, Geo, Event</td></tr>
+            <tr><td>Error Correction</td><td>L / M / Q / H (scan reliability vs data capacity)</td></tr>
+            <tr><td>Export</td><td>PNG (raster), SVG (vector)</td></tr>
+            <tr><td>Size Range</td><td>160px to 900px</td></tr>
+            <tr><td>Quiet Zone</td><td>2 to 12 modules</td></tr>
+            <tr><td>Styling</td><td>Square, Rounded, Dots + custom colors</td></tr>
+            <tr><td>Logo Overlay</td><td>0 to 30% (recommended 15-20%)</td></tr>
+            <tr><td>Privacy</td><td>100% client-side, no uploads</td></tr>
+          </tbody>
+        </table>
       </div>
     </section>
 
@@ -641,10 +700,25 @@
         return m;
       };
 
-      const generateMatrix = (text) => {
+      const generateMatrix = (text, ecLevel = 'M') => {
+        if (window.qrcode) {
+          const level = ['L', 'M', 'Q', 'H'].includes(ecLevel) ? ecLevel : 'M';
+          const qr = window.qrcode(0, level);
+          qr.addData(text);
+          qr.make();
+          const size = qr.getModuleCount();
+          const matrix = Array.from({ length: size }, (_, y) => {
+            const row = new Array(size);
+            for (let x = 0; x < size; x += 1) {
+              row[x] = qr.isDark(y, x);
+            }
+            return row;
+          });
+          return matrix;
+        }
         const data = [0, 0, 0, 0, 0, 0];
         const bytes = new TextEncoder().encode(text);
-        if (bytes.length > 70) throw new Error('Payload too long for quick QR. Keep under 70 bytes.');
+        if (bytes.length > 70) throw new Error('Payload too long. Use a shorter input or retry when the full QR engine loads.');
         data.push(0b0100);
         data.push(bytes.length);
         for (const b of bytes) data.push(b);
@@ -777,6 +851,8 @@
     })();
 
     const preview = document.getElementById('qr-preview');
+    const previewImg = document.getElementById('qr-preview-img');
+    const previewPlaceholder = document.getElementById('qr-preview-placeholder');
     const status = document.getElementById('qr-status');
     const payloadEl = document.getElementById('qr-payload');
     const typeSelect = document.getElementById('qr-type');
@@ -785,6 +861,7 @@
     const sizeInput = document.getElementById('qr-size');
     const marginInput = document.getElementById('qr-margin');
     const styleSelect = document.getElementById('qr-style');
+    const ecSelect = document.getElementById('qr-ec');
     const fore = document.getElementById('qr-fore');
     const back = document.getElementById('qr-back');
     const transparent = document.getElementById('qr-transparent');
@@ -916,7 +993,8 @@
         sizeInput.value = size;
         marginInput.value = margin;
 
-        const matrix = window.__qrPro.generateMatrix(payload);
+        const ecLevel = ecSelect.value;
+        const matrix = window.__qrPro.generateMatrix(payload, ecLevel);
         const opts = {
           size,
           margin,
@@ -932,15 +1010,17 @@
         currentPngUrl = canvas.toDataURL('image/png');
         currentSvg = window.__qrPro.toSvg(matrix, opts, logoDataUrl);
 
-        preview.style.backgroundImage = `url(${currentPngUrl})`;
-        preview.textContent = '';
+        previewImg.src = currentPngUrl;
+        previewImg.style.display = 'block';
+        previewPlaceholder.style.display = 'none';
 
         const ratio = window.__qrPro.contrastRatio(opts.fg, opts.bg);
         const contrastMsg = ratio < 3 ? 'Low contrast. Use darker foreground or lighter background.' : 'Contrast looks good.';
-        status.textContent = `QR ready at ${canvas.width}px. ${contrastMsg}`;
+        status.textContent = `QR ready at ${canvas.width}px. EC ${ecLevel}. ${contrastMsg}`;
       } catch (err) {
-        preview.textContent = 'QR preview';
-        preview.style.backgroundImage = 'none';
+        previewImg.removeAttribute('src');
+        previewImg.style.display = 'none';
+        previewPlaceholder.style.display = 'block';
         currentPngUrl = '';
         currentSvg = '';
         status.textContent = err.message;
@@ -955,7 +1035,7 @@
     typeSelect.addEventListener('change', () => { setType(); maybeRender(); });
     autoSelect.addEventListener('change', maybeRender);
     payloadInputs.forEach((el) => el.addEventListener('input', maybeRender));
-    [sizeInput, marginInput, styleSelect, fore, back, transparent, logoSizeInput].forEach((el) => el.addEventListener('input', maybeRender));
+    [sizeInput, marginInput, styleSelect, ecSelect, fore, back, transparent, logoSizeInput].forEach((el) => el.addEventListener('input', maybeRender));
 
     logoInput.addEventListener('change', () => {
       const file = logoInput.files && logoInput.files[0];
@@ -1022,8 +1102,9 @@
       currentPngUrl = '';
       currentSvg = '';
       payloadEl.textContent = '-';
-      preview.textContent = 'QR preview';
-      preview.style.backgroundImage = 'none';
+      previewImg.removeAttribute('src');
+      previewImg.style.display = 'none';
+      previewPlaceholder.style.display = 'block';
       status.textContent = 'Cleared. Enter details to generate a new QR.';
     });
 
