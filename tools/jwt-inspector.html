@@ -349,6 +349,19 @@
       </div>
     </section>
 
+    <section class="section" aria-labelledby="jwt-seo">
+      <h2 id="jwt-seo">JWT Inspector for Professional Token Debugging</h2>
+      <p>ToolsMatic JWT Inspector is built for engineers who need fast, accurate answers when debugging authentication. It decodes JWT headers and payloads, validates exp/nbf/iat claims with clock skew, and verifies signatures for HS256/HS384/HS512 and RS256/RS384/RS512 without sending tokens to any server. That means you can inspect bearer tokens, access tokens, and refresh tokens in sensitive environments while keeping data private and offline-ready.</p>
+      <p>Unlike basic decoders, this inspector highlights token health and makes it obvious when a token is expired, not yet valid, or missing critical claims. Issuer and audience checks help confirm tokens belong to the right identity provider and client. For SSO, API gateways, or microservices, this saves hours of trial and error by surfacing the exact claim that fails validation.</p>
+      <h2>Signature Verification Without Risk</h2>
+      <p>Paste a shared secret for HS algorithms or a PEM public key for RS algorithms and verify signatures instantly. The verification runs in your browser using the Web Crypto API, so keys never leave your device. This protects sensitive keys and tokens while giving you the same verification outcome you would get from server-side libraries.</p>
+      <h2>JWT Claims, Clock Skew, and Validation Strategy</h2>
+      <p>Production systems often suffer from clock drift across servers and devices. The built-in clock skew control allows a safe time window so valid tokens do not fail exp/nbf checks by a few seconds. You can also override the current time to reproduce production incidents or investigate expired tokens from logs.</p>
+      <p>When troubleshooting JWT authentication, start by checking the header for the algorithm, then verify the payload claims for iss, aud, exp, nbf, and iat. If the signature fails, validate the exact key being used and confirm no token segment was modified. This inspector is optimized for these workflows with clear status messages and fast copy buttons.</p>
+      <h2>Built for Security, QA, and DevOps Teams</h2>
+      <p>Security analysts use it to validate tokens in restricted environments, QA teams use it to confirm automated test tokens match expected claims, and DevOps teams use it to quickly identify clock skew problems between services. Because everything runs locally, it is safe to use with production tokens under strict compliance requirements.</p>
+    </section>
+
     <section style="margin: 40px 0; padding: 30px; background: rgba(6, 182, 212, 0.02); border-radius: 12px;">
       <h2 style="text-align:center; margin-bottom: 24px;">Elite JWT Features</h2>
       <div class="feature-grid">
