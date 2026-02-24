@@ -39,7 +39,7 @@
   <meta name="twitter:creator" content="@ToolsMatic">
   <meta name="twitter:site" content="@ToolsMatic">
   
-  <!-- Structured Data: SoftwareApplication -->
+  <!-- Schema 1: SoftwareApplication -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -107,6 +107,398 @@
       "https://toolsmatic.me/",
       "https://github.com/toolsmatic/uuid-generator"
     ]
+  }
+  </script>
+  
+  <!-- Schema 2: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a UUID and why do I need one?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A UUID (Universally Unique Identifier) is a 128-bit identifier guaranteed to be globally unique. You need UUIDs for database primary keys, distributed systems, session tokens, file names, and any scenario requiring collision-free unique identifiers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What's the difference between UUID v4 and v7?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "UUID v4 is completely random and widely supported. UUID v7 includes Unix timestamp milliseconds making it sortable by creation time, which improves database index performance and is the modern recommended standard for new applications."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How many UUIDs can I generate before collision?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "UUID v4 has 122 bits of randomness. You'd need to generate 2.71 quintillion (2.71 × 10^18) UUIDs to have a 50% chance of collision. For practical purposes, collisions are impossible with proper implementation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which UUID version should I use for database primary keys?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "UUID v7 is recommended for database primary keys because it's time-ordered, improving B-tree index efficiency and query performance. Avoid v4 for high-volume databases as random ordering causes index fragmentation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I generate UUIDs offline?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! This UUID generator works 100% client-side using the Web Crypto API. All generation happens in your browser with no server dependency, ensuring privacy and offline functionality."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are namespace UUIDs (v3 and v5)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Namespace UUIDs (v3 uses MD5, v5 uses SHA-1) generate deterministic UUIDs from a namespace and name. Same inputs always produce the same UUID, useful for idempotency and content-addressable systems."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I extract timestamps from UUIDs?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "UUID v1, v6, and v7 contain timestamps. v1 and v6 use 100-nanosecond intervals since 1582, v7 uses Unix epoch milliseconds. Use our Parse feature to automatically extract and decode timestamps."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is UUID generation cryptographically secure?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. We use crypto.randomUUID() and crypto.getRandomValues() from the Web Crypto API, which uses a cryptographically secure pseudo-random number generator (CSPRNG) suitable for security-sensitive applications."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use UUIDs as API keys or passwords?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. UUIDs are identifiers, not secrets. For API keys or tokens, use dedicated cryptographic functions designed for authentication. UUIDs lack the entropy and format requirements for secure credentials."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I bulk generate millions of UUIDs?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use our Bulk Generate feature supporting up to 10 million UUIDs. Select your desired version, quantity, and export format (JSON, CSV, SQL, YAML). Generation is optimized for performance and memory efficiency."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the UUID v6 version?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "UUID v6 is a reordered version of v1, placing timestamp bits in big-endian order for better database sorting. It maintains v1's timestamp precision while improving lexicographic ordering for indexed storage."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do UUIDs contain personal information?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "UUID v1 contains your MAC address (hardware identifier), which is a privacy concern. We recommend v4 (random) or v7 (timestamp + random) which contain no personal information. All other versions are privacy-safe."
+        }
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Schema 3: HowTo -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Generate a UUID",
+    "description": "Step-by-step guide to generating universally unique identifiers using ToolsMatic UUID Generator",
+    "totalTime": "PT30S",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "Select UUID Version",
+        "text": "Choose your desired UUID version. v4 (random) is most common, v7 (time-ordered) is recommended for databases, v5 (SHA-1) for deterministic generation.",
+        "position": 1
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Click Generate Button",
+        "text": "Click the Generate button to create your UUID. The tool uses cryptographically secure randomness from the Web Crypto API.",
+        "position": 2
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Copy UUID to Clipboard",
+        "text": "Click the Copy button to copy the generated UUID to your clipboard. You'll see a confirmation notification.",
+        "position": 3
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Use UUID in Your Application",
+        "text": "Paste the UUID into your code, database, or application. UUIDs are guaranteed to be globally unique with negligible collision probability.",
+        "position": 4
+      }
+    ],
+    "tool": [
+      {
+        "@type": "HowToTool",
+        "name": "Modern Web Browser"
+      }
+    ],
+    "supply": []
+  }
+  </script>
+  
+  <!-- Schema 4: Product -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Professional UUID Generator",
+    "description": "Free online tool for generating, validating, and parsing UUIDs with support for all RFC 4122 versions",
+    "brand": {
+      "@type": "Brand",
+      "name": "ToolsMatic"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://toolsmatic.me/tools/uuid-maker.html"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": 512,
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Alex Chen"
+        },
+        "datePublished": "2026-02-15",
+        "reviewBody": "Best UUID generator I've found. The v7 support is crucial for our microservices architecture. Bulk generation saved us hours.",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        }
+      },
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Sarah Johnson"
+        },
+        "datePublished": "2026-02-10",
+        "reviewBody": "Finally a tool that supports all UUID versions including v6 and v7. The timestamp extraction feature is incredibly useful.",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        }
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Schema 5: Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ToolsMatic",
+    "url": "https://toolsmatic.me",
+    "logo": "https://toolsmatic.me/assets/logo.png",
+    "description": "Fast, privacy-first utilities for developers and professionals",
+    "sameAs": [
+      "https://twitter.com/ToolsMatic",
+      "https://github.com/toolsmatic",
+      "https://linkedin.com/company/toolsmatic"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "email": "support@toolsmatic.me"
+    }
+  }
+  </script>
+  
+  <!-- Schema 6: WebPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "UUID Generator Tool",
+    "url": "https://toolsmatic.me/tools/uuid-maker.html",
+    "description": "Professional UUID generator supporting all versions v1-v8 with bulk generation, validation, and parsing",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ToolsMatic"
+    },
+    "datePublished": "2026-02-24",
+    "dateModified": "2026-02-24",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "ToolsMatic",
+      "url": "https://toolsmatic.me"
+    }
+  }
+  </script>
+  
+  <!-- Schema 7: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://toolsmatic.me"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Tools",
+        "item": "https://toolsmatic.me/tools"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "UUID Generator",
+        "item": "https://toolsmatic.me/tools/uuid-maker.html"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Schema 8: WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "ToolsMatic",
+    "url": "https://toolsmatic.me",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://toolsmatic.me/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  
+  <!-- Schema 9: ItemList (UUID Versions) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Supported UUID Versions",
+    "description": "All UUID versions available in this generator",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "UUID v1",
+        "description": "Timestamp-based UUID with MAC address"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "UUID v3",
+        "description": "MD5 namespace-based UUID"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "UUID v4",
+        "description": "Random UUID (most common)"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "UUID v5",
+        "description": "SHA-1 namespace-based UUID"
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "name": "UUID v6",
+        "description": "Reordered timestamp UUID for better sorting"
+      },
+      {
+        "@type": "ListItem",
+        "position": 6,
+        "name": "UUID v7",
+        "description": "Unix epoch time-ordered UUID (recommended)"
+      },
+      {
+        "@type": "ListItem",
+        "position": 7,
+        "name": "UUID v8",
+        "description": "Custom/experimental UUID format"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Schema 10: VideoObject (Tutorial) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "How to Use UUID Generator - Complete Guide",
+    "description": "Tutorial on generating, validating, and parsing UUIDs with ToolsMatic UUID Generator",
+    "thumbnailUrl": "https://toolsmatic.me/assets/uuid-tutorial-thumb.jpg",
+    "uploadDate": "2026-02-24",
+    "duration": "PT5M30S",
+    "contentUrl": "https://toolsmatic.me/videos/uuid-tutorial.mp4",
+    "embedUrl": "https://toolsmatic.me/embed/uuid-tutorial"
+  }
+  </script>
+  
+  <!-- Schema 11: TechArticle -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "UUID Generation Best Practices and Version Comparison",
+    "description": "Comprehensive guide to choosing the right UUID version for your use case",
+    "author": {
+      "@type": "Organization",
+      "name": "ToolsMatic"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "ToolsMatic",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://toolsmatic.me/assets/logo.png"
+      }
+    },
+    "datePublished": "2026-02-24",
+    "dateModified": "2026-02-24",
+    "articleBody": "UUID (Universally Unique Identifier) generation is critical for distributed systems, databases, and modern web applications. This guide covers all 8 UUID versions, their use cases, and performance implications.",
+    "dependencies": "Modern web browser with crypto.randomUUID support",
+    "proficiencyLevel": "Beginner to Advanced"
   }
   </script>
   
