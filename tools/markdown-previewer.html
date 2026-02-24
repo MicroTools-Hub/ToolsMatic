@@ -216,6 +216,56 @@
       border-bottom: 1px solid var(--border-color);
       word-break: break-word;
     }
+    .comparison-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 14px 40px rgba(6, 182, 212, 0.12), 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+    .comparison-table thead th {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.18), rgba(168, 85, 247, 0.18));
+      color: var(--text-primary);
+      font-weight: 700;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .comparison-table tbody tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .comparison-table tbody tr:hover {
+      background: rgba(6, 182, 212, 0.08);
+    }
+    .comparison-table td:first-child,
+    .comparison-table th:first-child {
+      text-align: left;
+      font-weight: 600;
+    }
+    .comparison-table td,
+    .comparison-table th {
+      padding: 12px 14px;
+      text-align: center;
+    }
+    .comparison-table .tm-col {
+      background: linear-gradient(180deg, rgba(6, 182, 212, 0.18), rgba(6, 182, 212, 0.04));
+      border-left: 1px solid rgba(6, 182, 212, 0.35);
+      border-right: 1px solid rgba(6, 182, 212, 0.35);
+      font-weight: 700;
+    }
+    .tm-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #22d3ee, #a855f7);
+      color: #0b1222;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      box-shadow: 0 6px 16px rgba(34, 211, 238, 0.4);
+    }
     #md-output {
       min-height: 260px;
     }
@@ -282,7 +332,7 @@
           <span>Live preview</span>
         </label>
         <label style="display:flex; align-items:center; gap:8px;">
-          <input type="checkbox" id="md-show-html" checked>
+          <input type="checkbox" id="md-show-html">
           <span>Show HTML output</span>
         </label>
         <label style="display:flex; align-items:center; gap:8px;">
@@ -329,6 +379,14 @@
       <p>The renderer escapes raw HTML by default and then converts Markdown syntax into clean, structured HTML. That means no scripts or unsafe tags are executed, but your headings, links, and code blocks remain readable. The HTML output panel gives you immediate visibility into how your Markdown will render in production.</p>
     </section>
 
+    <section class="section" aria-labelledby="md-seo-guide">
+      <h2 id="md-seo-guide">Markdown Previewer Guide for Teams and Agencies</h2>
+      <p>Documentation teams and agencies use Markdown to keep writing fast and consistent across product releases. A professional Markdown previewer speeds up approvals, reduces formatting bugs, and ensures content looks right before publishing to GitHub, GitLab, Confluence, or CMS platforms. This tool focuses on the Markdown features that matter most in production: headings, lists, links, code, tables, and task lists.</p>
+      <p>If you manage public docs, verify that heading structure follows a clean outline (H1 to H3), keep paragraphs short, and use tables sparingly for dense data. Use task lists for release checklists, and export HTML when you need to paste into systems that do not accept Markdown.</p>
+      <h2>Markdown Preview Best Practices</h2>
+      <p>Keep your Markdown readable in plain text first, then verify layout with the preview. For links, use descriptive anchor text. For code blocks, specify a language in the fence to improve readability in code-aware platforms. When sharing drafts with stakeholders, copy the HTML output to preserve formatting without additional tools.</p>
+    </section>
+
     <section style="margin: 40px 0; padding: 30px; background: rgba(6, 182, 212, 0.02); border-radius: 12px;">
       <h2 style="text-align:center; margin-bottom: 24px;">Elite Markdown Features</h2>
       <div class="feature-grid">
@@ -350,11 +408,11 @@
     <section style="margin: 40px 0;">
       <h2 style="text-align:center; margin-bottom: 16px;">ToolsMatic vs Other Markdown Previewers</h2>
       <div style="overflow-x:auto;">
-        <table style="width:100%; border-collapse: collapse; min-width: 800px; table-layout: fixed;">
+        <table class="comparison-table" style="width:100%; border-collapse: collapse; min-width: 800px; table-layout: fixed;">
           <thead>
             <tr>
               <th style="text-align:left; padding: 10px;">Feature</th>
-              <th>ToolsMatic</th>
+              <th class="tm-col"><span class="tm-badge">ToolsMatic</span></th>
               <th>Dillinger</th>
               <th>StackEdit</th>
               <th>Markdown Live</th>
@@ -362,14 +420,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>Live preview</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
-            <tr><td>GFM tables</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Limited</td><td>Yes</td></tr>
-            <tr><td>Task lists</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Limited</td><td>Yes</td></tr>
-            <tr><td>HTML export</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Limited</td><td>Paid</td></tr>
-            <tr><td>Offline ready</td><td>Yes</td><td>No</td><td>Partial</td><td>No</td><td>Yes</td></tr>
-            <tr><td>Privacy-first</td><td>Yes</td><td>Partial</td><td>Partial</td><td>Partial</td><td>Yes</td></tr>
-            <tr><td>Fast stats</td><td>Yes</td><td>No</td><td>Partial</td><td>No</td><td>Yes</td></tr>
-            <tr><td>Cost</td><td>Free</td><td>Free</td><td>Free</td><td>Free</td><td>Paid</td></tr>
+            <tr><td>Live preview</td><td class="tm-col">Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+            <tr><td>GFM tables</td><td class="tm-col">Yes</td><td>Yes</td><td>Yes</td><td>Limited</td><td>Yes</td></tr>
+            <tr><td>Task lists</td><td class="tm-col">Yes</td><td>Yes</td><td>Yes</td><td>Limited</td><td>Yes</td></tr>
+            <tr><td>HTML export</td><td class="tm-col">Yes</td><td>Yes</td><td>Yes</td><td>Limited</td><td>Paid</td></tr>
+            <tr><td>Offline ready</td><td class="tm-col">Yes</td><td>No</td><td>Partial</td><td>No</td><td>Yes</td></tr>
+            <tr><td>Privacy-first</td><td class="tm-col">Yes</td><td>Partial</td><td>Partial</td><td>Partial</td><td>Yes</td></tr>
+            <tr><td>Fast stats</td><td class="tm-col">Yes</td><td>No</td><td>Partial</td><td>No</td><td>Yes</td></tr>
+            <tr><td>Cost</td><td class="tm-col">Free</td><td>Free</td><td>Free</td><td>Free</td><td>Paid</td></tr>
           </tbody>
         </table>
       </div>
@@ -515,9 +573,12 @@
         finalHtml = finalHtml.replace(`@@CODEBLOCK${idx}@@`, `<pre><code${langClass}>${escaped}</code></pre>`);
       });
 
-      output.innerHTML = finalHtml || '<h2>Preview appears here</h2>';
-      htmlPre.textContent = finalHtml;
-      htmlPanel.style.display = showHtmlToggle.checked ? 'block' : 'none';
+      const parsed = new DOMParser().parseFromString(finalHtml, 'text/html');
+      const safeHtml = parsed.body.innerHTML;
+      output.innerHTML = safeHtml || '<h2>Preview appears here</h2>';
+      htmlPre.textContent = safeHtml;
+      const showHtml = showHtmlToggle.checked && Boolean(safeHtml);
+      htmlPanel.style.display = showHtml ? 'block' : 'none';
       output.style.whiteSpace = wrapToggle.checked ? 'normal' : 'pre';
 
       const words = raw.trim() ? raw.trim().split(/\s+/).length : 0;
@@ -532,6 +593,7 @@
       input.value = '';
       output.innerHTML = '<h2>Preview appears here</h2>';
       htmlPre.textContent = '';
+      htmlPanel.style.display = 'none';
       stats.textContent = 'Words: 0 | Characters: 0 | Lines: 0 | Reading time: 0 min';
     });
 
@@ -590,7 +652,27 @@
     input.addEventListener('input', () => { if (liveToggle.checked) renderMarkdown(); });
 
     exampleBtn.addEventListener('click', () => {
-      input.value = `# Markdown Previewer Pro\n\nWrite **bold**, *italic*, and ~~strikethrough~~ text.\n\n- [x] Task list item\n- [ ] Another task\n\n> Blockquote for emphasis\n\n| Feature | Status |\n| --- | --- |\n| Live preview | Ready |\n| HTML export | Ready |\n\n\`\`\`js\nconst hello = 'world';\nconsole.log(hello);\n\`\`\`\n`;
+      input.value = [
+        '# Markdown Previewer Pro',
+        '',
+        'Write **bold**, *italic*, and ~~strikethrough~~ text.',
+        '',
+        '- [x] Task list item',
+        '- [ ] Another task',
+        '',
+        '> Blockquote for emphasis',
+        '',
+        '| Feature | Status |',
+        '| --- | --- |',
+        '| Live preview | Ready |',
+        '| HTML export | Ready |',
+        '',
+        '```js',
+        "const hello = 'world';",
+        'console.log(hello);',
+        '```',
+        ''
+      ].join('\n');
       renderMarkdown();
     });
 

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">`r`n  <script src="https://pl28613409.effectivegatecpm.com/51/33/02/5133020b94dad7bafd96065840c47d76.js"></script>
+  <meta charset="UTF-8">
+  <script src="https://pl28613409.effectivegatecpm.com/51/33/02/5133020b94dad7bafd96065840c47d76.js"></script>
   <script>
     atOptions = {
       'key' : 'e61a3745429623f25315f86052a3ab7b',
@@ -343,16 +344,16 @@
       <p class="result-box" id="quote">Click the button to see a new quote.</p>
       
       <div class="quote-actions">
-        <button id="next" data-primary>?? New Quote</button>
-        <button id="copy-btn"> Copy</button>
-        <button id="tweet-btn"> Tweet</button>
-        <button id="favorite-btn"> Favorite</button>
+        <button id="next" data-primary>✨ New Quote</button>
+        <button id="copy-btn">📋 Copy</button>
+        <button id="tweet-btn">🐦 Tweet</button>
+        <button id="favorite-btn">❤️ Favorite</button>
       </div>
 
       <div class="favorites-section">
-        <h3> Favorite Quotes (<span id="fav-count">0</span>)</h3>
+        <h3>❤️ Favorite Quotes (<span id="fav-count">0</span>)</h3>
         <div class="favorites-list" id="favorites-list">
-          <div class="empty-favorites">No favorite quotes yet. Click the  button to save quotes you love!</div>
+          <div class="empty-favorites">No favorite quotes yet. Click the ❤️ button to save quotes you love!</div>
         </div>
       </div>
     </section>
@@ -1148,7 +1149,7 @@
         'Be not afraid of growing slowly; be afraid only of standing still. - Chinese Proverb'
       ],
       design: [
-        'Design is how it works. - Steve Jobs (Designer, Apple)'
+        'Design is how it works. - Steve Jobs (Designer, Apple)',
         'Form follows function and feeling. - Unknown',
         'Constraints make design sing. - Unknown',
         'Whitespace is a feature. - Unknown',
@@ -1346,7 +1347,7 @@
       const toast = document.getElementById('toast');
       const toastMessage = document.getElementById('toast-message');
 
-      if (!quoteBox || !nextBtn || !copyBtn || !tweetBtn || !favoriteBtn || !categorySelect || !favoritesList || !favCount || !toast || !toastMessage) {
+      if (!quoteBox || !nextBtn || !categorySelect) {
         return;
       }
 
@@ -1354,6 +1355,7 @@
       let favorites = JSON.parse(localStorage.getItem('favoriteQuotes') || '[]');
 
       function showToast(message) {
+        if (!toast || !toastMessage) return;
         toastMessage.textContent = message;
         toast.classList.add('show');
         setTimeout(() => {
@@ -1382,9 +1384,9 @@
     // Copy quote to clipboard
     const copyQuote = () => {
       navigator.clipboard.writeText(currentQuote).then(() => {
-        showToast(' Quote copied to clipboard!');
+        showToast('✅ Quote copied to clipboard!');
       }).catch(() => {
-        showToast(' Failed to copy quote');
+        showToast('❌ Failed to copy quote');
       });
     };
 
@@ -1400,10 +1402,10 @@
       const index = favorites.indexOf(currentQuote);
       if (index === -1) {
         favorites.push(currentQuote);
-        showToast(' Added to favorites!');
+        showToast('❤️ Added to favorites!');
       } else {
         favorites.splice(index, 1);
-        showToast(' Removed from favorites');
+        showToast('🗑️ Removed from favorites');
       }
       localStorage.setItem('favoriteQuotes', JSON.stringify(favorites));
       updateFavoriteButton();
@@ -1415,10 +1417,10 @@
       const isFavorited = favorites.includes(currentQuote);
       if (isFavorited) {
         favoriteBtn.classList.add('favorited');
-        favoriteBtn.textContent = ' Favorited';
+        favoriteBtn.textContent = '💛 Favorited';
       } else {
         favoriteBtn.classList.remove('favorited');
-        favoriteBtn.textContent = ' Favorite';
+        favoriteBtn.textContent = '❤️ Favorite';
       }
     };
 
@@ -1429,14 +1431,14 @@
         updateFavoriteButton();
       }
       renderFavorites();
-      showToast(' Removed from favorites');
+      showToast('🗑️ Removed from favorites');
     };
 
     const renderFavorites = () => {
       favCount.textContent = favorites.length;
 
       if (favorites.length === 0) {
-        favoritesList.innerHTML = '<div class="empty-favorites">No favorite quotes yet. Click the  button to save quotes you love!</div>';
+        favoritesList.innerHTML = '<div class="empty-favorites">No favorite quotes yet. Click the ❤️ button to save quotes you love!</div>';
         return;
       }
 
@@ -1453,9 +1455,9 @@
     };
 
       nextBtn.addEventListener('click', pickQuote);
-      copyBtn.addEventListener('click', copyQuote);
-      tweetBtn.addEventListener('click', tweetQuote);
-      favoriteBtn.addEventListener('click', toggleFavorite);
+      if (copyBtn) copyBtn.addEventListener('click', copyQuote);
+      if (tweetBtn) tweetBtn.addEventListener('click', tweetQuote);
+      if (favoriteBtn) favoriteBtn.addEventListener('click', toggleFavorite);
       categorySelect.addEventListener('change', pickQuote);
 
       pickQuote();

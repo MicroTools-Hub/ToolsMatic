@@ -371,6 +371,9 @@
       border-radius: 8px;
       background: var(--bg-secondary);
       line-height: 1.4;
+      overflow: hidden;
+      word-break: break-word;
+      overflow-wrap: anywhere;
     }
 
     .tab-btn.active {
@@ -401,10 +404,16 @@
       height: 100%;
     }
 
+    .section {
+      overflow: hidden;
+    }
+
     .faq {
       max-width: 100%;
       word-wrap: break-word;
-      overflow-wrap: break-word;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      overflow: hidden;
     }
 
     .faq h3 {
@@ -413,6 +422,7 @@
       font-size: 1.1rem;
       color: var(--accent-color);
       word-break: break-word;
+      overflow-wrap: anywhere;
     }
 
     .faq h4 {
@@ -421,6 +431,7 @@
       font-size: 0.95rem;
       color: var(--text-primary);
       word-break: break-word;
+      overflow-wrap: anywhere;
     }
 
     .faq p {
@@ -430,7 +441,32 @@
       font-size: 0.9rem;
       color: var(--text-secondary);
       word-wrap: break-word;
-      overflow-wrap: break-word;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .faq code {
+      word-break: break-all;
+      overflow-wrap: anywhere;
+    }
+
+    .feature-list li {
+      overflow: hidden;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .tips-grid .panel p {
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .section p,
+    .section li,
+    .section h2,
+    .section h3,
+    .section h4 {
+      overflow-wrap: anywhere;
       word-break: break-word;
     }
 
@@ -1383,7 +1419,10 @@ Perfect for coding comments, terminal creativity, and text art fun</div>
 
     // Font transformations (30+ fonts)
     const fontStyles = {
-      'standard': (char) => baseGlyphs[char] || baseGlyphs['?'],
+      'standard': (char) => {
+        const base = baseGlyphs[char] || baseGlyphs['?'];
+        return base.map(row => row.replace(/0/g,' ').replace(/1/g,'#'));
+      },
       'block': (char) => {
         const base = baseGlyphs[char] || baseGlyphs['?'];
         return base.map(row => row.replace(/0/g,' ').replace(/1/g,'█'));
