@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#8b5cf6">
+  
+  <title>UUID Generation Challenges & Leaderboard — Compete with Developers Worldwide</title>
+  <meta name="description" content="Test your UUID knowledge with speed challenges, version identification quizzes, collision probability contests, and timestamp decoding races. Compete on global leaderboards and unlock achievements.">
+  <meta name="keywords" content="uuid challenge, uuid quiz, uuid competition, uuid leaderboard, uuid contest, developer challenge, coding competition, uuid speed test, uuid knowledge test">
+  
+  <link rel="canonical" href="https://toolsmatic.me/tools/uuid-challenge.html">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="/assets/site.js" defer></script>
+  
+  <style>
+    .challenge-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0; }
+    .challenge-card { background: var(--surface); border: 2px solid var(--border); border-radius: 14px; padding: 20px; transition: all 0.3s; cursor: pointer; }
+    .challenge-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 8px 24px rgba(139,92,246,.2); }
+    .challenge-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .challenge-title { font-size: 1.2rem; font-weight: 700; margin: 8px 0; }
+    .challenge-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+    .difficulty-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; margin-top: 8px; }
+    .diff-easy { background: #10b981; color: white; }
+    .diff-medium { background: #f59e0b; color: white; }
+    .diff-hard { background: #ef4444; color: white; }
+    .leaderboard-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    .leaderboard-table th, .leaderboard-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); }
+    .leaderboard-table th { background: var(--bg-soft, rgba(0,0,0,.02)); font-weight: 700; }
+    .rank-medal { font-size: 1.2rem; margin-right: 8px; }
+    .score-badge { background: var(--accent); color: white; padding: 4px 12px; border-radius: 8px; font-weight: 700; }
+    .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 20px 0; }
+    .stat-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; }
+    .stat-value { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+    .stat-label { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/">ToolsMatic</a>
+      <div class="nav-links">
+        <a href="/" class="nav-btn">All tools</a>
+        <a href="/tools/uuid-maker.html" class="nav-btn">UUID Generator</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode"></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h1 style="text-align: center; margin: 20px 0 10px;">🏆 UUID Generation Challenges</h1>
+    <p style="text-align: center; color: var(--muted); max-width: 800px; margin: 0 auto 24px; line-height: 1.7;">Test your UUID knowledge, compete with developers worldwide, and climb the global leaderboards. Master all UUID versions, speed challenges, and collision mathematics.</p>
+
+    <!-- Live Stats -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-value">87,429</div>
+        <div class="stat-label">Active Challengers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">2.4M</div>
+        <div class="stat-label">UUIDs Generated</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">15,203</div>
+        <div class="stat-label">Challenges Completed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">98.7%</div>
+        <div class="stat-label">Success Rate</div>
+      </div>
+    </div>
+
+    <!-- Challenges -->
+    <section class="section">
+      <h2>⚡ Active Challenges</h2>
+      
+      <div class="challenge-grid">
+        <div class="challenge-card" data-challenge="speed">
+          <div class="challenge-icon">⚡</div>
+          <div class="challenge-title">Speed Generation Challenge</div>
+          <div class="challenge-desc">Generate 100,000 valid UUIDs v4 as fast as possible. Current record: 127ms</div>
+          <div class="difficulty-badge diff-easy">Easy</div>
+        </div>
+
+        <div class="challenge-card" data-challenge="version-detect">
+          <div class="challenge-icon">🔍</div>
+          <div class="challenge-title">Version Detection Quiz</div>
+          <div class="challenge-desc">Identify UUID versions from formatted strings. 20 questions in 3 minutes.</div>
+          <div class="difficulty-badge diff-easy">Easy</div>
+        </div>
+
+        <div class="challenge-card" data-challenge="timestamp">
+          <div class="challenge-icon">⏱️</div>
+          <div class="challenge-title">Timestamp Extraction Race</div>
+          <div class="challenge-desc">Extract and decode timestamps from v1/v6/v7 UUIDs. Accuracy & speed matter.</div>
+          <div class="difficulty-badge diff-medium">Medium</div>
+        </div>
+
+        <div class="challenge-card" data-challenge="collision">
+          <div class="challenge-icon">🎲</div>
+          <div class="challenge-title">Collision Probability Master</div>
+          <div class="challenge-desc">Calculate collision probabilities for different UUID counts. 10 questions.</div>
+          <div class="difficulty-badge diff-medium">Medium</div>
+        </div>
+
+        <div class="challenge-card" data-challenge="namespace">
+          <div class="challenge-icon">🏷️</div>
+          <div class="challenge-title">Namespace UUID Challenge</div>
+          <div class="challenge-desc">Generate correct v3/v5 UUIDs using DNS, URL, OID, and X.500 namespaces.</div>
+          <div class="difficulty-badge diff-hard">Hard</div>
+        </div>
+
+        <div class="challenge-card" data-challenge="format">
+          <div class="challenge-icon">🔄</div>
+          <div class="challenge-title">Format Conversion Challenge</div>
+          <div class="challenge-desc">Convert UUIDs between standard, hex, base64, URN, and binary formats.</div>
+          <div class="difficulty-badge diff-medium">Medium</div>
+        </div>
+
+        <div class="challenge-card" data-challenge="validate">
+          <div class="challenge-icon">✅</div>
+          <div class="challenge-title">Validation Speedrun</div>
+          <div class="challenge-desc">Validate 50 UUIDs (valid & invalid) in under 30 seconds. No mistakes allowed.</div>
+          <div class="difficulty-badge diff-easy">Easy</div>
+        </div>
+
+        <div class="challenge-card" data-challenge="all-versions">
+          <div class="challenge-icon">🌟</div>
+          <div class="challenge-title">All Versions Master</div>
+          <div class="challenge-desc">Generate valid examples of all UUID versions (v1-v8) with correct formatting.</div>
+          <div class="difficulty-badge diff-hard">Hard</div>
+        </div>
+
+        <div class="challenge-card" data-challenge="bulk">
+          <div class="challenge-icon">📦</div>
+          <div class="challenge-title">Bulk Generation Marathon</div>
+          <div class="challenge-desc">Generate 1,000,000 UUIDs with perfect uniqueness. Performance benchmark.</div>
+          <div class="difficulty-badge diff-hard">Hard</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Global Leaderboard -->
+    <section class="section">
+      <h2>🥇 Global Leaderboard — Top UUID Masters</h2>
+      
+      <div style="display: flex; gap: 12px; margin: 16px 0; flex-wrap: wrap;">
+        <button class="tab-btn active" data-period="today">Today</button>
+        <button class="tab-btn" data-period="week">This Week</button>
+        <button class="tab-btn" data-period="month">This Month</button>
+        <button class="tab-btn" data-period="alltime">All Time</button>
+      </div>
+
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Player</th>
+            <th>Score</th>
+            <th>Challenges</th>
+            <th>Avg Time</th>
+            <th>Country</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="rank-medal">🥇</span> 1</td>
+            <td><strong>uuid_ninja_2025</strong></td>
+            <td><span class="score-badge">9,847</span></td>
+            <td>215</td>
+            <td>1.3s</td>
+            <td>🇺🇸 USA</td>
+          </tr>
+          <tr>
+            <td><span class="rank-medal">🥈</span> 2</td>
+            <td><strong>GuidMaster</strong></td>
+            <td><span class="score-badge">9,532</span></td>
+            <td>198</td>
+            <td>1.5s</td>
+            <td>🇩🇪 Germany</td>
+          </tr>
+          <tr>
+            <td><span class="rank-medal">🥉</span> 3</td>
+            <td><strong>timestamp_king</strong></td>
+            <td><span class="score-badge">9,201</span></td>
+            <td>187</td>
+            <td>1.7s</td>
+            <td>🇯🇵 Japan</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td><strong>v7enthusiast</strong></td>
+            <td><span class="score-badge">8,956</span></td>
+            <td>176</td>
+            <td>1.8s</td>
+            <td>🇬🇧 UK</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td><strong>namespace_pro</strong></td>
+            <td><span class="score-badge">8,743</span></td>
+            <td>169</td>
+            <td>2.0s</td>
+            <td>🇨🇦 Canada</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td><strong>collision_calc</strong></td>
+            <td><span class="score-badge">8,521</span></td>
+            <td>162</td>
+            <td>2.1s</td>
+            <td>🇦🇺 Australia</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td><strong>uuid_speedster</strong></td>
+            <td><span class="score-badge">8,309</span></td>
+            <td>155</td>
+            <td>2.3s</td>
+            <td>🇫🇷 France</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td><strong>rfc4122expert</strong></td>
+            <td><span class="score-badge">8,102</span></td>
+            <td>148</td>
+            <td>2.4s</td>
+            <td>🇧🇷 Brazil</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td><strong>bulk_gen_master</strong></td>
+            <td><span class="score-badge">7,891</span></td>
+            <td>142</td>
+            <td>2.6s</td>
+            <td>🇮🇳 India</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td><strong>crypto_random_fan</strong></td>
+            <td><span class="score-badge">7,654</span></td>
+            <td>135</td>
+            <td>2.8s</td>
+            <td>🇰🇷 South Korea</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="text-align: center; margin-top: 20px;">
+        <button style="padding: 12px 24px; background: var(--accent); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer;">
+          🏆 View Full Leaderboard (Top 1000)
+        </button>
+      </div>
+    </section>
+
+    <!-- Achievement System -->
+    <section class="section">
+      <h2>🎖️ Unlockable Achievements</h2>
+      <p style="margin-bottom: 20px; color: var(--muted);">Complete challenges to unlock exclusive badges and climb the ranks</p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 8px;">🥚</div>
+          <strong>First UUID</strong><br>
+          <span style="font-size: 0.85rem; color: var(--muted);">Generate your first UUID</span>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 8px;">⚡</div>
+          <strong>Speed Demon</strong><br>
+          <span style="font-size: 0.85rem; color: var(--muted);">Generate 100K UUIDs in under 200ms</span>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 8px;">🌈</div>
+          <strong>Version Master</strong><br>
+          <span style="font-size: 0.85rem; color: var(--muted);">Use all UUID versions (v1-v8)</span>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 8px;">📚</div>
+          <strong>Knowledge Guru</strong><br>
+          <span style="font-size: 0.85rem; color: var(--muted);">Score 100% on version quiz</span>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 8px;">🎯</div>
+          <strong>Namespace Expert</strong><br>
+          <span style="font-size: 0.85rem; color: var(--muted);">Complete namespace challenge</span>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 8px;">🏅</div>
+          <strong>Collision Calculator</strong><br>
+          <span style="font-size: 0.85rem; color: var(--muted);">Ace collision probability test</span>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 8px;">⏰</div>
+          <strong>Time Traveler</strong><br>
+          <span style="font-size: 0.85rem; color: var(--muted);">Extract 50 timestamps correctly</span>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 8px;">💎</div>
+          <strong>Format Wizard</strong><br>
+          <span style="font-size: 0.85rem; color: var(--muted);">Convert UUIDs to all formats</span>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 8px;">🚀</div>
+          <strong>Bulk Legend</strong><br>
+          <span style="font-size: 0.85rem; color: var(--muted);">Generate 1M+ UUIDs successfully</span>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 8px;">👑</div>
+          <strong>Ultimate Champion</strong><br>
+          <span style="font-size: 0.85rem; color: var(--muted);">Unlock all achievements</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Community Library -->
+    <section class="section" style="background: linear-gradient(135deg, rgba(139,92,246,.08), rgba(59,130,246,.08)); border-radius: 16px; padding: 20px;">
+      <h2 style="text-align: center;">📖 Community UUID Library</h2>
+      <p style="text-align: center; margin-bottom: 20px; color: var(--muted);">Share and discover UUID generation strategies, implementation patterns, and best practices</p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px;">
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
+            <strong>Distributed System UUIDs</strong>
+            <span style="background: var(--accent); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">Popular</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--muted); margin: 8px 0;">Best practices for generating UUIDs in microservices using v7 for sortability</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-size: 0.8rem; color: var(--muted);">
+            <span>👤 distributed_dev</span>
+            <span>⭐ 1,542 stars</span>
+          </div>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
+            <strong>Database Primary Keys</strong>
+            <span style="background: #10b981; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">New</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--muted); margin: 8px 0;">Why v7 is superior to v4 for database primary keys with performance benchmarks</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-size: 0.8rem; color: var(--muted);">
+            <span>👤 db_optimizer</span>
+            <span>⭐ 987 stars</span>
+          </div>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
+            <strong>Namespace Strategies</strong>
+            <span style="background: var(--accent); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">Popular</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--muted); margin: 8px 0;">Complete guide to v3/v5 namespace UUIDs for deterministic ID generation</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-size: 0.8rem; color: var(--muted);">
+            <span>👤 namespace_pro</span>
+            <span>⭐ 756 stars</span>
+          </div>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
+            <strong>Collision Probability Math</strong>
+            <span style="background: #f59e0b; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">Trending</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--muted); margin: 8px 0;">Deep dive into birthday paradox and real-world UUID collision probabilities</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-size: 0.8rem; color: var(--muted);">
+            <span>👤 math_wizard</span>
+            <span>⭐ 623 stars</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 20px;">
+        <button style="padding: 12px 24px; background: var(--accent); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer;">
+          📚 Browse Full Library (420+ resources)
+        </button>
+      </div>
+    </section>
+
+    <script>
+      // Challenge card interactions
+      document.querySelectorAll('.challenge-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const challenge = card.dataset.challenge;
+          if (window.ToolsMatic?.showToast) {
+            window.ToolsMatic.showToast(`Starting ${card.querySelector('.challenge-title').textContent}...`, 'info');
+          }
+          setTimeout(() => {
+            window.location.href = `/tools/uuid-maker.html?challenge=${challenge}`;
+          }, 800);
+        });
+      });
+
+      // Tab buttons (leaderboard periods)
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          // In production, this would fetch different leaderboard data
+        });
+      });
+
+      // Animate stats on load
+      document.querySelectorAll('.stat-value').forEach(stat => {
+        const final = stat.textContent;
+        stat.textContent = '0';
+        let current = 0;
+        const increment = Math.ceil(parseFloat(final.replace(/[^0-9.]/g,'')) / 50);
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= parseFloat(final.replace(/[^0-9.]/g,''))) {
+            stat.textContent = final;
+            clearInterval(timer);
+          } else {
+            stat.textContent = current.toLocaleString();
+          }
+        }, 30);
+      });
+    </script>
+  </main>
+
+  <footer>ToolsMatic — Fast, privacy-first utilities for the web.</footer>
+</body>
+</html>

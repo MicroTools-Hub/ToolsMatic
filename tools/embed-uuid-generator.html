@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#8b5cf6">
+  
+  <title>Embed UUID Generator in Your Site — Integration Guide | ToolsMatic</title>
+  <meta name="description" content="Embed ToolsMatic UUID Generator in your website, blog, documentation, or course platform. iFrame, Web Component, and JavaScript SDK integration with customization options.">
+  <meta name="keywords" content="embed uuid generator, uuid widget, uuid iframe, uuid web component, uuid sdk, integrate uuid generator, uuid generator plugin, uuid tool embedding">
+  
+  <link rel="canonical" href="https://toolsmatic.me/tools/embed-uuid-generator.html">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="/assets/site.js" defer></script>
+  
+  <style>
+    .method-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin: 20px 0; }
+    .method-card h3 { margin-top: 0; color: var(--accent); }
+    .code-block { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 12px 0; overflow-x: auto; position: relative; }
+    .code-block pre { margin: 0; font-family: 'Courier New', monospace; font-size: 0.9rem; line-height: 1.6; }
+    .copy-btn { position: absolute; top: 10px; right: 10px; padding: 6px 12px; background: var(--accent); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
+    .copy-btn:hover { opacity: 0.9; }
+    .demo-frame { border: 2px solid var(--border); border-radius: 10px; margin: 16px 0; overflow: hidden; }
+    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 16px 0; }
+    .feature-item { background: var(--bg-soft, rgba(0,0,0,.02)); border: 1px solid var(--border); border-radius: 8px; padding: 12px; text-align: center; }
+    .platform-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 16px 0; }
+    .platform-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; cursor: pointer; transition: all 0.3s; }
+    .platform-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/">ToolsMatic</a>
+      <div class="nav-links">
+        <a href="/" class="nav-btn">All tools</a>
+        <a href="/tools/uuid-maker.html" class="nav-btn">UUID Generator</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode"></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h1 style="text-align: center; margin: 20px 0 10px;">Embed UUID Generator in Your Website</h1>
+    <p style="text-align: center; color: var(--muted); max-width: 800px; margin: 0 auto 24px; line-height: 1.7;">Add a powerful UUID generator to your blog, documentation, course platform, or application. Multiple integration methods with full customization support.</p>
+
+    <!-- Why Embed -->
+    <section class="section" style="background: linear-gradient(135deg, rgba(139,92,246,.08), rgba(59,130,246,.08)); border-radius: 16px; padding: 20px;">
+      <h2 style="text-align: center; margin-bottom: 20px;">🎯 Why Embed ToolsMatic UUID Generator?</h2>
+      
+      <div class="feature-grid">
+        <div class="feature-item">
+          <div style="font-size: 1.8rem; margin-bottom: 8px;">🚀</div>
+          <strong>Zero Maintenance</strong><br>
+          <span style="font-size: 0.85rem; color: var(--muted);">Always up-to-date, no hosting required</span>
+        </div>
+        <div class="feature-item">
+          <div style="font-size: 1.8rem; margin-bottom: 8px;">🔒</div>
+          <strong>Privacy-First</strong><br>
+          <span style="font-size: 0.85rem; color: var(--muted);">Client-side processing, no data collected</span>
+        </div>
+        <div class="feature-item">
+          <div style="font-size: 1.8rem; margin-bottom: 8px;">⚡</div>
+          <strong>Lightning Fast</strong><br>
+          <span style="font-size: 0.85rem; color: var(--muted);">CDN-hosted, optimized performance</span>
+        </div>
+        <div class="feature-item">
+          <div style="font-size: 1.8rem; margin-bottom: 8px;">🎨</div>
+          <strong>Customizable</strong><br>
+          <span style="font-size: 0.85rem; color: var(--muted);">Match your brand with themes</span>
+        </div>
+        <div class="feature-item">
+          <div style="font-size: 1.8rem; margin-bottom: 8px;">📱</div>
+          <strong>Responsive</strong><br>
+          <span style="font-size: 0.85rem; color: var(--muted);">Works on all devices & screen sizes</span>
+        </div>
+        <div class="feature-item">
+          <div style="font-size: 1.8rem; margin-bottom: 8px;">🆓</div>
+          <strong>100% Free</strong><br>
+          <span style="font-size: 0.85rem; color: var(--muted);">No attribution required (but appreciated!)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Method 1: Basic iFrame -->
+    <section class="section">
+      <div class="method-card">
+        <h3>📦 Method 1: Basic iFrame Embed (Easiest)</h3>
+        <p>The simplest way to embed the UUID generator. Just copy and paste this HTML snippet:</p>
+        
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre>&lt;iframe 
+  src="https://toolsmatic.me/tools/uuid-maker.html?embed=true"
+  width="100%"
+  height="600"
+  frameborder="0"
+  style="border: 1px solid #e5e7eb; border-radius: 12px;"
+  title="UUID Generator"&gt;
+&lt;/iframe&gt;</pre>
+        </div>
+
+        <h4>Live Preview:</h4>
+        <div class="demo-frame">
+          <iframe 
+            src="/tools/uuid-maker.html?embed=true"
+            width="100%"
+            height="600"
+            frameborder="0"
+            style="display: block;"
+            title="UUID Generator Demo">
+          </iframe>
+        </div>
+
+        <h4>✅ Pros:</h4>
+        <ul style="line-height: 1.8;">
+          <li>No JavaScript knowledge required</li>
+          <li>Works on any platform (WordPress, Medium, Ghost, etc.)</li>
+          <li>Automatic updates and bug fixes</li>
+        </ul>
+
+        <h4>⚠️ Cons:</h4>
+        <ul style="line-height: 1.8;">
+          <li>Limited customization options</li>
+          <li>Fixed height (can be adjusted via parameter)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Method 2: Responsive iFrame -->
+    <section class="section">
+      <div class="method-card">
+        <h3> Method 2: Responsive iFrame (Recommended)</h3>
+        <p>Maintains aspect ratio across all screen sizes with responsive wrapper:</p>
+        
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre>&lt;div style="position: relative; padding-bottom: 75%; height: 0; overflow: hidden;"&gt;
+  &lt;iframe 
+    src="https://toolsmatic.me/tools/uuid-maker.html?embed=true&theme=auto"
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 1px solid #e5e7eb; border-radius: 12px;"
+    frameborder="0"
+    title="UUID Generator"&gt;
+  &lt;/iframe&gt;
+&lt;/div&gt;</pre>
+        </div>
+
+        <h4>Customization Parameters:</h4>
+        <table style="width: 100%; border-collapse: collapse; margin: 12px 0;">
+          <thead>
+            <tr style="background: var(--bg-soft, rgba(0,0,0,.02));">
+              <th style="padding: 10px; text-align: left; border-bottom: 1px solid var(--border);">Parameter</th>
+              <th style="padding: 10px; text-align: left; border-bottom: 1px solid var(--border);">Values</th>
+              <th style="padding: 10px; text-align: left; border-bottom: 1px solid var(--border);">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid var(--border);"><code>embed</code></td>
+              <td style="padding: 10px; border-bottom: 1px solid var(--border);">true/false</td>
+              <td style="padding: 10px; border-bottom: 1px solid var(--border);">Removes header/footer for cleaner embed</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid var(--border);"><code>theme</code></td>
+              <td style="padding: 10px; border-bottom: 1px solid var(--border);">light/dark/auto</td>
+              <td style="padding: 10px; border-bottom: 1px solid var(--border);">Color theme (auto matches system)</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid var(--border);"><code>version</code></td>
+              <td style="padding: 10px; border-bottom: 1px solid var(--border);">v1/v3/v4/v5/v6/v7</td>
+              <td style="padding: 10px; border-bottom: 1px solid var(--border);">Default UUID version to display</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid var(--border);"><code>hideVersions</code></td>
+              <td style="padding: 10px; border-bottom: 1px solid var(--border);">v1,v3,v5</td>
+              <td style="padding: 10px; border-bottom: 1px solid var(--border);">Hide specific version tabs</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid var(--border);"><code>autoGenerate</code></td>
+              <td style="padding: 10px; border-bottom: 1px solid var(--border);">true/false</td>
+              <td style="padding: 10px; border-bottom: 1px solid var(--border);">Generate UUID on page load</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4>Example with Parameters:</h4>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre>&lt;iframe 
+  src="https://toolsmatic.me/tools/uuid-maker.html?embed=true&theme=dark&version=v7&autoGenerate=true"
+  width="100%"
+  height="600"
+  frameborder="0"
+  title="UUID Generator"&gt;
+&lt;/iframe&gt;</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Method 3: Web Component -->
+    <section class="section">
+      <div class="method-card">
+        <h3>⚙️ Method 3: Web Component (Advanced)</h3>
+        <p>Use custom HTML element with JavaScript API for maximum control:</p>
+        
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre>&lt;!-- Include the SDK --&gt;
+&lt;script src="https://cdn.toolsmatic.me/uuid-generator.js"&gt;&lt;/script&gt;
+
+&lt;!-- Use the component --&gt;
+&lt;uuid-generator 
+  version="v4"
+  theme="auto"
+  height="600px"&gt;
+&lt;/uuid-generator&gt;</pre>
+        </div>
+
+        <h4>JavaScript API:</h4>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre>const generator = document.querySelector('uuid-generator');
+
+// Generate UUID programmatically
+const uuid = generator.generate('v7');
+console.log(uuid); // "018d5c7f-3b1a-7000-8000-123456789abc"
+
+// Listen to generation events
+generator.addEventListener('uuid-generated', (event) => {
+  console.log('New UUID:', event.detail.uuid);
+  console.log('Version:', event.detail.version);
+});
+
+// Validate UUID
+const isValid = generator.validate('f47ac10b-58cc-4372-a567-0e02b2c3d479');
+
+// Parse UUID
+const info = generator.parse('f47ac10b-58cc-4372-a567-0e02b2c3d479');
+console.log(info.version); // "v4"</pre>
+        </div>
+
+        <h4>✅ Pros:</h4>
+        <ul style="line-height: 1.8;">
+          <li>Full JavaScript API control</li>
+          <li>Event listeners for generated UUIDs</li>
+          <li>Programmatic UUID generation</li>
+          <li>TypeScript support included</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Method 4: JavaScript SDK -->
+    <section class="section">
+      <div class="method-card">
+        <h3>💻 Method 4: JavaScript SDK (Developers)</h3>
+        <p>Headless SDK for custom UI implementation:</p>
+        
+        <h4>Installation:</h4>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre># npm
+npm install @toolsmatic/uuid
+
+# yarn
+yarn add @toolsmatic/uuid
+
+# pnpm
+pnpm add @toolsmatic/uuid</pre>
+        </div>
+
+        <h4>Usage:</h4>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre>import { UUIDGenerator } from '@toolsmatic/uuid';
+
+const generator = new UUIDGenerator();
+
+// Generate UUIDs
+const v4 = generator.v4();
+const v7 = generator.v7();
+const v5 = generator.v5('dns', 'example.com');
+
+// Bulk generation
+const batch = generator.bulk(1000, 'v7');
+
+// Validate
+const isValid = generator.validate(v4);
+
+// Parse
+const info = generator.parse(v4);
+console.log(info.version); // "v4"
+
+// Format conversion
+const hex = generator.toHex(v4);
+const base64 = generator.toBase64(v4);
+const urn = generator.toURN(v4);</pre>
+        </div>
+
+        <h4>TypeScript Support:</h4>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre>import { UUIDGenerator, UUIDVersion, UUIDFormat } from '@toolsmatic/uuid';
+
+const generator = new UUIDGenerator();
+
+const uuid: string = generator.v4();
+const version: UUIDVersion = 'v7';
+const format: UUIDFormat = 'base64';
+
+const converted = generator.convert(uuid, format);</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Platform-Specific Guides -->
+    <section class="section">
+      <h2>🔌 Platform-Specific Integration Guides</h2>
+      
+      <div class="platform-grid">
+        <div class="platform-card" onclick="showGuide('wordpress')">
+          <div style="font-size: 2rem; margin-bottom: 8px;">📝</div>
+          <strong>WordPress</strong>
+        </div>
+        <div class="platform-card" onclick="showGuide('medium')">
+          <div style="font-size: 2rem; margin-bottom: 8px;">📰</div>
+          <strong>Medium</strong>
+        </div>
+        <div class="platform-card" onclick="showGuide('devto')">
+          <div style="font-size: 2rem; margin-bottom: 8px;">💻</div>
+          <strong>Dev.to</strong>
+        </div>
+        <div class="platform-card" onclick="showGuide('notion')">
+          <div style="font-size: 2rem; margin-bottom: 8px;">📄</div>
+          <strong>Notion</strong>
+        </div>
+        <div class="platform-card" onclick="showGuide('react')">
+          <div style="font-size: 2rem; margin-bottom: 8px;">⚛️</div>
+          <strong>React</strong>
+        </div>
+        <div class="platform-card" onclick="showGuide('vue')">
+          <div style="font-size: 2rem; margin-bottom: 8px;">💚</div>
+          <strong>Vue.js</strong>
+        </div>
+        <div class="platform-card" onclick="showGuide('angular')">
+          <div style="font-size: 2rem; margin-bottom: 8px;">🅰️</div>
+          <strong>Angular</strong>
+        </div>
+        <div class="platform-card" onclick="showGuide('docusaurus')">
+          <div style="font-size: 2rem; margin-bottom: 8px;">🦖</div>
+          <strong>Docusaurus</strong>
+        </div>
+      </div>
+
+      <!-- WordPress Guide -->
+      <div id="guide-wordpress" class="method-card" style="display: none;">
+        <h3>WordPress Integration</h3>
+        <p>Add to any post or page using the HTML block:</p>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre>&lt;!-- WordPress HTML Block --&gt;
+&lt;div class="uuid-generator-embed"&gt;
+  &lt;iframe 
+    src="https://toolsmatic.me/tools/uuid-maker.html?embed=true&theme=auto"
+    width="100%"
+    height="600"
+    frameborder="0"
+    style="border: 1px solid #ddd; border-radius: 8px;"
+    loading="lazy"
+    title="UUID Generator"&gt;
+  &lt;/iframe&gt;
+&lt;/div&gt;</pre>
+        </div>
+        <p><strong>Or use shortcode (requires Custom HTML Widget plugin):</strong></p>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre>[toolsmatic-uuid theme="auto" version="v4"]</pre>
+        </div>
+      </div>
+
+      <!-- React Guide -->
+      <div id="guide-react" class="method-card" style="display: none;">
+        <h3>React Integration</h3>
+        <p>Create a reusable component:</p>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre>import React from 'react';
+
+const UUIDGenerator = ({ version = 'v4', theme = 'auto', height = '600px' }) => {
+  const src = `https://toolsmatic.me/tools/uuid-maker.html?embed=true&theme=${theme}&version=${version}`;
+  
+  return (
+    &lt;iframe
+      src={src}
+      width="100%"
+      height={height}
+      frameBorder="0"
+      style={{ border: '1px solid #e5e7eb', borderRadius: '12px' }}
+      title="UUID Generator"
+    /&gt;
+  );
+};
+
+export default UUIDGenerator;
+
+// Usage
+&lt;UUIDGenerator version="v7" theme="dark" /&gt;</pre>
+        </div>
+      </div>
+
+      <!-- Vue Guide -->
+      <div id="guide-vue" class="method-card" style="display: none;">
+        <h3>Vue.js Integration</h3>
+        <p>Create a Vue component:</p>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre>&lt;template&gt;
+  &lt;iframe
+    :src="iframeSrc"
+    width="100%"
+    :height="height"
+    frameborder="0"
+    :style="iframeStyle"
+    title="UUID Generator"
+  /&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { computed } from 'vue';
+
+const props = defineProps({
+  version: { type: String, default: 'v4' },
+  theme: { type: String, default: 'auto' },
+  height: { type: String, default: '600px' }
+});
+
+const iframeSrc = computed(() => 
+  `https://toolsmatic.me/tools/uuid-maker.html?embed=true&theme=${props.theme}&version=${props.version}`
+);
+
+const iframeStyle = {
+  border: '1px solid #e5e7eb',
+  borderRadius: '12px'
+};
+&lt;/script&gt;
+
+&lt;!-- Usage --&gt;
+&lt;UUIDGenerator version="v7" theme="dark" /&gt;</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- CDN Resources -->
+    <section class="section" style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+      <h2>🌐 CDN Resources</h2>
+      <p>All assets are served via global CDN for optimal performance:</p>
+      
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre>&lt;!-- Web Component SDK --&gt;
+&lt;script src="https://cdn.toolsmatic.me/uuid-generator.js"&gt;&lt;/script&gt;
+
+&lt;!-- Minified version (recommended) --&gt;
+&lt;script src="https://cdn.toolsmatic.me/uuid-generator.min.js"&gt;&lt;/script&gt;
+
+&lt;!-- Specific version (cache-friendly) --&gt;
+&lt;script src="https://cdn.toolsmatic.me/uuid-generator@3.0.0.min.js"&gt;&lt;/script&gt;
+
+&lt;!-- TypeScript definitions --&gt;
+&lt;script src="https://cdn.toolsmatic.me/uuid-generator.d.ts"&gt;&lt;/script&gt;</pre>
+      </div>
+
+      <p style="margin-top: 16px;"><strong>Performance:</strong> ~12KB gzipped • 99.9% uptime • Global CDN with edge caching</p>
+    </section>
+
+    <script>
+      function copyCode(btn) {
+        const codeBlock = btn.nextElementSibling;
+        const code = codeBlock.textContent;
+        
+        navigator.clipboard.writeText(code).then(() => {
+          btn.textContent = '✓ Copied!';
+          setTimeout(() => {
+            btn.textContent = 'Copy';
+          }, 2000);
+        });
+      }
+
+      function showGuide(platform) {
+        // Hide all guides
+        document.querySelectorAll('[id^="guide-"]').forEach(guide => {
+          guide.style.display = 'none';
+        });
+        
+        // Show selected guide
+        const guide = document.getElementById(`guide-${platform}`);
+        if (guide) {
+          guide.style.display = 'block';
+          guide.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+    </script>
+  </main>
+
+  <footer>ToolsMatic — Fast, privacy-first utilities for the web.</footer>
+</body>
+</html>

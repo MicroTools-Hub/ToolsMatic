@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#8b5cf6">
+  
+  <title>UUID Generator REST API Documentation — ToolsMatic</title>
+  <meta name="description" content="Complete REST API documentation for ToolsMatic UUID Generator. Generate, validate, parse UUIDs programmatically. Support for all versions v1-v8, bulk generation, webhooks, and enterprise integrations.">
+  <meta name="keywords" content="uuid api, uuid rest api, uuid generator api, guid api, uuid validation api, uuid webhook, uuid bulk api, uuid microservice, uuid service, programmatic uuid generation">
+  
+  <link rel="canonical" href="https://toolsmatic.me/tools/uuid-api.html">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="/assets/site.js" defer></script>
+  
+  <style>
+    .endpoint-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin: 16px 0; }
+    .endpoint-header { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 12px; }
+    .method-badge { padding: 4px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; }
+    .method-get { background: #10b981; color: white; }
+    .method-post { background: #3b82f6; color: white; }
+    .method-put { background: #f59e0b; color: white; }
+    .method-delete { background: #ef4444; color: white; }
+    .code-block { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 12px 0; overflow-x: auto; }
+    .code-block pre { margin: 0; font-family: 'Courier New', monospace; font-size: 0.9rem; line-height: 1.6; }
+    .param-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+    .param-table th, .param-table td { padding: 10px; text-align: left; border-bottom: 1px solid var(--border); }
+    .param-table th { font-weight: 700; background: var(--bg-soft, rgba(0,0,0,.02)); }
+    .required-badge { background: #ef4444; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; }
+    .optional-badge { background: var(--muted); color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; }
+    .tab-nav { display: flex; gap: 8px; margin: 16px 0; flex-wrap: wrap; }
+    .tab-btn { padding: 8px 16px; border: 1px solid var(--border); background: var(--surface); border-radius: 8px; cursor: pointer; transition: all 0.3s; }
+    .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/">ToolsMatic</a>
+      <div class="nav-links">
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode"></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h1 style="text-align: center; margin: 20px 0 10px;">UUID Generator REST API Documentation</h1>
+    <p style="text-align: center; color: var(--muted); max-width: 800px; margin: 0 auto 24px; line-height: 1.7;">Complete REST API for programmatic UUID generation, validation, parsing, and analysis. Support for all RFC 4122 versions, bulk operations, webhooks, and enterprise integrations.</p>
+
+    <!-- Quick Start -->
+    <section class="section">
+      <h2>🚀 Quick Start</h2>
+      <div class="endpoint-card">
+        <p>Base URL: <code>https://api.toolsmatic.me/v1</code></p>
+        <p style="margin: 12px 0;">Authentication: API key required (included in headers)</p>
+        <div class="code-block">
+          <pre>curl -X POST https://api.toolsmatic.me/v1/uuid/generate \\
+  -H "X-API-Key: your_api_key_here" \\
+  -H "Content-Type: application/json" \\
+  -d '{"version": "v4", "count": 1}'</pre>
+        </div>
+        
+        <p style="font-weight: 600; margin-top: 16px;">Response:</p>
+        <div class="code-block">
+          <pre>{
+  "success": true,
+  "uuids": ["f47ac10b-58cc-4372-a567-0e02b2c3d479"],
+  "version": "v4",
+  "count": 1,
+  "timestamp": "2025-01-15T10:30:00Z"
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Authentication -->
+    <section class="section">
+      <h2>🔐 Authentication</h2>
+      <p>All API requests require an API key passed in the <code>X-API-Key</code> header.</p>
+      
+      <div style="background: rgba(59,130,246,.1); border-left: 4px solid #3b82f6; padding: 16px; border-radius: 8px; margin: 16px 0;">
+        <strong>📘 Getting an API Key:</strong><br>
+        Sign up at <a href="https://toolsmatic.me/api/signup" style="color: var(--accent);">toolsmatic.me/api/signup</a> to get your free API key. Free tier includes 10,000 requests/month.
+      </div>
+
+      <h3>Rate Limits</h3>
+      <table class="param-table">
+        <thead>
+          <tr>
+            <th>Plan</th>
+            <th>Requests/Month</th>
+            <th>Requests/Minute</th>
+            <th>Bulk Limit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Free</strong></td>
+            <td>10,000</td>
+            <td>100</td>
+            <td>1,000 UUIDs</td>
+          </tr>
+          <tr>
+            <td><strong>Pro</strong></td>
+            <td>1,000,000</td>
+            <td>1,000</td>
+            <td>100,000 UUIDs</td>
+          </tr>
+          <tr>
+            <td><strong>Enterprise</strong></td>
+            <td>Unlimited</td>
+            <td>10,000</td>
+            <td>10,000,000 UUIDs</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Endpoints -->
+    <section class="section">
+      <h2>📡 API Endpoints</h2>
+
+      <!-- Generate UUID -->
+      <div class="endpoint-card">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <code>/uuid/generate</code>
+        </div>
+        <p>Generate one or more UUIDs with specified version and format.</p>
+
+        <h4>Request Body</h4>
+        <table class="param-table">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Type</th>
+              <th>Required</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>version</code></td>
+              <td>string</td>
+              <td><span class="optional-badge">optional</span></td>
+              <td>UUID version: v1, v3, v4 (default), v5, v6, v7, v8</td>
+            </tr>
+            <tr>
+              <td><code>count</code></td>
+              <td>integer</td>
+              <td><span class="optional-badge">optional</span></td>
+              <td>Number of UUIDs to generate (1-10,000,000). Default: 1</td>
+            </tr>
+            <tr>
+              <td><code>format</code></td>
+              <td>string</td>
+              <td><span class="optional-badge">optional</span></td>
+              <td>Output format: standard, hex, base64, urn, binary. Default: standard</td>
+            </tr>
+            <tr>
+              <td><code>namespace</code></td>
+              <td>string</td>
+              <td><span class="optional-badge">optional</span></td>
+              <td>Required for v3/v5: dns, url, oid, x500, or custom UUID</td>
+            </tr>
+            <tr>
+              <td><code>name</code></td>
+              <td>string</td>
+              <td><span class="optional-badge">optional</span></td>
+              <td>Required for v3/v5: name/data to hash</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4>Example Requests</h4>
+        <div class="tab-nav">
+          <button class="tab-btn active" data-lang="curl">cURL</button>
+          <button class="tab-btn" data-lang="js">JavaScript</button>
+          <button class="tab-btn" data-lang="python">Python</button>
+          <button class="tab-btn" data-lang="go">Go</button>
+        </div>
+
+        <div class="code-block" data-code="curl">
+          <pre># Generate single UUID v4
+curl -X POST https://api.toolsmatic.me/v1/uuid/generate \\
+  -H "X-API-Key: your_api_key" \\
+  -H "Content-Type: application/json" \\
+  -d '{"version": "v4", "count": 1}'
+
+# Bulk generate 1000 UUID v7
+curl -X POST https://api.toolsmatic.me/v1/uuid/generate \\
+  -H "X-API-Key: your_api_key" \\
+  -H "Content-Type: application/json" \\
+  -d '{"version": "v7", "count": 1000, "format": "hex"}'</pre>
+        </div>
+
+        <div class="code-block" data-code="js" style="display: none;">
+          <pre>// Using fetch API
+const response = await fetch('https://api.toolsmatic.me/v1/uuid/generate', {
+  method: 'POST',
+  headers: {
+    'X-API-Key': 'your_api_key',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    version: 'v4',
+    count: 100
+  })
+});
+
+const data = await response.json();
+console.log(data.uuids);</pre>
+        </div>
+
+        <div class="code-block" data-code="python" style="display: none;">
+          <pre>import requests
+
+response = requests.post(
+    'https://api.toolsmatic.me/v1/uuid/generate',
+    headers={
+        'X-API-Key': 'your_api_key',
+        'Content-Type': 'application/json'
+    },
+    json={
+        'version': 'v7',
+        'count': 500
+    }
+)
+
+data = response.json()
+print(data['uuids'])</pre>
+        </div>
+
+        <div class="code-block" data-code="go" style="display: none;">
+          <pre>package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "net/http"
+)
+
+func generateUUIDs() {
+    payload := map[string]interface{}{
+        "version": "v4",
+        "count": 1000,
+    }
+    
+    jsonData, _ := json.Marshal(payload)
+    req, _ := http.NewRequest("POST", 
+        "https://api.toolsmatic.me/v1/uuid/generate", 
+        bytes.NewBuffer(jsonData))
+    
+    req.Header.Set("X-API-Key", "your_api_key")
+    req.Header.Set("Content-Type", "application/json")
+    
+    client := &http.Client{}
+    resp, _ := client.Do(req)
+}</pre>
+        </div>
+
+        <h4>Response</h4>
+        <div class="code-block">
+          <pre>{
+  "success": true,
+  "uuids": [
+    "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "a3b12f90-1234-4abc-8def-0123456789ab"
+  ],
+  "version": "v4",
+  "count": 2,
+  "format": "standard",
+  "timestamp": "2025-01-15T10:30:00Z",
+  "requestId": "req_abc123"
+}</pre>
+        </div>
+      </div>
+
+      <!-- Validate UUID -->
+      <div class="endpoint-card">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <code>/uuid/validate</code>
+        </div>
+        <p>Validate UUID format and extract version/variant information.</p>
+
+        <h4>Request Body</h4>
+        <table class="param-table">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Type</th>
+              <th>Required</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>uuid</code></td>
+              <td>string</td>
+              <td><span class="required-badge">required</span></td>
+              <td>UUID string to validate</td>
+            </tr>
+            <tr>
+              <td><code>strict</code></td>
+              <td>boolean</td>
+              <td><span class="optional-badge">optional</span></td>
+              <td>Strict RFC 4122 validation. Default: true</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4>Example</h4>
+        <div class="code-block">
+          <pre>curl -X POST https://api.toolsmatic.me/v1/uuid/validate \\
+  -H "X-API-Key: your_api_key" \\
+  -H "Content-Type: application/json" \\
+  -d '{"uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479"}'</pre>
+        </div>
+
+        <h4>Response</h4>
+        <div class="code-block">
+          <pre>{
+  "valid": true,
+  "uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+  "version": "v4",
+  "variant": "RFC 4122",
+  "timeBased": false,
+  "format": "standard"
+}</pre>
+        </div>
+      </div>
+
+      <!-- Parse UUID -->
+      <div class="endpoint-card">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <code>/uuid/parse</code>
+        </div>
+        <p>Parse UUID and extract all fields including timestamps for v1/v6/v7.</p>
+
+        <h4>Example Request</h4>
+        <div class="code-block">
+          <pre>curl -X POST https://api.toolsmatic.me/v1/uuid/parse \\
+  -H "X-API-Key: your_api_key" \\
+  -H "Content-Type: application/json" \\
+  -d '{"uuid": "6ba7b810-9dad-11d1-80b4-00c04fd430c8"}'</pre>
+        </div>
+
+        <h4>Response</h4>
+        <div class="code-block">
+          <pre>{
+  "valid": true,
+  "version": "v1",
+  "variant": "RFC 4122",
+  "timeBased": true,
+  "timestamp": "1997-02-03T15:52:14.000Z",
+  "fields": {
+    "timeLow": "6ba7b810",
+    "timeMid": "9dad",
+    "timeHiVersion": "11d1",
+    "clockSeq": "80b4",
+    "node": "00c04fd430c8"
+  }
+}</pre>
+        </div>
+      </div>
+
+      <!-- Bulk Operations -->
+      <div class="endpoint-card">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <code>/uuid/bulk</code>
+        </div>
+        <p>High-performance bulk UUID generation with export formats (JSON, CSV, SQL, YAML).</p>
+
+        <h4>Request Body</h4>
+        <table class="param-table">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Type</th>
+              <th>Required</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>count</code></td>
+              <td>integer</td>
+              <td><span class="required-badge">required</span></td>
+              <td>Number of UUIDs (1 to 10,000,000)</td>
+            </tr>
+            <tr>
+              <td><code>version</code></td>
+              <td>string</td>
+              <td><span class="optional-badge">optional</span></td>
+              <td>UUID version (default: v4)</td>
+            </tr>
+            <tr>
+              <td><code>exportFormat</code></td>
+              <td>string</td>
+              <td><span class="optional-badge">optional</span></td>
+              <td>json (default), csv, sql, yaml, plain</td>
+            </tr>
+            <tr>
+              <td><code>compression</code></td>
+              <td>string</td>
+              <td><span class="optional-badge">optional</span></td>
+              <td>gzip, none (default)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4>Example</h4>
+        <div class="code-block">
+          <pre>curl -X POST https://api.toolsmatic.me/v1/uuid/bulk \\
+  -H "X-API-Key: your_api_key" \\
+  -H "Content-Type: application/json" \\
+  -d '{"count": 100000, "version": "v7", "exportFormat": "csv"}' \\
+  -o uuids.csv</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Webhooks -->
+    <section class="section">
+      <h2>🔔 Webhooks</h2>
+      <p>Receive real-time notifications for UUID generation events.</p>
+      
+      <div class="endpoint-card">
+        <h3>Setup Webhook</h3>
+        <p>Configure webhook endpoints in your dashboard at <code>toolsmatic.me/api/webhooks</code></p>
+        
+        <h4>Webhook Payload Example</h4>
+        <div class="code-block">
+          <pre>{
+  "event": "uuid.generated",
+  "timestamp": "2025-01-15T10:30:00Z",
+  "data": {
+    "count": 1000,
+    "version": "v7",
+    "requestId": "req_abc123",
+    "userId": "user_123"
+  }
+}</pre>
+        </div>
+
+        <h4>Supported Events</h4>
+        <ul style="margin: 12px 0; line-height: 1.8;">
+          <li><code>uuid.generated</code> — UUID successfully generated</li>
+          <li><code>uuid.validated</code> — UUID validation completed</li>
+          <li><code>uuid.parsed</code> — UUID parsing completed</li>
+          <li><code>bulk.completed</code> — Bulk generation finished</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Error Codes -->
+    <section class="section">
+      <h2>⚠️ Error Codes</h2>
+      <table class="param-table">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Message</th>
+            <th>Solution</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>400</code></td>
+            <td>Invalid request parameters</td>
+            <td>Check request body format and required fields</td>
+          </tr>
+          <tr>
+            <td><code>401</code></td>
+            <td>Unauthorized - Invalid API key</td>
+            <td>Verify X-API-Key header is correct</td>
+          </tr>
+          <tr>
+            <td><code>429</code></td>
+            <td>Rate limit exceeded</td>
+            <td>Wait or upgrade to higher tier</td>
+          </tr>
+          <tr>
+            <td><code>500</code></td>
+            <td>Internal server error</td>
+            <td>Contact support@toolsmatic.me</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- SDK & Libraries -->
+    <section class="section" style="background: linear-gradient(135deg, rgba(139,92,246,.08), rgba(59,130,246,.08)); border-radius: 16px; padding: 20px;">
+      <h2 style="text-align: center;">📚 Official SDKs</h2>
+      <p style="text-align: center; margin-bottom: 20px;">Use our official client libraries for faster integration</p>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-align: center;">
+          <strong>JavaScript/TypeScript</strong><br>
+          <code style="font-size: 0.85rem;">npm install @toolsmatic/uuid</code>
+        </div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-align: center;">
+          <strong>Python</strong><br>
+          <code style="font-size: 0.85rem;">pip install toolsmatic-uuid</code>
+        </div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-align: center;">
+          <strong>Go</strong><br>
+          <code style="font-size: 0.85rem;">go get github.com/toolsmatic/uuid-go</code>
+        </div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-align: center;">
+          <strong>Ruby</strong><br>
+          <code style="font-size: 0.85rem;">gem install toolsmatic-uuid</code>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // Tab switching for code examples
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const lang = btn.dataset.lang;
+          const parent = btn.closest('.endpoint-card');
+          
+          parent.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          
+          parent.querySelectorAll('[data-code]').forEach(code => {
+            code.style.display = code.dataset.code === lang ? 'block' : 'none';
+          });
+        });
+      });
+    </script>
+  </main>
+
+  <footer>ToolsMatic — Fast, privacy-first utilities for the web.</footer>
+</body>
+</html>
