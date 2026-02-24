@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regex Tester API — Developer Integration & Webhooks | ToolsMatic</title>
+  <meta name="description" content="Integrate the ToolsMatic Regex Tester API into your applications. RESTful endpoints for pattern validation, challenge mode, leaderboards, and webhook support.">
+  <meta name="keywords" content="regex api, regex validation api, developer api, webhooks, integration, pattern testing, leaderboard api">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <link rel="canonical" href="https://toolsmatic.me/tools/regex-tester-api.html">
+  <style>
+    .api-endpoint { background: var(--card); border-left: 4px solid var(--accent); padding: 16px; margin: 16px 0; border-radius: 8px; font-family: monospace; font-size: 0.9rem; overflow-x: auto; }
+    .method-badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-weight: 600; font-size: 0.8rem; margin-right: 8px; }
+    .method-post { background: #3b82f6; color: white; }
+    .method-get { background: #10b981; color: white; }
+    .method-delete { background: #ef4444; color: white; }
+    code.inline { background: var(--card); padding: 2px 6px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/">ToolsMatic</a>
+      <div class="nav-links">
+        <a href="/" class="nav-btn">All tools</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode"></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h1 style="text-align: center; margin: 20px 0 10px;">Regex Tester API & Integration Documentation</h1>
+    <p style="text-align: center; color: var(--muted); max-width: 700px; margin: 0 auto 30px;">Power your applications with enterprise-grade regex validation, scoring, and leaderboard management through the ToolsMatic REST API.</p>
+
+    <section class="section">
+      <h2>Authentication</h2>
+      <p>All API requests require authentication via API token in the Authorization header:</p>
+      <div class="api-endpoint">Authorization: Bearer YOUR_API_TOKEN</div>
+      <p>Obtain your API token from your <a href="https://toolsmatic.me/dashboard">ToolsMatic Dashboard</a>.</p>
+    </section>
+
+    <section class="section">
+      <h2>Core Endpoints</h2>
+
+      <h3>1. Validate Regex Pattern</h3>
+      <p>Test and score a regex pattern against sample text.</p>
+      <div class="api-endpoint">
+        <span class="method-badge method-post">POST</span>/api/v1/regex/validate
+      </div>
+      <p><strong>Request Body:</strong></p>
+      <pre style="background: var(--card); padding: 12px; border-radius: 8px; overflow-x: auto;"><code>{
+  "pattern": "(?&lt;email&gt;[a-z0-9._%+-]+)@[a-z0-9.-]+\\.[a-z]{2,}",
+  "flags": "gi",
+  "testText": "Contact: admin@toolsmatic.me and support@example.com",
+  "flavor": "javascript"
+}</code></pre>
+      <p><strong>Response (200 OK):</strong></p>
+      <pre style="background: var(--card); padding: 12px; border-radius: 8px; overflow-x: auto;"><code>{
+  "valid": true,
+  "score": 87,
+  "matchCount": 2,
+  "groupCount": 1,
+  "timeMs": 0.42,
+  "efficiency": "Great",
+  "matches": [
+    {
+      "index": 9,
+      "length": 21,
+      "text": "admin@toolsmatic.me",
+      "groups": [{ "name": "email", "value": "admin@toolsmatic.me" }]
+    },
+    {
+      "index": 35,
+      "length": 18,
+      "text": "support@example.com",
+      "groups": [{ "name": "email", "value": "support@example.com" }]
+    }
+  ],
+  "compatibility": {
+    "javascript": true,
+    "python": false,
+    "pcre": true
+  }
+}</code></pre>
+
+      <h3>2. Calculate Pattern Score</h3>
+      <p>Get efficiency and complexity metrics for a pattern.</p>
+      <div class="api-endpoint">
+        <span class="method-badge method-post">POST</span>/api/v1/regex/score
+      </div>
+      <pre style="background: var(--card); padding: 12px; border-radius: 8px; overflow-x: auto;"><code>{
+  "pattern": "[a-z0-9]+@[a-z0-9.]+",
+  "complexity": "medium"
+}</code></pre>
+      <p><strong>Response:</strong></p>
+      <pre style="background: var(--card); padding: 12px; border-radius: 8px; overflow-x: auto;"><code>{
+  "score": 72,
+  "efficiency": "Good",
+  "characterCount": 22,
+  "complexity": "medium",
+  "suggestions": [
+    "Consider adding anchors (^ and $) for strict matching",
+    "Use named groups for better maintainability"
+  ]
+}</code></pre>
+
+      <h3>3. Challenge Submission</h3>
+      <p>Submit a solution to a regex challenge and receive scoring.</p>
+      <div class="api-endpoint">
+        <span class="method-badge method-post">POST</span>/api/v1/regex/challenge/submit
+      </div>
+      <pre style="background: var(--card); padding: 12px; border-radius: 8px; overflow-x: auto;"><code>{
+  "challengeId": "golf_email_extract",
+  "pattern": "([a-z]+)@[a-z.]+",
+  "patternLength": 17,
+  "testsPassed": 10,
+  "testsTotal": 10,
+  "timeSeconds": 45
+}</code></pre>
+      <p><strong>Response:</strong></p>
+      <pre style="background: var(--card); padding: 12px; border-radius: 8px; overflow-x: auto;"><code>{
+  "success": true,
+  "scorePoints": 500,
+  "golfScore": 17,
+  "globalRank": 42,
+  "personalBest": 18,
+  "achievement": "golfWin",
+  "leaderboardUpdate": true
+}</code></pre>
+
+      <h3>4. Get Leaderboard</h3>
+      <p>Retrieve global or team-specific leaderboards.</p>
+      <div class="api-endpoint">
+        <span class="method-badge method-get">GET</span>/api/v1/regex/leaderboard?scope=global&limit=50
+      </div>
+      <p><strong>Query Parameters:</strong></p>
+      <ul>
+        <li><code class="inline">scope</code>: <code class="inline">global</code> | <code class="inline">team</code> | <code class="inline">personal</code> (default: global)</li>
+        <li><code class="inline">limit</code>: Number of results (1-100, default: 20)</li>
+        <li><code class="inline">offset</code>: Pagination offset (default: 0)</li>
+      </ul>
+      <p><strong>Response:</strong></p>
+      <pre style="background: var(--card); padding: 12px; border-radius: 8px; overflow-x: auto;"><code>{
+  "leaderboard": [
+    {
+      "rank": 1,
+      "username": "RegexMaster",
+      "score": 15847,
+      "challengesWon": 127,
+      "bestGolfScore": 14,
+      "badges": 7,
+      "lastActive": "2026-02-24T14:30:00Z"
+    },
+    {
+      "rank": 2,
+      "username": "PatternHunter",
+      "score": 15201,
+      "challengesWon": 118,
+      "bestGolfScore": 16,
+      "badges": 6,
+      "lastActive": "2026-02-24T12:15:00Z"
+    }
+  ],
+  "totalPlayers": 12847,
+  "yourRank": 127
+}</code></pre>
+
+      <h3>5. Get User Achievements</h3>
+      <p>Retrieve badges and achievements for a user.</p>
+      <div class="api-endpoint">
+        <span class="method-badge method-get">GET</span>/api/v1/user/achievements
+      </div>
+      <p><strong>Response:</strong></p>
+      <pre style="background: var(--card); padding: 12px; border-radius: 8px; overflow-x: auto;"><code>{
+  "achievements": [
+    { "id": "firstTest", "name": "🎯 First Test", "unlockedAt": "2026-01-15T09:22:00Z" },
+    { "id": "testsX10", "name": "⚡ Getting Warmed Up", "unlockedAt": "2026-01-16T14:30:00Z" },
+    { "id": "efficiencyPro", "name": "⚙️ Efficiency Pro", "unlockedAt": "2026-02-10T18:45:00Z" }
+  ],
+  "totalBadges": 3,
+  "nextMilestone": "testsX100"
+}</code></pre>
+
+      <h3>6. Pattern Library</h3>
+      <p>Search and browse community patterns.</p>
+      <div class="api-endpoint">
+        <span class="method-badge method-get">GET</span>/api/v1/patterns/library?query=email&sort=score
+      </div>
+      <p><strong>Query Parameters:</strong></p>
+      <ul>
+        <li><code class="inline">query</code>: Search term</li>
+        <li><code class="inline">sort</code>: <code class="inline">score</code> | <code class="inline">popular</code> | <code class="inline">recent</code> (default: popular)</li>
+        <li><code class="inline">category</code>: Pattern category tag</li>
+      </ul>
+      <p><strong>Response:</strong></p>
+      <pre style="background: var(--card); padding: 12px; border-radius: 8px; overflow-x: auto;"><code>{
+  "patterns": [
+    {
+      "id": "pat_email_rfc5322",
+      "name": "Email (RFC 5322 Compliant)",
+      "pattern": "(?&lt;user&gt;[a-z0-9._%+-]+)@(?&lt;domain&gt;[a-z0-9.-]+\\.[a-z]{2,})",
+      "author": "RegexMaster",
+      "score": 94,
+      "downloads": 15847,
+      "rating": 4.8,
+      "tags": ["email", "validation", "rfc5322"]
+    }
+  ],
+  "total": 1247
+}</code></pre>
+    </section>
+
+    <section class="section">
+      <h2>Webhooks</h2>
+      <p>Receive real-time notifications of events via webhooks.</p>
+
+      <h3>Webhook Events</h3>
+      <ul>
+        <li><code class="inline">challenge.completed</code> — User completed a challenge</li>
+        <li><code class="inline">achievement.unlocked</code> — Achievement badge earned</li>
+        <li><code class="inline">pattern.shared</code> — Pattern shared by user</li>
+        <li><code class="inline">leaderboard.rank_changed</code> — User ranking changed</li>
+      </ul>
+
+      <h3>Webhook Example: Challenge Completed</h3>
+      <p><strong>Request to your webhook URL:</strong></p>
+      <pre style="background: var(--card); padding: 12px; border-radius: 8px; overflow-x: auto;"><code>POST https://your-app.com/webhooks/regex-events
+Content-Type: application/json
+X-Webhook-Signature: sha256=abc123...
+X-Webhook-ID: wh_abc123xyz
+
+{
+  "event": "challenge.completed",
+  "timestamp": "2026-02-24T14:30:00Z",
+  "data": {
+    "userId": "user_abc123",
+    "challengeId": "golf_email_extract",
+    "score": 18,
+    "golfScore": 17,
+    "globalRank": 42
+  }
+}</code></pre>
+    </section>
+
+    <section class="section">
+      <h2>Code Examples</h2>
+
+      <h3>JavaScript/Node.js</h3>
+      <pre style="background: var(--card); padding: 12px; border-radius: 8px; overflow-x: auto;"><code>const fetch = require('node-fetch');
+
+async function validateRegex(pattern, testText) {
+  const response = await fetch('https://toolsmatic.me/api/v1/regex/validate', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.TOOLSMATIC_API_TOKEN}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      pattern,
+      flags: 'g',
+      testText,
+      flavor: 'javascript'
+    })
+  });
+  
+  return await response.json();
+}
+
+validateRegex('[a-z0-9]+@[a-z]+\\.[a-z]+', 'admin@example.com')
+  .then(result => console.log(`Pattern Score: ${result.score}/100`))
+  .catch(err => console.error(err));
+</code></pre>
+
+      <h3>Python</h3>
+      <pre style="background: var(--card); padding: 12px; border-radius: 8px; overflow-x: auto;"><code>import requests
+import os
+
+def validate_regex(pattern, test_text):
+  headers = {
+    'Authorization': f"Bearer {os.getenv('TOOLSMATIC_API_TOKEN')}",
+    'Content-Type': 'application/json'
+  }
+  
+  payload = {
+    'pattern': pattern,
+    'flags': 'g',
+    'testText': test_text,
+    'flavor': 'python'
+  }
+  
+  response = requests.post(
+    'https://toolsmatic.me/api/v1/regex/validate',
+    headers=headers,
+    json=payload
+  )
+  
+  return response.json()
+
+result = validate_regex(r'[a-z0-9]+@[a-z]+\.[a-z]+', 'admin@example.com')
+print(f"Pattern Score: {result['score']}/100")
+</code></pre>
+
+      <h3>cURL</h3>
+      <pre style="background: var(--card); padding: 12px; border-radius: 8px; overflow-x: auto;"><code>curl -X POST https://toolsmatic.me/api/v1/regex/validate \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "pattern": "[a-z0-9]+@[a-z]+\\.[a-z]+",
+    "flags": "g",
+    "testText": "admin@example.com",
+    "flavor": "javascript"
+  }'
+</code></pre>
+    </section>
+
+    <section class="section">
+      <h2>Rate Limits</h2>
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr style="border-bottom: 2px solid var(--border);">
+            <th style="text-align: left; padding: 12px;">Tier</th>
+            <th style="text-align: left; padding: 12px;">Requests/Min</th>
+            <th style="text-align: left; padding: 12px;">Max Pattern Length</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px;">Free</td>
+            <td style="padding: 12px;">10/min</td>
+            <td style="padding: 12px;">500 chars</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px;">Pro</td>
+            <td style="padding: 12px;">100/min</td>
+            <td style="padding: 12px;">5,000 chars</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px;">Enterprise</td>
+            <td style="padding: 12px;">1000+/min</td>
+            <td style="padding: 12px;">Unlimited</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>Error Responses</h2>
+      <pre style="background: var(--card); padding: 12px; border-radius: 8px; overflow-x: auto;"><code>// 400 Bad Request
+{
+  "error": "invalid_pattern",
+  "message": "Regex pattern syntax error: Unexpected token",
+  "statusCode": 400
+}
+
+// 401 Unauthorized
+{
+  "error": "invalid_token",
+  "message": "API token is invalid or expired",
+  "statusCode": 401
+}
+
+// 429 Too Many Requests
+{
+  "error": "rate_limit_exceeded",
+  "message": "Exceeded rate limit of 10 requests/min",
+  "retryAfter": 37,
+  "statusCode": 429
+}
+</code></pre>
+    </section>
+
+    <section class="section">
+      <h2>SDK Libraries</h2>
+      <ul>
+        <li><strong>JavaScript:</strong> <code class="inline">npm install toolsmatic-regex-sdk</code></li>
+        <li><strong>Python:</strong> <code class="inline">pip install toolsmatic-regex-sdk</code></li>
+        <li><strong>Go:</strong> <code class="inline">go get github.com/toolsmatic/regex-sdk-go</code></li>
+        <li><strong>Ruby:</strong> <code class="inline">gem install toolsmatic-regex</code></li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Support & Documentation</h2>
+      <p>For questions, issues, or feature requests:</p>
+      <ul>
+        <li>📧 Email: <a href="mailto:api@toolsmatic.me">api@toolsmatic.me</a></li>
+        <li>📚 Full Docs: <a href="https://docs.toolsmatic.me">docs.toolsmatic.me</a></li>
+        <li>💬 Community: <a href="https://github.com/toolsmatic/regex-sdk">GitHub Discussions</a></li>
+        <li>🐛 Report Bugs: <a href="https://github.com/toolsmatic/regex-sdk/issues">GitHub Issues</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>ToolsMatic — Fast, privacy-first utilities for the web.</footer>
+  <script src="/assets/site.js" defer></script>
+</body>
+</html>

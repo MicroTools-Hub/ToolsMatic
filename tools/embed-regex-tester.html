@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Embed Regex Tester | Developer Widget & Embed Kit | ToolsMatic</title>
+  <meta name="description" content="Embed the ToolsMatic Regex Tester widget in your blog, documentation, or learning platform. iframe embed, webcomponent, and JavaScript SDK available.">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <style>
+    .embed-example { background: var(--surface); border: 2px dashed var(--border); border-radius: 10px; padding: 16px; margin: 16px 0; min-height: 200px; display: flex; align-items: center; justify-content: center; }
+    .code-block { background: var(--card); border-left: 4px solid var(--accent); padding: 16px; margin: 16px 0; border-radius: 8px; overflow-x: auto; font-family: monospace; font-size: 0.9rem; }
+    .tab-buttons { display: flex; gap: 8px; margin-bottom: 16px; }
+    .tab-button { background: var(--surface); border: 1px solid var(--border); padding: 8px 16px; border-radius: 6px; cursor: pointer; transition: all 0.3s; }
+    .tab-button.active { background: var(--accent); color: white; border-color: var(--accent); }
+    .benefit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 16px 0; }
+    .benefit-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-align: center; }
+    .benefit-card strong { display: block; margin-bottom: 8px; font-size: 1.1rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="/">ToolsMatic</a>
+      <div class="nav-links">
+        <a href="/" class="nav-btn">All tools</a>
+        <a href="regex-tester.html" class="nav-btn">Regex Tester</a>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode"></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h1 style="text-align: center; margin: 20px 0 10px;">Embed the Regex Tester in Your Site</h1>
+    <p style="text-align: center; color: var(--muted); max-width: 800px; margin: 0 auto 30px;">Add interactive regex testing to your blog, documentation, course, or platform with simple embed code. No payment required. Free for all use cases.</p>
+
+    <!-- Benefits Section -->
+    <section class="section">
+      <h2>Why Embed?</h2>
+      <div class="benefit-grid">
+        <div class="benefit-card">
+          📚 <strong>Better Tutorials</strong>
+          <p style="font-size: 0.9rem; color: var(--muted);">Readers learn by doing, not just reading.</p>
+        </div>
+        <div class="benefit-card">
+          🔗 <strong>Backlinks</strong>
+          <p style="font-size: 0.9rem; color: var(--muted);">Every embed links back to ToolsMatic SEO juice.</p>
+        </div>
+        <div class="benefit-card">
+          🎯 <strong>Engagement</strong>
+          <p style="font-size: 0.9rem; color: var(--muted);">Interactive tools increase time-on-page 3-5x.</p>
+        </div>
+        <div class="benefit-card">
+          ⚡ <strong>Zero Maintenance</strong>
+          <p style="font-size: 0.9rem; color: var(--muted);">We handle updates, you keep the embed.</p>
+        </div>
+        <div class="benefit-card">
+          🌍 <strong>Drive Traffic</strong>
+          <p style="font-size: 0.9rem; color: var(--muted);">Readers discover ToolsMatic through embed.</p>
+        </div>
+        <div class="benefit-card">
+          📊 <strong>Cross-Site Stats</strong>
+          <p style="font-size: 0.9rem; color: var(--muted);">Anonymous analytics on embed performance.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Start -->
+    <section class="section">
+      <h2>⚡ Quick Start (30 seconds)</h2>
+      <p>Copy and paste this into your page HTML:</p>
+      <div class="code-block"><pre>&lt;iframe 
+  src="https://toolsmatic.me/tools/regex-tester.html"
+  width="100%"
+  height="600"
+  frameborder="0"
+  style="border-radius: 10px; border: 1px solid #ccc;"&gt;
+&lt;/iframe&gt;</pre></div>
+
+      <p>That's it! You now have a working regex tester embedded.</p>
+
+      <div class="embed-example">
+        <div style="text-align: center; color: var(--muted);">
+          <p>↑ Regex Tester will render here on your site ↑</p>
+          <p style="font-size: 0.9rem;">(This is a preview area)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Embed Methods -->
+    <section class="section">
+      <h2>Advanced Embedding Options</h2>
+
+      <h3>1. Basic iFrame (Recommended for Most)</h3>
+      <p>Simple, works everywhere, no configuration needed.</p>
+      <div class="code-block"><pre>&lt;div style="max-width: 800px; margin: 0 auto;"&gt;
+  &lt;iframe 
+    src="https://toolsmatic.me/tools/regex-tester.html"
+    width="100%"
+    height="700"
+    frameborder="0"
+    referrerpolicy="no-referrer"
+    style="border-radius: 12px; border: 1px solid #e5e7eb;"&gt;
+  &lt;/iframe&gt;
+&lt;/div&gt;</pre></div>
+
+      <h3>2. Responsive iFrame (Mobile-Friendly)</h3>
+      <p>Auto-scales on mobile, tablet, desktop.</p>
+      <div class="code-block"><pre>&lt;style&gt;
+  .regex-tester-embed {
+    position: relative;
+    padding-bottom: 100%;
+    height: 0;
+    overflow: hidden;
+  }
+  .regex-tester-embed iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+  }
+&lt;/style&gt;
+
+&lt;div class="regex-tester-embed"&gt;
+  &lt;iframe src="https://toolsmatic.me/tools/regex-tester.html"&gt;&lt;/iframe&gt;
+&lt;/div&gt;</pre></div>
+
+      <h3>3. Pre-Loaded Pattern (Guided Learning)</h3>
+      <p>Open the tester with your pattern pre-filled.</p>
+      <div class="code-block"><pre>&lt;a href="https://toolsmatic.me/tools/regex-tester.html?pattern=%28%3F%3Cemail%3E%5Ba-z0-9._%2B-%5D%2B%29%40%28%3F%3Cdomain%3E%5Ba-z0-9.-%5D%2B%29&flags=g&text=admin%40example.com"&gt;
+  Open Email Pattern in Regex Tester →
+&lt;/a&gt;</pre></div>
+      <p><strong>Generate encoded URLs:</strong> Use our <a href="https://toolsmatic.me/tools/url-encoder.html">URL Encoder</a></p>
+
+      <h3>4. Web Component / Custom Element (Advanced)</h3>
+      <p>Modern approach for single-page applications.</p>
+      <div class="code-block"><pre>&lt;script src="https://toolsmatic.me/assets/regex-tester-component.js"&gt;&lt;/script&gt;
+
+&lt;regex-tester 
+  pattern="(?&lt;name&gt;\\w+)"
+  flags="g"
+  height="500px"
+  theme="dark"&gt;
+&lt;/regex-tester&gt;</pre></div>
+
+      <h3>5. JavaScript SDK (Full Control)</h3>
+      <p>Programmatic control of the tester.</p>
+      <div class="code-block"><pre>&lt;div id="regex-container"&gt;&lt;/div&gt;
+
+&lt;script src="https://toolsmatic.me/assets/regex-tester-sdk.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  const tester = new RegexTester({
+    container: 'regex-container',
+    pattern: '[a-z0-9]+@[a-z]+\\.[a-z]+',
+    flags: 'g',
+    theme: 'auto',
+    onScore: (score) => console.log('Score:', score),
+    onAchievement: (badge) => console.log('Achievement:', badge)
+  });
+&lt;/script&gt;</pre></div>
+    </section>
+
+    <!-- Platform-Specific Guides -->
+    <section class="section">
+      <h2>Embed Guides for Popular Platforms</h2>
+
+      <h3>📝 Medium</h3>
+      <p>1. Write your article normally in Medium</p>
+      <p>2. When done, click "..." menu → "Embed a custom embed"</p>
+      <p>3. Paste this HTML:</p>
+      <div class="code-block"><pre>&lt;iframe width="100%" height="600" 
+  src="https://toolsmatic.me/tools/regex-tester.html" 
+  frameborder="0" style="border-radius:10px;"&gt;&lt;/iframe&gt;</pre></div>
+
+      <h3>📚 Dev.to</h3>
+      <p>Dev.to automatically embeds iframes in markdown. Add this anywhere in your article:</p>
+      <div class="code-block"><pre>{% embed https://toolsmatic.me/tools/regex-tester.html %}</pre></div>
+
+      <h3>📖 Notion</h3>
+      <p>1. Click "+" to add a block</p>
+      <p>2. Type "Embed"</p>
+      <p>3. Paste: <code>https://toolsmatic.me/tools/regex-tester.html</code></p>
+      <p>4. Notion will auto-embed with proper sizing</p>
+
+      <h3>🔧 Docusaurus / Markdown</h3>
+      <div class="code-block"><pre>import { RegexTester } from '@toolsmatic/embed';
+
+export default () => &lt;&gt;
+  &lt;RegexTester pattern="[a-z]+" /&gt;
+&lt;/&gt;</pre></div>
+
+      <h3>🎓 Course Platforms (Udemy, Teachable, etc.)</h3>
+      <p>1. Go to Lesson → "Add Section"</p>
+      <p>2. Choose "HTML / Rich Text"</p>
+      <p>3. Click "Switch to Code"</p>
+      <p>4. Paste iframe embed code</p>
+
+      <h3>📰 WordPress</h3>
+      <p>1. Add custom HTML block (Gutenberg)</p>
+      <p>2. Paste iframe code:</p>
+      <div class="code-block"><pre>&lt;!-- wp:html --&gt;
+&lt;iframe src="https://toolsmatic.me/tools/regex-tester.html" 
+  width="100%" height="600" frameborder="0" 
+  style="border-radius:10px; margin:20px 0;"&gt;&lt;/iframe&gt;
+&lt;!-- /wp:html --&gt;</pre></div>
+
+      <h3>🌐 Custom Websites</h3>
+      <p>Add to any HTML page:</p>
+      <div class="code-block"><pre>&lt;section class="regex-tester-section"&gt;
+  &lt;h2&gt;Try It Yourself&lt;/h2&gt;
+  &lt;iframe src="https://toolsmatic.me/tools/regex-tester.html" 
+    width="100%" height="650" frameborder="0"&gt;&lt;/iframe&gt;
+&lt;/section&gt;</pre></div>
+    </section>
+
+    <!-- Customization -->
+    <section class="section">
+      <h2>Customization & Configuration</h2>
+
+      <h3>Query Parameters</h3>
+      <p>Pre-fill the tester via URL parameters:</p>
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr style="background: var(--card);">
+            <th style="padding: 12px; text-align: left;">Parameter</th>
+            <th style="padding: 12px; text-align: left;">Value</th>
+            <th style="padding: 12px; text-align: left;">Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px;"><code>pattern</code></td>
+            <td style="padding: 12px;">URL-encoded regex</td>
+            <td style="padding: 12px;"><code>pattern=%5Ba-z%5D%2B</code></td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px;"><code>flags</code></td>
+            <td style="padding: 12px;">gimsuvy</td>
+            <td style="padding: 12px;"><code>flags=gi</code></td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px;"><code>text</code></td>
+            <td style="padding: 12px;">Test input</td>
+            <td style="padding: 12px;"><code>text=hello%20world</code></td>
+          </tr>
+          <tr>
+            <td style="padding: 12px;"><code>flavor</code></td>
+            <td style="padding: 12px;">javascript|python|pcre</td>
+            <td style="padding: 12px;"><code>flavor=python</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Complete Example</h3>
+      <div class="code-block"><pre>https://toolsmatic.me/tools/regex-tester.html?
+pattern=%28%3F%3Cemail%3E%5Ba-z0-9%5D%2B%29%40%5Ba-z%5D%2B&
+flags=g&
+text=Contact%3A%20admin%40example.com&
+flavor=javascript</pre></div>
+
+      <h3>Styling Options</h3>
+      <div class="code-block"><pre>&lt;!-- Light theme (default) --&gt;
+&lt;iframe src="..." data-theme="light"&gt;&lt;/iframe&gt;
+
+&lt;!-- Dark theme --&gt;
+&lt;iframe src="..." data-theme="dark"&gt;&lt;/iframe&gt;
+
+&lt;!-- Auto (respects system preference) --&gt;
+&lt;iframe src="..." data-theme="auto"&gt;&lt;/iframe&gt;</pre></div>
+    </section>
+
+    <!-- Analytics & Attribution -->
+    <section class="section">
+      <h2>Analytics & Tracking</h2>
+      <p>Every embed automatically tracks anonymous usage:</p>
+      <ul>
+        <li>✅ Patterns tested (anonymous)</li>
+        <li>✅ Challenges submitted</li>
+        <li>✅ Referrer site (shows which blog/site)</li>
+        <li>✅ Device type (mobile/desktop)</li>
+        <li>✅ Geographic region</li>
+      </ul>
+      <p><strong>Your Dashboard:</strong> <a href="https://toolsmatic.me/embed-analytics">toolsmatic.me/embed-analytics</a></p>
+      <p>View real-time stats on how your embed is performing!</p>
+
+      <h3>Attribution Line</h3>
+      <p>Optional: Add attribution to your embed:</p>
+      <div class="code-block"><pre>&lt;p style="text-align: center; color: #999; font-size: 0.9rem; margin-top: 12px;"&gt;
+  Regex tester powered by &lt;a href="https://toolsmatic.me/tools/regex-tester.html"&gt;ToolsMatic&lt;/a&gt;
+&lt;/p&gt;</pre></div>
+    </section>
+
+    <!-- Support -->
+    <section class="section">
+      <h2>Support & Troubleshooting</h2>
+
+      <h3>Embed Not Showing?</h3>
+      <ul>
+        <li>✓ Check iFrame width/height are set</li>
+        <li>✓ Verify URL starts with `https://`</li>
+        <li>✓ Disable ad blockers (they sometimes block iframes)</li>
+        <li>✓ Check browser console for CORS errors</li>
+      </ul>
+
+      <h3>Pattern Not Pre-Filling?</h3>
+      <ul>
+        <li>✓ Verify URL encoding is correct (use our URL Encoder)</li>
+        <li>✓ Special chars need `%XX` encoding</li>
+        <li>✓ Example: `[` = `%5B`, `]` = `%5D`</li>
+      </ul>
+
+      <h3>Mobile Display Issues?</h3>
+      <ul>
+        <li>✓ Use responsive iframe CSS (see Advanced section)</li>
+        <li>✓ Set min-height for better UX</li>
+        <li>✓ Test on real devices, not just browser devtools</li>
+      </ul>
+
+      <h3>Need Help?</h3>
+      <ul>
+        <li>📧 Email: <a href="mailto:embed@toolsmatic.me">embed@toolsmatic.me</a></li>
+        <li>💬 GitHub Issues: <a href="https://github.com/toolsmatic/embed-support">toolsmatic/embed-support</a></li>
+        <li>🐦 Twitter: <a href="https://twitter.com/toolsmatic">@ToolsMatic</a></li>
+      </ul>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="section" style="background: linear-gradient(135deg, rgba(34,211,238,.08), rgba(59,130,246,.08)); border-radius: 16px; padding: 24px; text-align: center;">
+      <h2>Ready to Embed?</h2>
+      <p style="color: var(--muted); font-size: 1.05rem;">Copy your favorite embed code above and paste into your site.<br/>✨ Your readers will love the interactive learning experience.</p>
+      <button style="background: var(--accent); color: white; border: none; padding: 12px 32px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 1rem; margin-top: 16px;">Open Regex Tester →</button>
+    </section>
+  </main>
+
+  <footer>ToolsMatic — Fast, privacy-first utilities for the web.</footer>
+  <script src="/assets/site.js" defer></script>
+</body>
+</html>
