@@ -668,239 +668,394 @@ select:focus-visible {
   50% { transform: scale(1.2); }
 }
 
-@media (max-width: 640px) {
-  .nav {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+/* Mobile Responsive Styles - Under 768px */
+@media (max-width: 767px) {
+  /* Typography */
+  h1 {
+    font-size: 26px !important;
+    line-height: 1.2;
   }
 
-  .nav-links {
-    flex-wrap: wrap;
-    gap: 10px;
+  h2 {
+    font-size: 18px;
   }
 
-  .hero h1 {
-    font-size: 28px;
+  h3 {
+    font-size: 16px;
   }
 
-  .suggestions-section {
-    padding: 20px;
+  p {
+    font-size: 14px;
   }
 
-  .suggestion-form {
-    padding: 15px;
+  /* Prevent horizontal scrolling */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
   }
 
-  .suggestion-item {
-    padding: 15px;
-  }
-}
-
-/* Mobile styles for all tools */
-@media (max-width: 768px) {
   main {
-    padding: 10px;
+    padding: 16px;
     overflow-x: hidden;
-    max-width: 100vw;
+    width: 100%;
   }
 
-  body {
-    min-width: 728px;
-    overflow-x: auto;
-  }
-
-  /* Keep banner ads at 728x90 */
-  .ad-container {
-    min-width: 728px;
-    margin: 0 auto;
-  }
-
-  .tool-shell {
-    padding: 15px;
-    margin: 15px 5px;
-    border-radius: 12px;
-    overflow-x: hidden;
-  }
-
-  .tool-shell h1 {
-    font-size: 1.5rem;
-    word-wrap: break-word;
-  }
-
-  .tool-shell h2 {
-    font-size: 1.2rem;
+  /* Cards and containers */
+  .card {
+    padding: 14px;
+    margin-bottom: 12px;
   }
 
   .section {
-    padding: 15px;
-    margin: 15px 5px;
-    border-radius: 12px;
+    padding: 14px;
+    margin: 12px 0;
   }
 
-  .section h2 {
-    font-size: 1.3rem;
+  .tool-shell {
+    padding: 14px;
+    margin: 12px 0;
   }
 
-  .section h3 {
-    font-size: 1.1rem;
+  .hero {
+    padding: 14px;
+    margin-bottom: 12px;
   }
 
-  textarea, input[type="text"], input[type="number"], input[type="url"], input[type="email"] {
-    width: 100%;
-    max-width: 100%;
-    font-size: 16px;
-    padding: 10px;
+  /* Banner ads with 16px margin below */
+  .ad-container {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
   }
 
-  select {
-    width: 100%;
-    font-size: 16px;
-    padding: 10px;
+  .update-banner {
+    left: 10px;
+    right: 10px;
+    max-width: none;
   }
 
-  .btn, button {
+  /* All buttons full width */
+  button,
+  .btn,
+  input[type="submit"],
+  input[type="reset"],
+  input[type="button"] {
     width: 100%;
     padding: 12px;
     font-size: 14px;
     margin-bottom: 8px;
   }
 
+  /* Form controls full width */
+  textarea,
+  input[type="text"],
+  input[type="number"],
+  input[type="url"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  input[type="tel"],
+  select {
+    width: 100%;
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  /* Reduce vertical spacing between sections */
+  header {
+    padding: 8px 0;
+  }
+
+  .nav {
+    padding: 12px 16px;
+    gap: 8px;
+  }
+
+  .nav-links {
+    gap: 8px;
+  }
+
+  footer {
+    padding: 12px 16px;
+    font-size: 12px;
+  }
+
+  /* Grid layout for cards */
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 12px 0;
+  }
+
+  .two-col {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  /* Inline controls stacked */
   .inline-controls {
     flex-direction: column;
     gap: 8px;
+    margin-top: 8px;
   }
 
   .inline-controls button {
     width: 100%;
   }
 
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
+  .inline-controls .small-input {
+    max-width: 100%;
   }
 
+  /* Page intro section */
   .page-intro {
-    margin: 20px 5px 30px 5px;
-    padding: 25px 20px;
-    text-align: center;
-    background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(168, 85, 247, 0.1));
-    border-radius: 12px;
-    border: 1px solid var(--border);
+    margin: 16px 0;
+    padding: 16px;
   }
 
   .page-intro-title {
-    font-size: 2.5rem;
-    font-weight: 800;
-    font-family: 'Fredoka One', 'Righteous', cursive;
-    letter-spacing: -0.02em;
-    margin: 0 0 15px 0;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-size: 28px;
+    margin-bottom: 12px;
   }
 
   .page-intro-description {
-    font-size: 1.1rem;
-    font-weight: 500;
-    line-height: 1.8;
-    color: var(--muted);
+    font-size: 14px;
     margin: 0;
   }
 
-  .hero {
-    padding: 20px;
+  /* Suggestions section */
+  .suggestions-section {
+    padding: 14px;
+    margin-bottom: 12px;
   }
 
-  .hero h1 {
-    font-size: 24px;
+  .suggestions-section h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
   }
 
-  .card {
-    padding: 15px;
+  .suggestion-form {
+    gap: 10px;
+    padding: 12px;
+    margin-bottom: 12px;
   }
 
+  .suggestion-item {
+    padding: 12px;
+    margin-bottom: 8px;
+  }
+
+  .suggestion-header {
+    gap: 8px;
+  }
+
+  /* Result boxes and displays */
   .result-box {
-    font-size: 14px;
     padding: 10px;
+    font-size: 14px;
+    min-height: auto;
+  }
+
+  .muted-text {
+    font-size: 12px;
   }
 
   .label {
-    font-size: 14px;
+    font-size: 13px;
+    margin: 8px 0 4px;
   }
 
+  /* Code and preformatted text */
   pre {
-    font-size: 13px;
+    font-size: 12px;
+    padding: 10px;
     overflow-x: auto;
     max-width: 100%;
   }
 
   code {
+    font-size: 12px;
+  }
+
+  /* Tables */
+  .table {
+    font-size: 12px;
+  }
+
+  .table th,
+  .table td {
+    padding: 8px;
+  }
+
+  /* Toast notifications */
+  .toast-host {
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+  }
+
+  .toast {
+    padding: 10px 12px;
     font-size: 13px;
-    word-break: break-all;
+  }
+
+  /* Pill and badge */
+  .pill {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+
+  .badge {
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+
+  .tag {
+    font-size: 11px;
+  }
+
+  /* History items */
+  .history-item {
+    padding: 8px 10px;
+    font-size: 13px;
+    gap: 8px;
+  }
+
+  /* Gradient preview */
+  .gradient-preview {
+    height: 150px;
+  }
+
+  /* Meter */
+  .meter {
+    height: 10px;
+  }
+
+  /* Muted background */
+  .muted-bg {
+    padding: 10px;
+    margin: 8px 0;
+  }
+
+  /* Reduce spacing in lists */
+  .section ul,
+  .section ol {
+    margin: 8px 0 8px 16px;
+  }
+
+  .section li {
+    margin-bottom: 4px;
+  }
+
+  /* Hero h1 specific */
+  .hero h1 {
+    font-size: 26px;
+  }
+
+  /* Section headings */
+  .section h2 {
+    font-size: 18px;
+    margin: 10px 0 8px 0;
+  }
+
+  .section h3 {
+    font-size: 16px;
+    margin: 8px 0 6px 0;
+  }
+
+  .section p {
+    font-size: 14px;
+    margin-bottom: 8px;
   }
 }
 
+/* Extra small screens - 480px and below */
 @media (max-width: 480px) {
-  body {
-    min-width: 728px;
-    overflow-x: auto;
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
+  p {
+    font-size: 13px;
   }
 
   main {
-    padding: 5px;
-  }
-
-  /* Keep banner ads at 728x90 */
-  .ad-container {
-    min-width: 728px;
-    margin: 0 auto;
+    padding: 12px;
   }
 
   .nav {
-    padding: 12px 10px;
+    padding: 10px 12px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .brand {
-    font-size: 18px;
+    font-size: 16px;
   }
 
-  .tool-shell {
+  .nav-links {
+    width: 100%;
+    gap: 6px;
+  }
+
+  .nav-links a {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .theme-toggle {
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+
+  .card {
     padding: 12px;
-    margin: 10px 5px;
-  }
-
-  .tool-shell h1 {
-    font-size: 1.3rem;
   }
 
   .section {
     padding: 12px;
-    margin: 10px 5px;
   }
 
-  textarea, input[type="text"], input[type="number"] {
-    padding: 8px;
-    font-size: 16px;
+  .tool-shell {
+    padding: 12px;
   }
 
-  .btn, button {
+  button, .btn {
     padding: 10px;
     font-size: 13px;
   }
 
-  .page-intro {
-    padding: 12px;
-    margin: 10px 5px 15px 5px;
+  .hero h1 {
+    font-size: 22px;
   }
 
   .page-intro-title {
-    font-size: 1.5rem;
+    font-size: 20px;
   }
 
-  .page-intro-description {
-    font-size: 0.9rem;
+  .toast-host {
+    bottom: 8px;
+    right: 8px;
+    left: 8px;
+  }
+
+  .update-banner {
+    left: 8px;
+    right: 8px;
+  }
+
+  footer {
+    padding: 10px 12px;
+    font-size: 11px;
+  }
+
+  pre {
+    font-size: 11px;
   }
 }
 
